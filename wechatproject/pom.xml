@@ -35,8 +35,7 @@
 				<server>tomcat</server>
 				<username>admin</username>
 				<password>tomcatadmin</password>
-				<path>/${project.build.finalName}</path>
-				<!-- war文件路径缺省情况下指向target -->
+				<path>/${project.artifactId}</path>
 				<warFile>${basedir}/target/${project.build.finalName}.war</warFile>
 				</configuration>
     		</plugin>
