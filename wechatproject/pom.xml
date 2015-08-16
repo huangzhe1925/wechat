@@ -20,27 +20,65 @@
 				<artifactId>maven-war-plugin</artifactId>
 				<version>2.4</version>
 				<configuration>
-				<warSourceDirectory>WebContent</warSourceDirectory>
-				<failOnMissingWebXml>false</failOnMissingWebXml>
+					<warSourceDirectory>WebContent</warSourceDirectory>
+					<failOnMissingWebXml>false</failOnMissingWebXml>
 				</configuration>
 			</plugin>
-			
+
 			<plugin>
 				<groupId>org.apache.tomcat.maven</groupId>
-        		<artifactId>tomcat7-maven-plugin</artifactId>
-    			<version>2.2</version>
-    			<configuration>
-				<url>http://localhost/manager/text</url>
-				<!-- server、username、password对应maven的setting下的配置 -->
-				<server>tomcat</server>
-				<username>admin</username>
-				<password>tomcatadmin</password>
-				<path>/${project.artifactId}</path>
-				<warFile>${basedir}/target/${project.build.finalName}.war</warFile>
+				<artifactId>tomcat7-maven-plugin</artifactId>
+				<version>2.2</version>
+				<configuration>
+					<url>http://localhost/manager/text</url>
+					<!-- server、username、password对应maven的setting下的配置 -->
+					<server>tomcat</server>
+					<username>admin</username>
+					<password>tomcatadmin</password>
+					<path>/${project.artifactId}</path>
+					<warFile>${basedir}/target/${project.build.finalName}.war</warFile>
 				</configuration>
-    		</plugin>
-			
-			
+			</plugin>
+
+
 		</plugins>
 	</build>
+	<dependencies>
+
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>jstl</artifactId>
+			<version>1.2</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-core</artifactId>
+			<version>2.5.3</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+			<version>2.5.3</version>
+		</dependency>
+
+
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-core</artifactId>
+			<version>4.1.6.RELEASE</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-webmvc</artifactId>
+			<version>4.1.6.RELEASE</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-web</artifactId>
+			<version>4.1.6.RELEASE</version>
+		</dependency>
+
+	</dependencies>
 </project>
