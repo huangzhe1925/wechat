@@ -15,7 +15,6 @@ public class WechatUtil {
 	public static final String TOKEN="19890402";
 	public static String getXMLFromRequest(HttpServletRequest request)
 			throws IOException {
-		/** 读取接收到的xml消息 */
 		StringBuffer sb = new StringBuffer();
 		InputStream is = request.getInputStream();
 		InputStreamReader isr = new InputStreamReader(is, "UTF-8");
@@ -28,7 +27,6 @@ public class WechatUtil {
 		return xml;
 	}
 
-	// 微信接口验证
 	public static boolean checkSignature(HttpServletRequest request) {
 		String signature = request.getParameter("signature");
 		String timestamp = request.getParameter("timestamp");
@@ -49,7 +47,6 @@ public class WechatUtil {
 		}
 	}
 
-	// sha1加密
 	public static String SHA1Encode(String sourceString) {
 		String resultString = null;
 		try {

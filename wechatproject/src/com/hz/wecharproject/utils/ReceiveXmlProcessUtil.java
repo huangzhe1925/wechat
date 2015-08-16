@@ -23,7 +23,7 @@ public class ReceiveXmlProcessUtil {
               
             msg = new ReceiveXmlEntity();  
             Class<?> c = Class.forName("com.hz.wecharproject.pojo.ReceiveXmlEntity");  
-            msg = (ReceiveXmlEntity)c.newInstance();//�������ʵ��Ķ���  
+            msg = (ReceiveXmlEntity)c.newInstance();
               
             while(iter.hasNext()){  
                 Element ele = (Element)iter.next();  
@@ -32,7 +32,7 @@ public class ReceiveXmlProcessUtil {
                 method.invoke(msg, ele.getText());  
             }  
         } catch (Exception e) {  
-            System.out.println("xml ��ʽ�쳣: "+ strXml);  
+            System.out.println("xml format error: "+ strXml);  
             e.printStackTrace();  
         }  
         return msg;  
