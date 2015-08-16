@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.hz.wecharproject.utils.WechatProcessUtil;
 import com.hz.wecharproject.utils.WechatUtil;
 
 @Controller
@@ -32,8 +33,11 @@ public class WechatAuthHandler {
 			}
 		} else {
 			// 正常的微信处理流程
-			result = WechatUtil.getXMLFromRequest(request);
-			System.out.println(result);
+			String xml = WechatUtil.getXMLFromRequest(request);
+			System.out.println("comein MSG: "+xml);
+			System.out.println();
+			result=WechatProcessUtil.processWechatMag(xml);
+			System.out.println("outgoing MSG: "+result);
 			System.out.println();
 		}
 		return result;

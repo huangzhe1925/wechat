@@ -8,7 +8,7 @@ public class WechatProcessUtil {
      * @param xml 接收到的微信数据 
      * @return  最终的解析结果（xml格式数据） 
      */  
-    public String processWechatMag(String xml){  
+    public static String processWechatMag(String xml){  
         /** 解析xml数据 */  
         ReceiveXmlEntity xmlEntity = new ReceiveXmlProcessUtil().getMsgEntity(xml);  
           
