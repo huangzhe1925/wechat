@@ -3,13 +3,6 @@ package com.hz.wecharproject.utils;
 import java.util.Date;
 
 public class FormatXmlProcessUtil {  
-    /** 
-     * 封装文字类的返回消息 
-     * @param to 
-     * @param from 
-     * @param content 
-     * @return 
-     */  
     public String formatXmlAnswer(String to, String from, String content) {  
         StringBuffer sb = new StringBuffer();  
         Date date = new Date();  
