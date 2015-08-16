@@ -13,7 +13,7 @@ import com.hz.wecharproject.utils.WechatUtil;
 @Controller
 public class WechatAuthHandler {
 
-	@RequestMapping(value = "wechatProcess",produces = "text/html;charset=UTF-8")
+	@RequestMapping(value = "wechatProcess")
 	@ResponseBody
 	public String wechatAuth(HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
