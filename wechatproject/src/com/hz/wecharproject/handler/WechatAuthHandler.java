@@ -42,6 +42,7 @@ public class WechatAuthHandler {
 			result = echostr;
 		} else {
 			// 正常的微信处理流程
+			 System.out.print(xml); 
 		}
 		return result;
 	}
