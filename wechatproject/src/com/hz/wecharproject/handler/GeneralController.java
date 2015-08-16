@@ -17,6 +17,6 @@ public class GeneralController {
         Map<String, String> map = new HashMap<String, String>(1);  
         map.put("success", "true");  
         return map;  
-    }  
+    }
   
 }  
