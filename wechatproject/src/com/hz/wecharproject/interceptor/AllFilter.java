@@ -17,10 +17,10 @@ public class AllFilter extends OncePerRequestFilter {
                                     HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
         String uri = request.getRequestURI();
-        if (!CommonUtil.WECHAT_URL.equals(uri)) {
-        	response.sendRedirect("http://www.baidu.com");
-        } else {
-            filterChain.doFilter(request, response);
+        if (CommonUtil.WECHAT_URL.equals(uri)) {
+        	filterChain.doFilter(request, response);
+        }else if(CommonUtil.SITE_MANAGE_URL.equals(uri)){
+        	filterChain.doFilter(request, response);
         }
     }
 }

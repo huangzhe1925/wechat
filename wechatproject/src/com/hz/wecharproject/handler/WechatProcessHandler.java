@@ -11,7 +11,8 @@ import com.hz.wecharproject.utils.WechatProcessUtil;
 import com.hz.wecharproject.utils.WechatUtil;
 
 @Controller
-public class WechatAuthHandler {
+@RequestMapping(value = "wechat")
+public class WechatProcessHandler {
 
 	@RequestMapping(value = "wechatProcess")
 	@ResponseBody
