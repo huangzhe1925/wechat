@@ -22,7 +22,7 @@ public class AllFilter extends OncePerRequestFilter {
         }else if(CommonUtil.SITE_MANAGE_URL.equals(uri)){
         	filterChain.doFilter(request, response);
         }else {
-        	System.out.println("fitler blocked");
+        	response.setStatus(HttpServletResponse.SC_NOT_FOUND);
         }
     }
 }
