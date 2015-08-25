@@ -9,7 +9,8 @@ public class SiteManageHandler {
 
 	@RequestMapping(value = "siteManageLogin")
 	public String siteMangeLogin() {
-		System.out.println("siteMangeLogin now");
-		return "siteManageLogin.jsp";
+		return "siteManageLogin";
 	}
+	
+	
 }
