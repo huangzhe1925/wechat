@@ -9,7 +9,7 @@ public class WechatProcessUtil {
           
         String result = "";  
         if("text".endsWith(xmlEntity.getMsgType())){  
-            result = xmlEntity.getContent();  
+            result = xmlEntity.getContent()+"    "+xml;  
         }  
           
         result = new FormatXmlProcessUtil().formatXmlAnswer(xmlEntity.getFromUserName(), xmlEntity.getToUserName(), result);  
