@@ -1,4 +1,4 @@
-package com.hz.wecharproject.utils;
+package com.hz.wechatproject.utils;
 
 import java.util.Date;
 

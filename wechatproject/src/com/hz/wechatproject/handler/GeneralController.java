@@ -1,4 +1,4 @@
-package com.hz.wecharproject.handler;
+package com.hz.wechatproject.handler;
 
 import java.util.HashMap;
 import java.util.Map;

@@ -33,7 +33,7 @@
 				<configuration>
 					<url>http://localhost/manager/text</url>
 					<!-- server、username、password对应maven的setting下的配置 -->
-					<server>tomcat</server>
+					<server>localhost</server>
 					<username>admin</username>
 					<password>tomcatadmin</password>
 					<path>/${project.artifactId}</path>
@@ -41,10 +41,15 @@
 				</configuration>
 			</plugin>
 
-
 		</plugins>
 	</build>
 	<dependencies>
+
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<version>1.2.17</version>
+		</dependency>
 
 		<dependency>
 			<groupId>javax.servlet</groupId>

@@ -1,6 +1,6 @@
-package com.hz.wecharproject.utils;
+package com.hz.wechatproject.utils;
 
-import com.hz.wecharproject.pojo.ReceiveXmlEntity;
+import com.hz.wechatproject.pojo.ReceiveXmlEntity;
 
 public class WechatProcessUtil {  
 

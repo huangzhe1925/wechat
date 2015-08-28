@@ -1,4 +1,4 @@
-package com.hz.wecharproject.utils;
+package com.hz.wechatproject.utils;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -8,7 +8,7 @@ import org.dom4j.Document;
 import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
 
-import com.hz.wecharproject.pojo.ReceiveXmlEntity;
+import com.hz.wechatproject.pojo.ReceiveXmlEntity;
 
 public class ReceiveXmlProcessUtil {  
     public ReceiveXmlEntity getMsgEntity(String strXml){  

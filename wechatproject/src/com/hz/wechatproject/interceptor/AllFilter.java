@@ -1,4 +1,4 @@
-package com.hz.wecharproject.interceptor;
+package com.hz.wechatproject.interceptor;
 import java.io.IOException;
 
 import javax.servlet.FilterChain;
@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.web.filter.OncePerRequestFilter;
 
-import com.hz.wecharproject.utils.CommonUtil;
+import com.hz.wechatproject.utils.CommonUtil;
 
 public class AllFilter extends OncePerRequestFilter {
    
@@ -19,7 +19,7 @@ public class AllFilter extends OncePerRequestFilter {
         String uri = request.getRequestURI();
         if (CommonUtil.WECHAT_URL.equals(uri)) {
         	filterChain.doFilter(request, response);
-        }else if(CommonUtil.SITE_MANAGE_URL.equals(uri)){
+        }else if(uri.startsWith(CommonUtil.SITE_MANAGE_URL)){
         	filterChain.doFilter(request, response);
         }else {
         	response.setStatus(HttpServletResponse.SC_NOT_FOUND);

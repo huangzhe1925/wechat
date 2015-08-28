@@ -1,4 +1,4 @@
-package com.hz.wecharproject.pojo;
+package com.hz.wechatproject.pojo;
 
 public class ReceiveXmlEntity {
 	private String ToUserName = "";
