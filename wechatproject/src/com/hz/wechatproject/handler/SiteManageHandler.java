@@ -7,19 +7,27 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.hz.wechatproject.utils.DBDao;
+import com.hz.wechatproject.db.service.UserService;
+import com.hz.wechatproject.db.service.impl.UserServiceImpl;
+import com.hz.wechatproject.pojo.User;
 
 @Controller
 @RequestMapping(value = "siteManage")
 public class SiteManageHandler {
 	
+	
 	@Autowired
-	DBDao dbDao;
-
+	UserService userService;
+	
+	
 	@ModelAttribute("user")  
-	public void initAccount(Model model) {  
+	public void initAccount(Model model) {
 		if(!model.containsAttribute("user")){
-			model.addAttribute("user",new UserLoginInfo()); 
+			model.addAttribute("user",new User()); 
+		}
+		
+		for(User user:userService.getAllUser()){
+			System.out.println(user);
 		}
 	}  
 	
@@ -31,30 +39,13 @@ public class SiteManageHandler {
 	
 	
 	@RequestMapping(value = "validateUser" ,method=RequestMethod.POST)
-	public String validateUser(@ModelAttribute("user") UserLoginInfo user) {
+	public String validateUser(@ModelAttribute("user") User user) {
 		
-		System.out.println("name "+user.getName()+"  password "+user.getPassword());
-		if("123".equals(user.getName())&& "123".equals(user.getPassword())){
+		System.out.println("name "+user.getUserName()+"  password "+user.getUserPasswd());
+		if("123".equals(user.getUserName())&& "123".equals(user.getUserPasswd())){
 			return "welcome";
 		}
 		return "siteManageLogin";
 	}
 	
-}
-
-class UserLoginInfo{
-	String name;
-	String password;
-	public String getName() {
-		return name;
-	}
-	public void setName(String name) {
-		this.name = name;
-	}
-	public String getPassword() {
-		return password;
-	}
-	public void setPassword(String password) {
-		this.password = password;
-	}
 }

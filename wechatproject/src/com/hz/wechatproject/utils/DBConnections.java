@@ -9,9 +9,9 @@ import org.springframework.stereotype.Component;
 
 
 @Component
-public class DBConnection {
+public class DBConnections {
 	
-	private static Logger logger=Logger.getLogger(DBConnection.class);
+	private static Logger logger=Logger.getLogger(DBConnections.class);
 
 	static{
 		logger.debug("org.sqlite.JDBC");
@@ -20,11 +20,9 @@ public class DBConnection {
 		} catch (ClassNotFoundException e) {
 			logger.error(e);
 		}
-
-		// 建立一个数据库名zieckey.db的连接，如果不存在就在当前目录下创建之
 	}
 	
-	public static Connection getDBConnection() throws SQLException{
+	public Connection getDBConnection() throws SQLException{
 		Connection conn = DriverManager.getConnection(PropertiesUtil.getProperty(PropertiesUtil.DBSOURCE_SQLITE_URL));
 		return conn;
 	}

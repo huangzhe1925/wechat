@@ -1,17 +1,35 @@
 package com.hz.wechatproject.utils;
 
+import java.lang.reflect.Method;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
-/**
- * 这是个非常简单的SQLite的Java程序, 程序中创建数据库、创建表、然后插入数据， 最后读出数据显示出来
- * 
- * @author zieckey (http://zieckey.cublog.cn)
- */
+import com.hz.wechatproject.dao.impl.UserDAOImpl;
+import com.hz.wechatproject.pojo.User;
+
+
+class UserDaoImpl {
+	
+}
+
 public class Tests {
-	public static void main(String[] args) {
+	public static void main(String[] args) throws Exception {
+		String methodName="test2";
+		Method method=Tests.class.getDeclaredMethod(methodName, null);
+		method.invoke(null, null);
+	}
+	
+	public static void test2(){
+		UserDAOImpl userDao=new UserDAOImpl();
+		for(User user:userDao.getAllUser()){
+			System.out.println();
+		}
+	}
+	
+	
+	public static void test1(){
 		try {
 			// 连接SQLite的JDBC
 

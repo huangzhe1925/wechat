@@ -11,11 +11,11 @@
 <body>
 <form:form action="${ctx}/siteManage/validateUser" method="post" modelAttribute="user">  
     <table>  
-        <tr>  
-            <td>Name:</td><td><form:input path="name"/></td>  
+        <tr> 
+            <td>Name:</td><td><form:input path="userName"/></td>  
         </tr>  
         <tr>  
-            <td>Password:</td><td><form:password path="password"/></td>  
+            <td>Password:</td><td><form:password path="userPasswd"/></td>  
         </tr>  
         <tr>  
             <td colspan="2"><input type="submit" value="submit"/></td>  

@@ -15,7 +15,8 @@
             http://www.springframework.org/schema/tx/spring-tx-4.0.xsd">
 
 	<context:component-scan base-package="com.hz.wechatproject" />
-	<mvc:resources location="/js/" mapping="/js/**" />
+	
+	<import resource="spring-mybatis.xml"/>  
 
 	<bean
 		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
@@ -45,4 +46,5 @@
 		</mvc:message-converters>
 	</mvc:annotation-driven>
 
+	<mvc:resources location="/js/" mapping="/js/**" />
 </beans>
