@@ -21,6 +21,10 @@ public class AllFilter extends OncePerRequestFilter {
         	filterChain.doFilter(request, response);
         }else if(uri.startsWith(CommonUtil.SITE_MANAGE_URL)){
         	filterChain.doFilter(request, response);
+        }else if(CommonUtil.isResourceRequest(uri)){
+        	filterChain.doFilter(request, response);
+        }else if(uri.startsWith(CommonUtil.ERRPR_PAGES_URI_PREFIX)){
+        	filterChain.doFilter(request, response);
         }else {
         	response.setStatus(HttpServletResponse.SC_NOT_FOUND);
         }
