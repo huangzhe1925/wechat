@@ -7,4 +7,5 @@ import com.hz.wechatproject.pojo.User;
 public interface UserService {
 	 
 	public List<User> getAllUser();
+	
 }

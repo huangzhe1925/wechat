@@ -1,3 +1,4 @@
+var isMustWechatBrowser=false;
 function is_wechat_client() {
 	var ua = navigator.userAgent.toLowerCase();
 	if (ua.match(/MicroMessenger/i) == "micromessenger") {
@@ -14,7 +15,8 @@ function getContextPath() {
     return result;
 }
 
-if(!is_wechat_client()){
+
+if(isMustWechatBrowser&&!is_wechat_client()){
 	window.location.href=getContextPath()+'/errorpages/wchatbrowseerror';
 }
 

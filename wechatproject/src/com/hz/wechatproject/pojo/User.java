@@ -4,6 +4,7 @@ public class User {
 	Integer userId;
 	String userName;
 	String userPasswd;
+	Integer userAccess;
 
 	public Integer getUserId() {
 		return userId;
@@ -29,10 +30,19 @@ public class User {
 		this.userPasswd = userPasswd;
 	}
 
+	public Integer getUserAccess() {
+		return userAccess;
+	}
+
+	public void setUserAccess(Integer userAccess) {
+		this.userAccess = userAccess;
+	}
+
 	@Override
 	public String toString() {
 		return "User [userId=" + userId + ", userName=" + userName
-				+ ", userPasswd=" + userPasswd + "]";
+				+ ", userPasswd=" + userPasswd + ", userAccess=" + userAccess
+				+ "]";
 	}
 	
 	

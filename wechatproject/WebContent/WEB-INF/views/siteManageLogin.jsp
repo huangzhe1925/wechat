@@ -9,8 +9,19 @@
 <title>Login Page</title>
 </head>
 <body>
-<form:form action="${ctx}/siteManage/validateUser" method="post" modelAttribute="user">  
-    <table>  
+<!--  ${ctx}/siteManage/validateUser-->
+
+<h3>Login with Username and Password</h3>
+<c:if test="${not empty error}">
+	<div class="error">${error}</div>
+</c:if>
+
+<c:if test="${not empty msg}">
+	<div class="msg">${msg}</div>
+</c:if>
+
+<form:form action="${ctx}/j_spring_security_check" method="post" modelAttribute="user">  
+    <table>
         <tr> 
             <td>Name:</td><td><form:input path="userName"/></td>  
         </tr>  
@@ -20,7 +31,7 @@
         <tr>  
             <td colspan="2"><input type="submit" value="submit"/></td>  
         </tr>  
-    </table>  
+    </table>
 </form:form>  
 </body>
 </html>

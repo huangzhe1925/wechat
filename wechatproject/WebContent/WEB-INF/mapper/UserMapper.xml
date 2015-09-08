@@ -13,6 +13,7 @@
 		<id column="USER_ID" property="userId" />
 		<result column="USER_NAME" property="userName" />
 		<result column="USER_PASSWD" property="userPasswd" />
+		<result column="USER_ACCESS" property="userAccess" />
 	</resultMap>
 
 	<!-- <insert id="getAllUser" parameterType="User" keyProperty="id"> insert 

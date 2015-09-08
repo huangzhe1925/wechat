@@ -3,9 +3,11 @@ package com.hz.wechatproject.dao.impl;
 import java.util.List;
 
 import org.mybatis.spring.support.SqlSessionDaoSupport;
+import org.springframework.stereotype.Repository;
 
 import com.hz.wechatproject.dao.UserDAO;
 import com.hz.wechatproject.pojo.User;
+
 
 public class UserDAOImpl extends SqlSessionDaoSupport implements UserDAO{
 

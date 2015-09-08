@@ -12,10 +12,17 @@ import com.hz.wechatproject.utils.CommonUtil;
 
 public class AllFilter extends OncePerRequestFilter {
    
+	public static boolean isFilterEnabled=false;
     @Override
     protected void doFilterInternal(HttpServletRequest request,
                                     HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
+    	
+    	if(!isFilterEnabled){
+    		filterChain.doFilter(request, response);
+    		return;
+    	}
+    	
         String uri = request.getRequestURI();
         if (CommonUtil.WECHAT_URL.equals(uri)) {
         	filterChain.doFilter(request, response);
