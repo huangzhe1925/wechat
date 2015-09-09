@@ -8,12 +8,17 @@
 	<select id="getAllUser" resultType="User" resultMap="UserMap">
 		select * from USER
 	</select>
+	
+	<select id="getUserByName" parameterType="java.lang.String" resultMap="UserMap">
+		select * from USER where USER_NAME = #{name}
+	</select>
 
 	<resultMap type="com.hz.wechatproject.pojo.User" id="UserMap">
 		<id column="USER_ID" property="userId" />
 		<result column="USER_NAME" property="userName" />
 		<result column="USER_PASSWD" property="userPasswd" />
 		<result column="USER_ACCESS" property="userAccess" />
+		<result column="USER_NICK_NAME" property="userNickName" />
 	</resultMap>
 
 	<!-- <insert id="getAllUser" parameterType="User" keyProperty="id"> insert 

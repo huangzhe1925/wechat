@@ -8,7 +8,7 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.GrantedAuthorityImpl;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 
 import com.hz.wechatproject.db.service.UserService;
 import com.hz.wechatproject.pojo.User;
+import com.hz.wechatproject.utils.CommonUtil;
 
 
 @Service
@@ -25,7 +26,7 @@ public class CustomUserAccessServiceImpl implements UserDetailsService {
 	@Autowired
 	UserService userService;
 	
-    protected static Logger logger = Logger.getLogger(CustomUserAccessServiceImpl.class);  
+    private static Logger logger = Logger.getLogger(CustomUserAccessServiceImpl.class);  
   
     public UserDetails loadUserByUsername(String username)  
             throws UsernameNotFoundException, DataAccessException {  
@@ -36,14 +37,16 @@ public class CustomUserAccessServiceImpl implements UserDetailsService {
   
             // 搜索数据库以匹配用户登录名.  
             // 我们可以通过dao使用JDBC来访问数据库  
-        	List<User> userList = userService.getAllUser();  
-  
+        	User foundedUser = userService.getUserByName(username);
+        	
+        	if(foundedUser==null){
+        		return user;
+        	}
             // Populate the Spring User object with details from the dbUser  
             // Here we just pass the username, password, and access level  
             // getAuthorities() will translate the access level to the correct  
             // role type  
-  
-            user = new org.springframework.security.core.userdetails.User(userList.get(0).getUserName(), userList.get(0).getUserPasswd(), true, true, true, true, getAuthorities(userList.get(0).getUserAccess()));  
+            user = new org.springframework.security.core.userdetails.User(foundedUser.getUserName(), foundedUser.getUserPasswd(), true, true, true, true, getAuthorities(foundedUser.getUserAccess()));  
   
         } catch (Exception e) {  
             logger.error("Error in retrieving user");  
@@ -59,18 +62,22 @@ public class CustomUserAccessServiceImpl implements UserDetailsService {
      * @param access 
      * @return 
      */  
-    public Collection<GrantedAuthority> getAuthorities(Integer access) {
+    public Collection<GrantedAuthority> getAuthorities(String access) {
   
-        List<GrantedAuthority> authList = new ArrayList<GrantedAuthority>(2);  
-  
+        List<GrantedAuthority> authList = new ArrayList<GrantedAuthority>(2);
+        
         // 所有的用户默认拥有ROLE_USER权限  
         logger.debug("Grant ROLE_USER to this user");  
-        authList.add(new GrantedAuthorityImpl("ROLE_USER"));  
-  
-        // 如果参数access为1.则拥有ROLE_ADMIN权限  
-        if (access.compareTo(999) == 0) {
+        authList.add(new SimpleGrantedAuthority(CommonUtil.ACCESS_ROLE_ROLE_USER));  
+
+        if(CommonUtil.isEmptyString(access)){
+        	return authList;
+        }
+        // 如果参数access为1.则拥有ROLE_ADMIN权限
+        List<String> rights=CommonUtil.splitStringAsList(access,CommonUtil.ACCESS_STRING_SEPERATOR);
+        if (rights.contains(CommonUtil.ACCESS_NUM_ROLE_ADMIN)) {
             logger.debug("Grant ROLE_ADMIN to this user");  
-            authList.add(new GrantedAuthorityImpl("ROLE_ADMIN"));  
+            authList.add(new SimpleGrantedAuthority(CommonUtil.ACCESS_ROLE_ROLE_ADMIN));  
         }  
   
         return authList;  

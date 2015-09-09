@@ -6,11 +6,9 @@ import com.hz.wechatproject.pojo.User;
 
 public interface UserDAO {
 	 
-    /**
-     * 查询用户
-     * @return
-     */
     public List<User> getAllUser();
+    
+    public User getUserByName(String name);
      
      
 }

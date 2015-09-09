@@ -1,5 +1,8 @@
 package com.hz.wechatproject.utils;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class CommonUtil {
 	public static final String WECHAT_URL = "/wechatproject/wechat/wechatProcess";
 	public static final String WECHAT_CONTEXT_PATH = "/wechatproject";
@@ -13,6 +16,12 @@ public class CommonUtil {
 	public static final String STATIC_RESOURCE_UTI_IMAGES_PREFIX = "/wechatproject/images";
 	
 	
+	public static final String ACCESS_STRING_SEPERATOR=",";
+	public static final String ACCESS_ROLE_ROLE_USER="ROLE_USER";
+	public static final String ACCESS_NUM_ROLE_USER="1";
+	public static final String ACCESS_ROLE_ROLE_ADMIN="ROLE_ADMIN";
+	public static final String ACCESS_NUM_ROLE_ADMIN="999";
+	
 
 	public static boolean isEmptyString(String str) {
 		if (str == null || str.isEmpty()) {
@@ -22,7 +31,6 @@ public class CommonUtil {
 	}
 	
 	public static boolean isValidURI(String uri){
-		
 		boolean retVal=false;
 		if (CommonUtil.WECHAT_URL.equals(uri)) {
 			retVal=true;
@@ -49,5 +57,17 @@ public class CommonUtil {
 		}
 		return false;
 	}
-
+	
+	public static List<String> splitStringAsList(String str,String seperator){
+		List<String> retList=new ArrayList<>();
+		if(isEmptyString(str)){
+			return retList;
+		}
+		for(String part:str.split(seperator)){
+			retList.add(part);
+		}
+		
+		return retList;
+	} 
+	
 }
