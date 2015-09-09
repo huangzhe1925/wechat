@@ -4,7 +4,8 @@ public class User {
 	Integer userId;
 	String userName;
 	String userPasswd;
-	Integer userAccess;
+	String userAccess;
+	String userNickName;
 
 	public Integer getUserId() {
 		return userId;
@@ -30,19 +31,27 @@ public class User {
 		this.userPasswd = userPasswd;
 	}
 
-	public Integer getUserAccess() {
-		return userAccess;
+	public String getUserNickName() {
+		return userNickName;
 	}
 
-	public void setUserAccess(Integer userAccess) {
-		this.userAccess = userAccess;
+	public void setUserNickName(String userNickName) {
+		this.userNickName = userNickName;
 	}
 
 	@Override
 	public String toString() {
 		return "User [userId=" + userId + ", userName=" + userName
 				+ ", userPasswd=" + userPasswd + ", userAccess=" + userAccess
-				+ "]";
+				+ ", userNickName=" + userNickName + "]";
+	}
+
+	public String getUserAccess() {
+		return userAccess;
+	}
+
+	public void setUserAccess(String userAccess) {
+		this.userAccess = userAccess;
 	}
 	
 	
