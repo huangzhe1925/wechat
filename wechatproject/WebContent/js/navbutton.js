@@ -33,7 +33,7 @@ $(function() {
 	var menuArr=getSubMenuArray('1',navObj);
 	$.each(menuArr, function(ky, vl) {
 		var index=ky+1;
-		$('.box').append('<div id="navItem'+index+'" class="navItem"><a date-id="'+vl.id+'"><span>'+vl.content+'</span></a></div>');
+		$('.box').append('<div id="navItem'+index+'" class="navItem"><a date-id="'+vl.id+'" href="#"><span>'+vl.content+'</span></a></div>');
 	});
 	
 	var itemCnt=$('.box').children().length-2;
@@ -45,11 +45,7 @@ $(function() {
 //		 var revertRotate='-'+(calObj[i].skew+parseInt(itemDeg/2));
 //		 $(this).children('a').attr('style',getRevertTransStyle(0, 50, 50, '-'+calObj[i].skew , revertRotate));
 //	}); 
-	$('.box div[class="navItem"]').each(function(i){
-		$(this).attr('style',getTransStyle(1, 100, 100, calObj[i].rotate, calObj[i].skew,0,0));
-		var revertRotate='-'+(calObj[i].skew+parseInt(itemDeg/2));
-		 $(this).children('a').attr('style',getRevertTransStyle(1, 50, 50, '-'+calObj[i].skew , revertRotate,0,0));
-	}); 
+	shrinkItems(calObj);
 	
 	$('.box').show();
 	
@@ -57,21 +53,11 @@ $(function() {
 	$('.centerbtn a').click(function(){
 		if($('.box').attr('data-status')=='close'){
 			$('.box').attr('data-status','open');
-			$('.box div[class="navItem"]').each(function(i){
-				$(this).attr('style',getTransStyle(1, 100, 100, calObj[i].rotate, calObj[i].skew,1,1));
-				var revertRotate='-'+(calObj[i].skew+parseInt(itemDeg/2));
-				$(this).children('a').attr('style',getRevertTransStyle(1, 50, 50, '-'+calObj[i].skew , revertRotate,1,1));
-			}); 
+			extendItems(calObj);
 		}else{
 			$('.box').attr('data-status','close');
-			$('.box div[class="navItem"]').each(function(i){
-				$(this).attr('style',getTransStyle(1, 100, 100, calObj[i].rotate, calObj[i].skew,0,0));
-				var revertRotate='-'+(calObj[i].skew+parseInt(itemDeg/2));
-				$(this).children('a').attr('style',getRevertTransStyle(1, 50, 50, '-'+calObj[i].skew , revertRotate,0,0));
-			}); 
+			shrinkItems(calObj);
 		}
-		
-		
 	});
 	
 	
@@ -103,6 +89,31 @@ $(function() {
 //	
 //	console.log(getSubMenuArray('1_2',navObj));
 });
+
+function shrinkItems(calObj){
+	$('.box div[class="navItem"]').each(function(i){
+		$(this).attr('style',getTransStyle(1, 100, 100, calObj[i].rotate, calObj[i].skew,0,0));
+		var revertRotate='-'+(calObj[i].skew+parseInt(itemDeg/2));
+		$(this).children('a').attr('style',getRevertTransStyle(1, 50, 50, '-'+calObj[i].skew , revertRotate,0,0));
+	});
+}
+
+function extendItems(calObj){
+	$('.box div[class="navItem"]').each(function(i){
+		$(this).attr('style',getTransStyle(1, 100, 100, calObj[i].rotate, calObj[i].skew,1,1));
+		var revertRotate='-'+(calObj[i].skew+parseInt(itemDeg/2));
+		$(this).children('a').attr('style',getRevertTransStyle(1, 50, 50, '-'+calObj[i].skew , revertRotate,1,1));
+	}); 
+}
+
+function bindEvent(){
+	$('.box .navItem').each(function(i){
+		$(this).children('a').unbind();
+		$(this).children('a').click(function(){
+			
+		});
+	}); 
+}
 
 function calculateAngle(itemCnt,spaDeg,iteDeg){
 	var retVal=new Array();
