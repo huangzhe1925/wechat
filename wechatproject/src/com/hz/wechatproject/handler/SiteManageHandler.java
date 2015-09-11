@@ -1,6 +1,7 @@
 package com.hz.wechatproject.handler;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import javax.annotation.Resource;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -15,17 +16,13 @@ import com.hz.wechatproject.pojo.User;
 @RequestMapping(value = "siteManage")
 public class SiteManageHandler {
 
-	@Autowired
+	@Resource(name="userService")
 	UserService userService;
 
 	@ModelAttribute("user")
 	public void initAccount(Model model) {
 		if (!model.containsAttribute("user")) {
 			model.addAttribute("user", new User());
-		}
-
-		for (User user : userService.getAllUser()) {
-			System.out.println(user);
 		}
 	}
 

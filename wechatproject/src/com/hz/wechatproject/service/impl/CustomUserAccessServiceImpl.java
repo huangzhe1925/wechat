@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import javax.annotation.Resource;
+
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
@@ -19,11 +21,11 @@ import com.hz.wechatproject.pojo.User;
 import com.hz.wechatproject.utils.CommonUtil;
 
 
-@Service
+@Service("customUserAccessService")
 public class CustomUserAccessServiceImpl implements UserDetailsService {  
 	
 	
-	@Autowired
+	@Resource(name="userService")
 	UserService userService;
 	
     private static Logger logger = Logger.getLogger(CustomUserAccessServiceImpl.class);  

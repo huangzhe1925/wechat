@@ -13,7 +13,7 @@ import com.hz.wechatproject.utils.CommonUtil;
 
 public class AllFilter extends OncePerRequestFilter {
 
-	public static final boolean IS_FILTER_ENABLED = true;
+	public static final boolean IS_FILTER_ENABLED = false;
 
 	@Override
 	protected void doFilterInternal(HttpServletRequest request,

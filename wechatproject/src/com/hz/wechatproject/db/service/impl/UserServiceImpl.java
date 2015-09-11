@@ -9,12 +9,11 @@ import com.hz.wechatproject.dao.UserDAO;
 import com.hz.wechatproject.db.service.UserService;
 import com.hz.wechatproject.pojo.User;
 
-@Service
+@Service("userService")
 public class UserServiceImpl implements UserService{
  
     @Autowired
     private UserDAO userDAO;
-     
 
 	@Override
 	public List<User> getAllUser() {
