@@ -60,6 +60,26 @@ $(function() {
 		}
 	});
 	
+	$('.box .navItem').each(function(i){
+		$(this).click(function(){
+			$(this).children('a').attr('date-status','clicked');
+			$(this).attr('style',getTransStyle(1, 100, 100, calObj[i].rotate, calObj[i].skew,0,0));
+			$(this).siblings(".navItem").css({'opacity':'0'});
+//			alert($(this).children('a').attr('date-id'));
+		});
+		//animationend transitionend
+		$(this).bind('transitionend',function(){
+			if($(this).children('a').attr('date-status')=='clicked'){
+				$(this).children('a').attr('date-status','');
+				extendItems(calObj);
+				console.log($(this));
+			}
+		});
+		
+	});
+	
+	
+	
 	
 //	$('#step').click(function() {
 //		var calObj=calculateAngle(itemCnt,spaceDeg,itemDeg);
