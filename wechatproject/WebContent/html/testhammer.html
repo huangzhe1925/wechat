@@ -1,0 +1,48 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Test Page</title>
+<script type="text/javascript" src="../js/jquery-2.1.4.min.js"></script>
+<script type="text/javascript" src="../js/hammer.min.js"></script>
+
+<style type="text/css">
+#box {
+	background: silver;
+	width:50px;
+	height:50px;
+	text-align: center;
+	border: 1px solid
+}
+</style>
+</head>
+<body>
+
+	<button id="step">click me</button>
+
+	<div id="box" data-status='close'>div</div>
+
+	<script> 
+		var myElement = document.getElementById('box');
+
+		// create a simple instance
+		// by default, it only adds horizontal recognizers
+		var mc = new Hammer(myElement);
+
+		// let the pan gesture support all directions.
+		// this will block the vertical scrolling on a touch-device while on the element
+		mc.get('pan').set({direction : Hammer.DIRECTION_ALL});
+
+		// listen to events...
+		mc.on("pan", function(ev) {
+			//myElement.textContent = ev.type + " gesture detected.";
+			console.log(ev.deltaX+" "+ev.deltaY+" "+ev.changedPointers[0].clientX+" "+ev.changedPointers[0].clientY)
+			$('#box').html(ev.center.x+"  "+ev.center.y);
+					$('#box').attr('style','transform:translate(' +ev.deltaX+'px, '+ev.deltaY + 'px)');
+		});
+		
+	</script>
+
+
+</body>
+</html>
