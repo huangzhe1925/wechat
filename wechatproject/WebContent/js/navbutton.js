@@ -7,8 +7,10 @@ var lastPosX = 0;
 var lastPosY = 0;
 var posX = 0;
 var posY = 0;
-var mc=null;
+var centerBtn=null;
 
+var transitionEvent;
+var calculatedObj;
 
 var navObj = Object.create([ {
 	'id' : '1',
@@ -36,9 +38,10 @@ var navObj = Object.create([ {
 	} ]
 } ]);
 
-var calculatedObj;
+
 
 $(function() {
+	transitionEvent = whichTransitionEvent();
 	var menuArr = getSubMenuArray('1', navObj);
 	$.each(menuArr, function(ky, vl) {
 		var index = ky + 1;
@@ -54,33 +57,51 @@ $(function() {
 
 	$('.box').show();
 
-	$('.centerbtn a').click(function() {
+//	$('.centerbtn a').click(function() {
+//		if ($('.box').attr('data-status') == 'close') {
+//			$('.box').attr('data-status', 'open');
+//			$(this).attr('data-id', '1');
+//			extendItems(0.5, calculatedObj);
+//		} else {
+//			if ($(this).attr('data-id') == '1') {
+//				shrinkItems(0.5, calculatedObj);
+//				$('.box').attr('data-status', 'close');
+//			} else {
+//				var parId = getParentId($(this).attr('data-id'));
+//				createNewItems(parId);
+//				changeCenterButton(parId, getContentFromId(parId, navObj));
+//			}
+//
+//		}
+//	});
+	
+	bindItemClickEvent(calculatedObj);
+	bindTranEndEvent(calculatedObj);
+	
+	centerBtn =new Hammer(document.getElementById('draggable'));
+
+	centerBtn.get('pan').set({direction : Hammer.DIRECTION_ALL});
+
+	centerBtn.on("pan panend", function(ev) {
+		manageMultitouch($('#box'),ev);
+	});
+	
+	centerBtn.on("tap pressup", function(ev) {
 		if ($('.box').attr('data-status') == 'close') {
 			$('.box').attr('data-status', 'open');
-			$(this).attr('data-id', '1');
+			$('.centerbtn a').attr('data-id', '1');
 			extendItems(0.5, calculatedObj);
 		} else {
-			if ($(this).attr('data-id') == '1') {
+			if ($('.centerbtn a').attr('data-id') == '1') {
 				shrinkItems(0.5, calculatedObj);
 				$('.box').attr('data-status', 'close');
 			} else {
-				var parId = getParentId($(this).attr('data-id'));
+				var parId = getParentId($('.centerbtn a').attr('data-id'));
 				createNewItems(parId);
 				changeCenterButton(parId, getContentFromId(parId, navObj));
 			}
 
 		}
-	});
-
-	bindItemClickEvent(calculatedObj);
-	bindTranEndEvent(calculatedObj);
-	
-	mc =new Hammer(document.getElementById('draggable'));
-
-	mc.get('pan').set({direction : Hammer.DIRECTION_ALL});
-
-	mc.on("pan panend", function(ev) {
-		manageMultitouch($('#box'),ev);
 	});
 
 });
@@ -121,7 +142,7 @@ function createNewItems(id) {
 function bindTranEndEvent(calObj) {
 	$('.box .navItem').each(function(i) {
 		// animationend transitionend
-		$(this).bind('transitionend',function() {
+		$(this).bind(transitionEvent,function() {
 			if ($(this).children('a').attr('date-status') == 'clicked') {
 				$(this).children('a').attr('date-status', '');
 				// extendItems(calObj);
@@ -141,11 +162,18 @@ function changeCenterButton(dataId, content) {
 function bindItemClickEvent(calObj) {
 	$('.box .navItem').each(
 		function(i) {
-			$(this).click(function() {
-				$(this).siblings(".navItem").unbind();
-				$(this).children('a').attr('date-status', 'clicked');
-				getTransStyle($(this),0.5, 100, 100,calObj[i].rotate, calObj[i].skew,0, 0);
-				$(this).siblings(".navItem").css({'opacity' : '0'});
+//			$(this).click(function() {
+//				$(this).siblings(".navItem").unbind();
+//				$(this).children('a').attr('date-status', 'clicked');
+//				getTransStyle($(this),0.5, 100, 100,calObj[i].rotate, calObj[i].skew,0, 0);
+//				$(this).siblings(".navItem").css({'opacity' : '0'});
+//			});
+			var that=$(this);
+			new Hammer($(this)[0]).on("tap pressup", function(ev) {
+				that.siblings(".navItem").unbind();
+				that.children('a').attr('date-status', 'clicked');
+				getTransStyle(that,0.5, 100, 100,calObj[i].rotate, calObj[i].skew,0, 0);
+				that.siblings(".navItem").css({'opacity' : '0'});
 			});
 	});
 
@@ -299,7 +327,8 @@ String.prototype.startWith = function(str) {
 	else
 		return false;
 	return true;
-}
+};
+
 String.prototype.endWith = function(str) {
 	if (str == null || str == "" || this.length == 0
 			|| str.length > this.length)
@@ -309,4 +338,21 @@ String.prototype.endWith = function(str) {
 	else
 		return false;
 	return true;
-}
+};
+
+function whichTransitionEvent(){
+    var el = document.createElement('fakeelement');  
+    var transitions = {  
+      'transition':'transitionend',  
+      'OTransition':'oTransitionEnd',  
+      'MozTransition':'transitionend',  
+      'WebkitTransition':'webkitTransitionEnd',  
+      'MsTransition':'msTransitionEnd'  
+    };
+  
+    for(var t in transitions){
+        if( el.style[t] !== undefined ){  
+            return transitions[t];  
+        }  
+    }  
+}  
