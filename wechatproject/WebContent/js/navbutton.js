@@ -257,9 +257,14 @@ function getTransStyle(divObj,duration, orgX, orgY, rotate, skew, scaleX, scaleY
 	divObj.css('transition','all '+duration+'s');
 	divObj.css('transform-origin',orgX+'% '+orgY+'%');
 	divObj.css('transform','scale('+scaleX+','+scaleY+') rotate('+ rotate + 'deg) skew(' + skew + 'deg)');
-	divObj.css('-webkit-transition','all '+duration+'s');
 	divObj.css('-webkit-transform-origin',orgX+'% '+orgY+'%');
 	divObj.css('-webkit-transform','scale('+scaleX+','+scaleY+') rotate('+ rotate + 'deg) skew(' + skew + 'deg)');
+	divObj.css('-ms-transform-origin',orgX+'% '+orgY+'%');
+	divObj.css('-ms-transform','scale('+scaleX+','+scaleY+') rotate('+ rotate + 'deg) skew(' + skew + 'deg)');
+	divObj.css('-moz-transform-origin',orgX+'% '+orgY+'%');
+	divObj.css('-moz-transform','scale('+scaleX+','+scaleY+') rotate('+ rotate + 'deg) skew(' + skew + 'deg)');
+	divObj.css('-o-transform-origin',orgX+'% '+orgY+'%');
+	divObj.css('-o-transform','scale('+scaleX+','+scaleY+') rotate('+ rotate + 'deg) skew(' + skew + 'deg)');
 //	return 'transition: all ' + duration + 's;:' + orgX + '% '
 //			+ orgY + '%;transform: scale(' + scaleX + ',' + scaleY
 //			+ ') rotate(' + rotate + 'deg) skew(' + skew + 'deg);';
@@ -272,9 +277,14 @@ function getRevertTransStyle(divObj,duration, orgX, orgY, skew, rotate, scaleX, 
 	divObj.css('transition','all '+duration+'s');
 	divObj.css('transform-origin',orgX+'% '+orgY+'%');
 	divObj.css('transform','scale('+scaleX+','+scaleY+') skew('+ skew + 'deg) rotate(' + rotate + 'deg)');
-	divObj.css('-webkit-transition','all '+duration+'s');
 	divObj.css('-webkit-transform-origin',orgX+'% '+orgY+'%');
 	divObj.css('-webkit-transform','scale('+scaleX+','+scaleY+') skew('+ skew + 'deg) rotate(' + rotate + 'deg)');
+	divObj.css('-ms-transform-origin',orgX+'% '+orgY+'%');
+	divObj.css('-ms-transform','scale('+scaleX+','+scaleY+') skew('+ skew + 'deg) rotate(' + rotate + 'deg)');
+	divObj.css('-moz-transform-origin',orgX+'% '+orgY+'%');
+	divObj.css('-moz-transform','scale('+scaleX+','+scaleY+') skew('+ skew + 'deg) rotate(' + rotate + 'deg)');
+	divObj.css('-o-transform-origin',orgX+'% '+orgY+'%');
+	divObj.css('-o-transform','scale('+scaleX+','+scaleY+') skew('+ skew + 'deg) rotate(' + rotate + 'deg)');
 //	return 'transition: all ' + duration + 's;transform-origin:' + orgX + '% '
 //			+ orgY + '%;transform:scale(' + scaleX + ',' + scaleY + ') skew('
 //			+ skew + 'deg) rotate(' + rotate + 'deg);';
