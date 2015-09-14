@@ -3,6 +3,13 @@ var spaceDeg = 4;
 var itemDeg = 30;
 var maxItems = 7;
 
+var lastPosX = 0;
+var lastPosY = 0;
+var posX = 0;
+var posY = 0;
+var mc=null;
+
+
 var navObj = Object.create([ {
 	'id' : '1',
 	'content' : 'Menu',
@@ -42,8 +49,8 @@ $(function() {
 	});
 
 	var itemCnt = $('.box').children().length - 2;
-	calculatedObj=calculateAngle(itemCnt, spaceDeg, itemDeg);
-	shrinkItems(0,calculatedObj);
+	calculatedObj = calculateAngle(itemCnt, spaceDeg, itemDeg);
+	shrinkItems(0, calculatedObj);
 
 	$('.box').show();
 
@@ -51,41 +58,62 @@ $(function() {
 		if ($('.box').attr('data-status') == 'close') {
 			$('.box').attr('data-status', 'open');
 			$(this).attr('data-id', '1');
-			extendItems(0.5,calculatedObj);
+			extendItems(0.5, calculatedObj);
 		} else {
-			if($(this).attr('data-id')=='1'){
-				shrinkItems(0.5,calculatedObj);
-				$('.box').attr('data-status','close')
-			}else{
-				var parId=getParentId($(this).attr('data-id'));
+			if ($(this).attr('data-id') == '1') {
+				shrinkItems(0.5, calculatedObj);
+				$('.box').attr('data-status', 'close');
+			} else {
+				var parId = getParentId($(this).attr('data-id'));
 				createNewItems(parId);
-				changeCenterButton(parId,getContentFromId(parId,navObj));
+				changeCenterButton(parId, getContentFromId(parId, navObj));
 			}
-			
+
 		}
 	});
 
 	bindItemClickEvent(calculatedObj);
 	bindTranEndEvent(calculatedObj);
+	
+	mc =new Hammer(document.getElementById('draggable'));
+
+	mc.get('pan').set({direction : Hammer.DIRECTION_ALL});
+
+	mc.on("pan panend", function(ev) {
+		manageMultitouch($('#box'),ev);
+	});
 
 });
+
+function manageMultitouch(divObj,ev) {
+	switch (ev.type) {
+	case 'pan':
+		posX = ev.deltaX + lastPosX;
+		posY = ev.deltaY + lastPosY;
+		break;
+	case 'panend':
+		lastPosX = posX;
+		lastPosY = posY;
+		break;
+	}
+	divObj.css('transition','all 0s');
+	divObj.css('transform', 'translate(' + posX + 'px, ' + posY + 'px)');
+}
 
 function createNewItems(id) {
 	var menuArr = getSubMenuArray(id, navObj);
 	$('.box .navItem').remove();
-	
-	$.each(menuArr, function(ky, vl) {
+
+	$.each(menuArr,function(ky, vl) {
 		var index = ky + 1;
-		$('.box').append(
-				'<div id="navItem' + index + '" class="navItem" style="display:none;"><a date-id="'
-						+ vl.id + '" href="javascript:void(0);"><span>'
-						+ vl.content + '</span></a></div>');
+		$('.box').append('<div id="navItem'+ index+ '" class="navItem" style="display:none;"><a date-id="'+ vl.id+ '" href="javascript:void(0);"><span>'
+				+ vl.content+ '</span></a></div>');
 	});
 	var itemCnt = $('.box').children().length - 2;
-	calculatedObj=calculateAngle(itemCnt, spaceDeg, itemDeg);
-	shrinkItems(0,calculatedObj);
+	calculatedObj = calculateAngle(itemCnt, spaceDeg, itemDeg);
+	shrinkItems(0, calculatedObj);
 	$('.box .navItem').show();
-	extendItems(0.5,calculatedObj);
+	extendItems(0.5, calculatedObj);
 	bindItemClickEvent(calculatedObj);
 	bindTranEndEvent(calculatedObj);
 }
@@ -93,73 +121,52 @@ function createNewItems(id) {
 function bindTranEndEvent(calObj) {
 	$('.box .navItem').each(function(i) {
 		// animationend transitionend
-		$(this).bind('transitionend', function() {
+		$(this).bind('transitionend',function() {
 			if ($(this).children('a').attr('date-status') == 'clicked') {
 				$(this).children('a').attr('date-status', '');
 				// extendItems(calObj);
-				var newDataId=$(this).children('a').attr('date-id');
-				createNewItems(newDataId);
-				changeCenterButton(newDataId,getContentFromId(newDataId,navObj));
+				var newDataId = $(this).children('a').attr('date-id');
+					createNewItems(newDataId);
+					changeCenterButton(newDataId,getContentFromId(newDataId,navObj));
 			}
 		});
 	});
 }
 
-function changeCenterButton(dataId,content){
+function changeCenterButton(dataId, content) {
 	$('.box .centerbtn a span').html(content);
-	$('.box .centerbtn a').attr('data-id',dataId);
+	$('.box .centerbtn a').attr('data-id', dataId);
 }
 
 function bindItemClickEvent(calObj) {
 	$('.box .navItem').each(
-			function(i) {
-				$(this).click(
-						function() {
-							$(this).siblings(".navItem").unbind();
-							$(this).children('a')
-									.attr('date-status', 'clicked');
-							$(this).attr(
-									'style',
-									getTransStyle(1, 100, 100,
-											calObj[i].rotate, calObj[i].skew,
-											0, 0));
-							$(this).siblings(".navItem").css({
-								'opacity' : '0'
-							});
-						});
+		function(i) {
+			$(this).click(function() {
+				$(this).siblings(".navItem").unbind();
+				$(this).children('a').attr('date-status', 'clicked');
+				getTransStyle($(this),0.5, 100, 100,calObj[i].rotate, calObj[i].skew,0, 0);
+				$(this).siblings(".navItem").css({'opacity' : '0'});
 			});
+	});
 
 }
 
-function shrinkItems(duration,calObj) {
+function shrinkItems(duration, calObj) {
 	$('.box div[class="navItem"]').each(
 			function(i) {
-				$(this).attr(
-						'style',
-						getTransStyle(duration, 100, 100, calObj[i].rotate,
-								calObj[i].skew, 0, 0));
-				var revertRotate = '-'
-						+ (calObj[i].skew + parseInt(itemDeg / 2));
-				$(this).children('a').attr(
-						'style',
-						getRevertTransStyle(duration, 50, 50, '-' + calObj[i].skew,
-								revertRotate, 0, 0));
+				getTransStyle($(this),duration, 100, 100, calObj[i].rotate,calObj[i].skew, 0, 0);
+				var revertRotate = '-'+ (calObj[i].skew + parseInt(itemDeg / 2));
+				getRevertTransStyle($(this).children('a'),duration, 50, 50, '-'+ calObj[i].skew, revertRotate, 0, 0);
 			});
 };
 
-function extendItems(duration,calObj) {
+function extendItems(duration, calObj) {
 	$('.box div[class="navItem"]').each(
 			function(i) {
-				$(this).attr(
-						'style',
-						getTransStyle(duration, 100, 100, calObj[i].rotate,
-								calObj[i].skew, 1, 1));
+				getTransStyle($(this),duration, 100, 100, calObj[i].rotate,calObj[i].skew, 1, 1);
 				var revertRotate = '-'
 						+ (calObj[i].skew + parseInt(itemDeg / 2));
-				$(this).children('a').attr(
-						'style',
-						getRevertTransStyle(duration, 50, 50, '-' + calObj[i].skew,
-								revertRotate, 1, 1));
+				getRevertTransStyle($(this).children('a'),duration, 50, 50, '-'+ calObj[i].skew, revertRotate, 1, 1);
 			});
 }
 
@@ -188,13 +195,13 @@ function calculateAngle(itemCnt, spaDeg, iteDeg) {
 	return retVal;
 }
 
-function getParentId(id){
-	if(id==null||id=='1'){
+function getParentId(id) {
+	if (id == null || id == '1') {
 		console.log('getParentId error');
 		return null;
 	}
-	
-	return id.substring(0,id.lastIndexOf('_'));
+
+	return id.substring(0, id.lastIndexOf('_'));
 }
 
 function getSubMenuArray(id, json) {
@@ -219,40 +226,52 @@ function getSubMenuArray(id, json) {
 	return retVal;
 }
 
-function getContentFromId(id,json){
+function getContentFromId(id, json) {
 	if (json == null) {
 		return '';
 	}
 
 	var retVal = '';
 	$.each(json, function(ky, vl) {
-			if (id == vl.id) {
-				retVal = vl.content;
-				return;
-			} else {
-				retVal = getContentFromId(id, vl.sub);
-			}
+		if (id == vl.id) {
+			retVal = vl.content;
+			return;
+		} else {
+			retVal = getContentFromId(id, vl.sub);
+		}
 
 	});
 
 	return retVal;
-	
+
 }
 
 function show(msg) {
 	alert(msg);
 }
 
-function getTransStyle(duration, orgX, orgY, rotate, skew, scaleX, scaleY) {
-	return 'transition: all ' + duration + 's;transform-origin:' + orgX + '% '
-			+ orgY + '%;transform: scale(' + scaleX + ',' + scaleY
-			+ ') rotate(' + rotate + 'deg) skew(' + skew + 'deg);';
+function getTransStyle(divObj,duration, orgX, orgY, rotate, skew, scaleX, scaleY) {
+	if(divObj==null){
+		return;
+	}
+	divObj.css('transition','all '+duration+'s');
+	divObj.css('transform-origin',orgX+'% '+orgY+'%');
+	divObj.css('transform','scale('+scaleX+','+scaleY+') rotate('+ rotate + 'deg) skew(' + skew + 'deg)');
+//	return 'transition: all ' + duration + 's;:' + orgX + '% '
+//			+ orgY + '%;transform: scale(' + scaleX + ',' + scaleY
+//			+ ') rotate(' + rotate + 'deg) skew(' + skew + 'deg);';
 }
 
-function getRevertTransStyle(duration, orgX, orgY, skew, rotate, scaleX, scaleY) {
-	return 'transition: all ' + duration + 's;transform-origin:' + orgX + '% '
-			+ orgY + '%;transform:scale(' + scaleX + ',' + scaleY + ') skew('
-			+ skew + 'deg) rotate(' + rotate + 'deg);';
+function getRevertTransStyle(divObj,duration, orgX, orgY, skew, rotate, scaleX, scaleY) {
+	if(divObj==null){
+		return;
+	}
+	divObj.css('transition','all '+duration+'s');
+	divObj.css('transform-origin',orgX+'% '+orgY+'%');
+	divObj.css('transform','scale('+scaleX+','+scaleY+') skew('+ skew + 'deg) rotate(' + rotate + 'deg)');
+//	return 'transition: all ' + duration + 's;transform-origin:' + orgX + '% '
+//			+ orgY + '%;transform:scale(' + scaleX + ',' + scaleY + ') skew('
+//			+ skew + 'deg) rotate(' + rotate + 'deg);';
 }
 
 String.prototype.startWith = function(str) {

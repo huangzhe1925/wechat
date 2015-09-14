@@ -8,9 +8,12 @@
 
 <style type="text/css">
 #box {
+	position:absolute;
 	background: silver;
 	width:50px;
 	height:50px;
+	top:200px;
+	left:200px;
 	text-align: center;
 	border: 1px solid
 }
@@ -23,6 +26,11 @@
 	<div id="box" data-status='close'>div</div>
 
 	<script> 
+	
+	  var lastPosX = 0;
+      var lastPosY = 0;
+      var posX = 0;
+      var posY = 0;
 		var myElement = document.getElementById('box');
 
 		// create a simple instance
@@ -34,12 +42,27 @@
 		mc.get('pan').set({direction : Hammer.DIRECTION_ALL});
 
 		// listen to events...
-		mc.on("pan", function(ev) {
+		mc.on("pan panend", function(ev) {
 			//myElement.textContent = ev.type + " gesture detected.";
-			console.log(ev.deltaX+" "+ev.deltaY+" "+ev.changedPointers[0].clientX+" "+ev.changedPointers[0].clientY)
-			$('#box').html(ev.center.x+"  "+ev.center.y);
-					$('#box').attr('style','transform:translate(' +ev.deltaX+'px, '+ev.deltaY + 'px)');
+			//console.log(ev.deltaX+" "+ev.deltaY+" "+ev.changedPointers[0].clientX+" "+ev.changedPointers[0].clientY)
+			$('#box').html(posX+"  "+posY);
+			manageMultitouch(ev);
+			//$('#box').css('transform','translate(' +ev.deltaX+'px, '+ev.deltaY + 'px)');
 		});
+		 function manageMultitouch(ev) {
+             switch (ev.type) {
+                 case 'pan':
+                     posX = ev.deltaX + lastPosX;
+                     posY = ev.deltaY + lastPosY;
+                     break;
+                 case 'panend':
+                     lastPosX = posX;
+                     lastPosY = posY;
+                     break;
+             }
+           	$('#box').css('transform','translate(' +posX+'px, '+posY + 'px)');
+         }
+		
 		
 	</script>
 
