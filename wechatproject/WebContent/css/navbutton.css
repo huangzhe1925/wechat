@@ -1,10 +1,10 @@
 .navItem{overflow:hidden;position:absolute;width:250px;height:250px;}
 
-.navItem a{text-decoration:none;background: radial-gradient(transparent 35%, #429a67 35%);overflow:hidden;text-align:center;border:1px solid #1B00FF;position:absolute;width:500px;height:500px;border-radius:50%;}
+.navItem a{text-decoration:none;background: radial-gradient(transparent 35%, #429a67 35%);background: -webkit-radial-gradient(transparent 35%, #429a67 35%);overflow:hidden;text-align:center;border:1px solid #1B00FF;position:absolute;width:500px;height:500px;border-radius:50%;-webkit-border-radius:50%;}
 
 .navItem a span{position:relative; top:5%; text-align:center;}
 
-.centercover{z-index:5;position:absolute;left:125px;top:125px;width:250px;height:250px;border-radius:50%;}
-.centerbtn a{z-index:10;position:absolute;left:200px;top:200px;width:100px;height:100px;border-radius:50%;text-align:center;border:1px solid green;background-color:green;}
+.centercover{z-index:5;position:absolute;left:125px;top:125px;width:250px;height:250px;border-radius:50%;-webkit-border-radius:50%;}
+.centerbtn a{z-index:10;position:absolute;left:200px;top:200px;width:100px;height:100px;-webkit-border-radius:50%;border-radius:50%;text-align:center;border:1px solid green;background-color:green;}
 .centerbtn a span{z-index:9;position:relative; top:40%; text-align:center;}
 .box{overflow:hidden;position:absolute;left:50px; top:50px;height:500px;width:500px;}
