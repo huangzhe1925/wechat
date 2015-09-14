@@ -44,6 +44,11 @@ public class SiteManageHandler {
 	public String toWelcomePage() {
 		return "welcome";
 	}
+	
+	@RequestMapping(value = "deploypage")
+	public String toDeployPage(){
+		return "deploy";
+	}
 
 	// @RequestMapping(value = "validateUser", method = RequestMethod.POST)
 	// public String validateUser(@ModelAttribute("user") User user) {

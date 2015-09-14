@@ -17,7 +17,7 @@
 
 		<security:intercept-url pattern="/siteManage/siteManageLogin"
 			access="permitAll" />
-		<security:intercept-url pattern="/siteManage/welcomepage"
+		<security:intercept-url pattern="/siteManage/*"
 			access="hasRole('ROLE_USER')" />
 		<!-- <security:intercept-url pattern="/main/common" access="hasRole('ROLE_USER')" 
 			/> -->

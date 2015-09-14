@@ -6,7 +6,7 @@ import java.util.List;
 public class CommonUtil {
 	public static final String WECHAT_URL = "/wechatproject/wechat/wechatProcess";
 	public static final String WECHAT_CONTEXT_PATH = "/wechatproject";
-	public static final String SITE_MANAGE_LOGIN_URL = "/wechatproject/siteManage/siteManageLogin";
+	public static final String SITE_MANAGE_LOGIN_URL = "/wechatproject/siteManage";
 	public static final String SITE_MANAGE_URL = "/wechatproject/siteManage";
 	public static final String ERRPR_PAGES_URI_PREFIX = "/wechatproject/errorpages";
 	public static final String SECURITY_CHECK_URI="/wechatproject/j_spring_security_check";
