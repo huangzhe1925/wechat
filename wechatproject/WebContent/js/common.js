@@ -1,4 +1,4 @@
-var isMustWechatBrowser=true;
+var isMustWechatBrowser=false;
 
 function is_wechat_client() {
 	var ua = navigator.userAgent.toLowerCase();
