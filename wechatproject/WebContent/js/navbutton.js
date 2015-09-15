@@ -18,7 +18,15 @@ var navObj = Object.create([ {
 	'sub' : [ {
 		'id' : '1_1',
 		'content' : 'List1',
-		'sub' : []
+		'sub' : [ {
+			'id' : '1_1_1',
+			'content' : 'List11',
+			'sub' : []
+		}, {
+			'id' : '1_1_2',
+			'content' : 'List12',
+			'sub' : []
+		} ]
 	}, {
 		'id' : '1_2',
 		'content' : 'List2',
@@ -27,7 +35,7 @@ var navObj = Object.create([ {
 		'id' : '1_3',
 		'content' : 'List3',
 		'sub' : [ {
-			'id' : '1_3_1',
+			'id' : '1_3_1', 
 			'content' : 'List31',
 			'sub' : []
 		}, {
@@ -179,25 +187,54 @@ function bindItemClickEvent(calObj) {
 
 }
 
-function shrinkItems(duration, calObj) {
+function shrinkItems(duration, calObj,index) {
+	var totalItem=$('.box div[class="navItem"]').length;
+	if(index==null){
+		index=0;
+	}
+	if(index>=totalItem){
+		return;
+	}
+	if(duration!=0){
+		duration=0.5;
+	}
 	$('.box div[class="navItem"]').each(
 			function(i) {
-				$(this).css('overflow','hidden');
+				if(i!=index){
+					return;
+				}
 				var revertRotate = '-'+ (calObj[i].skew + parseInt(itemDeg / 2));
 				getRevertTransStyle($(this).children('a'),duration, 50, 50, '-'+ calObj[i].skew, revertRotate, 0, 0);
 				getTransStyle($(this),duration, 100, 100, calObj[i].rotate,calObj[i].skew, 0, 0);
+				index++;
+				setTimeout(function(){shrinkItems(duration,calObj,index);}, 10);
+				return false;
 			});
 };
 
-function extendItems(duration, calObj) {
+function extendItems(duration, calObj,index) {
+	var totalItem=$('.box div[class="navItem"]').length;
+	if(index==null){
+		index=0;
+	}
+	if(index>=totalItem){
+		return;
+	}
+	if(duration!=0){
+		duration=0.5;
+	}
+	
 	$('.box div[class="navItem"]').each(
 			function(i) {
-				$(this).css('overflow','hidden');
-				var revertRotate = '-'
-					+ (calObj[i].skew + parseInt(itemDeg / 2));
+				if(i!=index){
+					return;
+				}
+				var revertRotate = '-'+ (calObj[i].skew + parseInt(itemDeg / 2));
 				getRevertTransStyle($(this).children('a'),duration, 50, 50, '-'+ calObj[i].skew, revertRotate, 1, 1);
-				
 				getTransStyle($(this),duration, 100, 100, calObj[i].rotate,calObj[i].skew, 1, 1);
+				index++;
+				setTimeout(function(){extendItems(duration,calObj,index);}, 10);
+				return false;
 			});
 }
 
@@ -245,10 +282,10 @@ function getSubMenuArray(id, json) {
 		if (id.startWith(vl.id)) {
 			if (id == vl.id) {
 				retVal = vl.sub;
-				return;
+				return false;
 			} else {
 				retVal = getSubMenuArray(id, vl.sub);
-				return;
+				return false;
 			}
 		}
 
@@ -266,7 +303,7 @@ function getContentFromId(id, json) {
 	$.each(json, function(ky, vl) {
 		if (id == vl.id) {
 			retVal = vl.content;
-			return;
+			return false;
 		} else {
 			retVal = getContentFromId(id, vl.sub);
 		}
