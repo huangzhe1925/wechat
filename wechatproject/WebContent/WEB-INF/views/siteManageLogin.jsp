@@ -24,7 +24,7 @@
 </c:if>
 
 <form:form action="${ctx}/j_spring_security_check" method="post" modelAttribute="user" >  
-    <table style="width:100%;height:20%">
+    <table>
         <tr> 
             <td>Name:</td><td><form:input path="userName"/></td>  
         </tr>  
