@@ -1,4 +1,4 @@
-.navItem{overflow:hidden;position:absolute;width:250px;height:250px;border:1px solid green;}
+.navItem{display:box;overflow:hidden;position:absolute;width:250px;height:250px;border:1px solid green;}
 
 .navItem a{position:absolute;text-decoration:none;background: -webkit-radial-gradient(transparent 35%, #429a67 35%);overflow:hidden;text-align:center;width:500px;height:500px;border-radius:50%;-webkit-border-radius:50%;}
 
