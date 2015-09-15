@@ -170,7 +170,7 @@ function bindItemClickEvent(calObj) {
 //			});
 			var that=$(this);
 			new Hammer($(this)[0]).on("tap pressup", function(ev) {
-				that.siblings(".navItem").unbind();
+				//that.siblings(".navItem").unbind();
 				that.children('a').attr('date-status', 'clicked');
 				getTransStyle(that,0.5, 100, 100,calObj[i].rotate, calObj[i].skew,0, 0);
 				that.siblings(".navItem").css({'opacity' : '0'});
@@ -191,10 +191,14 @@ function shrinkItems(duration, calObj) {
 function extendItems(duration, calObj) {
 	$('.box div[class="navItem"]').each(
 			function(i) {
+				if(i!=0){
+					return;
+				}
 				getTransStyle($(this),duration, 100, 100, calObj[i].rotate,calObj[i].skew, 1, 1);
 				var revertRotate = '-'
 						+ (calObj[i].skew + parseInt(itemDeg / 2));
 				getRevertTransStyle($(this).children('a'),duration, 50, 50, '-'+ calObj[i].skew, revertRotate, 1, 1);
+				
 			});
 }
 
