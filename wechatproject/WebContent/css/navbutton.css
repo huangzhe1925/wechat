@@ -1,6 +1,6 @@
 .navItem{overflow:hidden;position:absolute;width:250px;height:250px;}
 
-.navItem a{text-decoration:none;background-color:red;overflow:hidden;text-align:center;border:1px solid #1B00FF;position:absolute;width:500px;height:500px;border-radius:50%;-webkit-border-radius:50%;}
+.navItem a{text-decoration:none;background-color: radial-gradient(transparent 35%, #429a67 35%);background-color: -webkit-radial-gradient(transparent 35%, #429a67 35%);overflow:hidden;text-align:center;border:1px solid #1B00FF;position:absolute;width:500px;height:500px;border-radius:50%;-webkit-border-radius:50%;}
 
 .navItem a span{position:relative; top:5%; text-align:center;}
 
