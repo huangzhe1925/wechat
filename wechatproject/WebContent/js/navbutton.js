@@ -182,20 +182,22 @@ function bindItemClickEvent(calObj) {
 function shrinkItems(duration, calObj) {
 	$('.box div[class="navItem"]').each(
 			function(i) {
-				getTransStyle($(this),duration, 100, 100, calObj[i].rotate,calObj[i].skew, 0, 0);
+				$(this).css('overflow','hidden');
 				var revertRotate = '-'+ (calObj[i].skew + parseInt(itemDeg / 2));
 				getRevertTransStyle($(this).children('a'),duration, 50, 50, '-'+ calObj[i].skew, revertRotate, 0, 0);
+				getTransStyle($(this),duration, 100, 100, calObj[i].rotate,calObj[i].skew, 0, 0);
 			});
 };
 
 function extendItems(duration, calObj) {
 	$('.box div[class="navItem"]').each(
 			function(i) {
-				getTransStyle($(this),duration, 100, 100, calObj[i].rotate,calObj[i].skew, 1, 1);
+				$(this).css('overflow','hidden');
 				var revertRotate = '-'
-						+ (calObj[i].skew + parseInt(itemDeg / 2));
+					+ (calObj[i].skew + parseInt(itemDeg / 2));
 				getRevertTransStyle($(this).children('a'),duration, 50, 50, '-'+ calObj[i].skew, revertRotate, 1, 1);
 				
+				getTransStyle($(this),duration, 100, 100, calObj[i].rotate,calObj[i].skew, 1, 1);
 			});
 }
 
