@@ -142,9 +142,11 @@ function createNewItems(id) {
 	calculatedObj = calculateAngle(itemCnt, spaceDeg, itemDeg);
 	shrinkItems(0, calculatedObj);
 	$('.box .navItem').show();
-	extendItems(0.5, calculatedObj);
-	bindItemClickEvent(calculatedObj);
-	bindTranEndEvent(calculatedObj);
+	setTimeout(function(){
+		extendItems(0.5, calculatedObj);
+		bindItemClickEvent(calculatedObj);
+		bindTranEndEvent(calculatedObj);
+	},30);
 }
 
 function bindTranEndEvent(calObj) {
@@ -152,11 +154,12 @@ function bindTranEndEvent(calObj) {
 		// animationend transitionend
 		$(this).bind(transitionEvent,function() {
 			if ($(this).children('a').attr('date-status') == 'clicked') {
+				$('.box .navItem').hide();
 				$(this).children('a').attr('date-status', '');
 				// extendItems(calObj);
 				var newDataId = $(this).children('a').attr('date-id');
-					createNewItems(newDataId);
-					changeCenterButton(newDataId,getContentFromId(newDataId,navObj));
+				createNewItems(newDataId);
+				changeCenterButton(newDataId,getContentFromId(newDataId,navObj));
 			}
 		});
 	});
@@ -177,11 +180,12 @@ function bindItemClickEvent(calObj) {
 //				$(this).siblings(".navItem").css({'opacity' : '0'});
 //			});
 			var that=$(this);
-			new Hammer($(this)[0]).on("tap pressup", function(ev) {
+			new Hammer($(this).children('a')[0]).on("tap pressup", function(ev) {
 				//that.siblings(".navItem").unbind();
 				that.children('a').attr('date-status', 'clicked');
-				getTransStyle(that,0.5, 100, 100,calObj[i].rotate, calObj[i].skew,0, 0);
-				that.siblings(".navItem").css({'opacity' : '0'});
+				getRevertTransStyle(that.children('a'),0.5, 100, 100,calObj[i].rotate, calObj[i].skew,0, 0);
+				that.siblings(".navItem").children('a').css({'opacity' : '0'});
+				
 			});
 	});
 
@@ -200,15 +204,17 @@ function shrinkItems(duration, calObj,index) {
 	}
 	$('.box div[class="navItem"]').each(
 			function(i) {
-				if(i!=index){
+				if(i!=index&&duration!=0){
 					return;
 				}
 				var revertRotate = '-'+ (calObj[i].skew + parseInt(itemDeg / 2));
 				getRevertTransStyle($(this).children('a'),duration, 50, 50, '-'+ calObj[i].skew, revertRotate, 0, 0);
-				getTransStyle($(this),duration, 100, 100, calObj[i].rotate,calObj[i].skew, 0, 0);
-				index++;
-				setTimeout(function(){shrinkItems(duration,calObj,index);}, 10);
-				return false;
+				getTransStyle($(this),duration, 100, 100, calObj[i].rotate,calObj[i].skew, 1, 1);
+				if(duration!=0){
+					index++;
+					setTimeout(function(){shrinkItems(duration,calObj,index);}, 10);
+					return false;	
+				}
 			});
 };
 
@@ -226,15 +232,17 @@ function extendItems(duration, calObj,index) {
 	
 	$('.box div[class="navItem"]').each(
 			function(i) {
-				if(i!=index){
+				if(i!=index&&duration!=0){
 					return;
 				}
 				var revertRotate = '-'+ (calObj[i].skew + parseInt(itemDeg / 2));
 				getRevertTransStyle($(this).children('a'),duration, 50, 50, '-'+ calObj[i].skew, revertRotate, 1, 1);
 				getTransStyle($(this),duration, 100, 100, calObj[i].rotate,calObj[i].skew, 1, 1);
-				index++;
-				setTimeout(function(){extendItems(duration,calObj,index);}, 10);
-				return false;
+				if(duration!=0){
+					index++;
+					setTimeout(function(){extendItems(duration,calObj,index);}, 10);
+					return false;
+				}
 			});
 }
 
