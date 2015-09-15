@@ -191,9 +191,6 @@ function shrinkItems(duration, calObj) {
 function extendItems(duration, calObj) {
 	$('.box div[class="navItem"]').each(
 			function(i) {
-				if(i!=0){
-					return;
-				}
 				getTransStyle($(this),duration, 100, 100, calObj[i].rotate,calObj[i].skew, 1, 1);
 				var revertRotate = '-'
 						+ (calObj[i].skew + parseInt(itemDeg / 2));
