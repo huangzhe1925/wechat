@@ -82,10 +82,10 @@ public class CommonUtil {
 		Process process;
 		Runtime rt = Runtime.getRuntime();
 		process = rt.exec(shell);
+		process.waitFor();
 		InputStreamReader ir = new InputStreamReader(process.getInputStream());
 		LineNumberReader input = new LineNumberReader(ir);
 		String line;
-		process.waitFor();
 		while ((line = input.readLine()) != null) {
 			strList.add(line);
 		}
@@ -107,10 +107,10 @@ public class CommonUtil {
 		Process process;
 		process = Runtime.getRuntime().exec(
 				new String[] { "/bin/sh", "-c", shStr }, null, null);
+		process.waitFor();
 		InputStreamReader ir = new InputStreamReader(process.getInputStream());
 		LineNumberReader input = new LineNumberReader(ir);
 		String line;
-		process.waitFor();
 		while ((line = input.readLine()) != null) {
 			strList.add(line);
 		}
