@@ -9,6 +9,8 @@
 <title>Deploy</title>
 </head>
 <body>
+
+any text
 	<button id="gitupdate">Git Update</button>
 	<br>
 	<button id="deploy">Deploy</button>
