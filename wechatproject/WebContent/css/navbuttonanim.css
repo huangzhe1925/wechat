@@ -1,0 +1,10 @@
+.navItem{overflow:hidden;position:absolute;width:250px;height:250px;border:1px solid green;}
+
+.navItem a{position:absolute;text-decoration:none;background: -webkit-radial-gradient(transparent 35%, #429a67 35%);overflow:hidden;text-align:center;width:500px;height:500px;border-radius:50%;-webkit-border-radius:50%;}
+
+.navItem a span{position:relative; top:5%; text-align:center;}
+
+.centercover{border:1px solid red;z-index:5;position:absolute;left:125px;top:125px;width:250px;height:250px;border-radius:50%;-webkit-border-radius:50%;}
+.centerbtn a{z-index:10;position:absolute;left:200px;top:200px;width:100px;height:100px;-webkit-border-radius:50%;border-radius:50%;text-align:center;border:1px solid green;background-color:green;}
+.centerbtn a span{z-index:9;position:relative; top:40%; text-align:center;}
+.box{overflow:hidden;position:absolute;left:50px; top:50px;height:500px;width:500px;border:1px solid green;}
