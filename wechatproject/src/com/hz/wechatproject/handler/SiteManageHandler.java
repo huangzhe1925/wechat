@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -15,12 +16,15 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.fasterxml.jackson.databind.util.JSONPObject;
 import com.hz.wechatproject.db.service.UserService;
+import com.hz.wechatproject.pojo.ModelExcuteScriptPOJO;
 import com.hz.wechatproject.pojo.User;
 import com.hz.wechatproject.utils.CommonUtil;
 
 @Controller
 @RequestMapping(value = "siteManage")
 public class SiteManageHandler {
+	
+	private static Logger logger = Logger.getLogger(SiteManageHandler.class); 
 
 	@Resource(name="userService")
 	UserService userService;
@@ -58,13 +62,17 @@ public class SiteManageHandler {
 	
 	@RequestMapping(value = "executeScript")
 	@ResponseBody  
-	public JSONPObject executeScript(String callbackparam){
+	public JSONPObject executeScript(@RequestParam String callbackparam,@ModelAttribute ModelExcuteScriptPOJO data){
 		List<String> result=new ArrayList<String>();
 		try {
-			result.addAll(CommonUtil.execShell("cmd.exe /c dir"));
-			result.addAll(CommonUtil.execShell("cmd.exe cd"));
+			if("gitupdate".equals(data.getMethod())){
+				result.addAll(CommonUtil.execShell("/root/gitupdate"));
+			}else if("deploy".equals(data.getMethod())){
+				result.addAll(CommonUtil.execShell("/root/deploy"));
+			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error("Error when execute script, maybe did not find script");
+			return new JSONPObject(callbackparam, "Error in finding script");
 		}
 		return new JSONPObject(callbackparam, result);
 	}

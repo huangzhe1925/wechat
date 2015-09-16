@@ -5,33 +5,40 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">  
 <title>Deploy</title>
 </head>
 <body>
-	<button id="test">Test Deploy</button>
+	<button id="gitupdate">Git Update</button>
+	<br>
+	<button id="deploy">Deploy</button>
+	<br>
 <div id="content"></div>
 
 	<script>
-		$('#test').click(function() {
-			testDeploy();
+		$('#gitupdate').click(function() {
+			exeDeploy("gitupdate");
+		});
+		
+		$('#deploy').click(function() {
+			exeDeploy("deploy");
 		});
 
-		function testDeploy() {
-			var _data = {};
+		function exeDeploy(method) {
+			var _data = {method:method};
 			var _url = "${ctx}/siteManage/executeScript";
 			$.ajax({
 				url : _url,
 				type : 'get',
-				data : JSON.stringify(_data),
+				data : _data,
 				dataType : "jsonp",
 				async : false,
 				jsonp : "callbackparam",
 				error : function(XHR, textStatus, errorThrown) {
 					console.log('加载失败');
-
 				},
 				success : function(data) {
-					$("#content").html(data);
+					$("#content").append(data+"<br>");
 				}
 			});
 		};
