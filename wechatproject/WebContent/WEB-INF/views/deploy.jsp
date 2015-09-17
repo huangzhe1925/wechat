@@ -10,7 +10,6 @@
 <title>Deploy</title>
 </head>
 <body>
-fff
 	<button id="gitupdate">Git Update</button>
 	<br>
 	<button id="deploy">Deploy</button>
