@@ -1,12 +1,25 @@
 package com.hz.wechatproject.utils;
 
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.LineNumberReader;
+import java.io.PrintWriter;
+import java.sql.Driver;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.List;
 
+import org.apache.log4j.Logger;
+
+import com.fasterxml.jackson.databind.util.JSONPObject;
+
 public class CommonUtil {
+
+	private static Logger logger = Logger.getLogger(CommonUtil.class);
+
 	public static final String WECHAT_URL = "/wechatproject/wechat/wechatProcess";
 	public static final String WECHAT_CONTEXT_PATH = "/wechatproject";
 	public static final String SITE_MANAGE_LOGIN_URL = "/wechatproject/siteManage";
@@ -23,6 +36,13 @@ public class CommonUtil {
 	public static final String ACCESS_NUM_ROLE_USER = "1";
 	public static final String ACCESS_ROLE_ROLE_ADMIN = "ROLE_ADMIN";
 	public static final String ACCESS_NUM_ROLE_ADMIN = "999";
+
+	public static final String SCRIPT_UPDATE_METHOD = "gitupdate";
+	public static final String SCRIPT_UPDATE = "/root/gitupdate";
+//	public static final String SCRIPT_UPDATE = "C:\\work\\test.bat";
+	public static final String SCRIPT_DEPLOY_METHOD = "deploy";
+	public static final String SCRIPT_DEPLOY = "/root/atdeploy";
+//	public static final String SCRIPT_DEPLOY = "C:\\work\\test.bat";
 
 	public static boolean isEmptyString(String str) {
 		if (str == null || str.isEmpty()) {
@@ -77,20 +97,71 @@ public class CommonUtil {
 	 * @param shell
 	 *            需要运行的shell脚本
 	 */
-	public static List<String> execShell(String shell) throws Exception {
+	public static List<String> execShell(final String shell, boolean needToWait)
+			throws Exception {
 		List<String> strList = new ArrayList<String>();
-		Process process;
-		Runtime rt = Runtime.getRuntime();
-		process = rt.exec(shell);
-		process.waitFor();
-		InputStreamReader ir = new InputStreamReader(process.getInputStream());
-		LineNumberReader input = new LineNumberReader(ir);
-		String line;
-		while ((line = input.readLine()) != null) {
-			strList.add(line);
+
+		if (needToWait) {
+			Process process;
+			Runtime rt = Runtime.getRuntime();
+			process = rt.exec(shell);
+			process.waitFor();
+			InputStreamReader isr = new InputStreamReader(
+					process.getInputStream());
+			BufferedReader br = new BufferedReader(isr);
+			String line = null;
+			while ((line = br.readLine()) != null) {
+				strList.add(line);
+				logger.debug(line);
+			}
+		}else{
+			new Thread(){
+				public void run(){
+					try {
+						Thread.sleep(2000);
+						Runtime rt = Runtime.getRuntime();
+						rt.exec(shell);
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
+			}.start();
+		}
+		return strList;
+	}
+
+	public static List<String> execShellMethod(String method) {
+		List<String> strList = new ArrayList<String>();
+		if (method == null || method.isEmpty()) {
+			return strList;
+		}
+		try {
+			if (SCRIPT_UPDATE_METHOD.equals(method)) {
+				strList.addAll(CommonUtil.execShell(SCRIPT_UPDATE, true));
+			} else if (SCRIPT_DEPLOY_METHOD.equals(method)) {
+//				unregisteJDBCDrivers();
+				strList.addAll(CommonUtil.execShell(SCRIPT_DEPLOY, true));
+			}
+		} catch (Exception e) {
+			logger.error("Error when execute script, maybe did not find script");
+		}
+		return strList;
+	}
+
+	public static void unregisteJDBCDrivers() {
+		Enumeration<Driver> drivers = DriverManager.getDrivers();
+		if (drivers != null) {
+			while (drivers.hasMoreElements()) {
+				Driver driver = drivers.nextElement();
+				try {
+					DriverManager.deregisterDriver(driver);
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+
 		}
 
-		return strList;
 	}
 
 	/**

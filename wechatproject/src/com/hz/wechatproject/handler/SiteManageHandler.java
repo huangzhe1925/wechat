@@ -64,16 +64,8 @@ public class SiteManageHandler {
 	@ResponseBody  
 	public JSONPObject executeScript(@RequestParam String callbackparam,@ModelAttribute ModelExcuteScriptPOJO data){
 		List<String> result=new ArrayList<String>();
-		try {
-			if("gitupdate".equals(data.getMethod())){
-				result.addAll(CommonUtil.execShell("/root/gitupdate"));
-			}else if("deploy".equals(data.getMethod())){
-				result.addAll(CommonUtil.execShell("/root/deploy"));
-			}
-		} catch (Exception e) {
-			logger.error("Error when execute script, maybe did not find script");
-			return new JSONPObject(callbackparam, "Error in finding script");
-		}
+		logger.debug("start to execute script "+data.getMethod());
+		result.addAll(CommonUtil.execShellMethod(data.getMethod()));
 		return new JSONPObject(callbackparam, result);
 	}
 
