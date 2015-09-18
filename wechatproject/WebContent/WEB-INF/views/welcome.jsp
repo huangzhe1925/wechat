@@ -10,13 +10,20 @@
 <script type="text/javascript" src="${ctx}/js/hammer.min.js"></script>
 <link rel="stylesheet" type="text/css" href="${ctx}/css/navbutton.css">
 </head>
-<body>
-
-<div id="box" class="box" style="display:none" data-status='close'>
-	<!-- The center cover layer -->
-	<div id="centercover" class="centercover"></div>
-	<!-- The center button -->
-	<div id="centerbtn" class="centerbtn"><a id ="draggable" href='javascript:void(0);'><span>Button</span></a></div>
+<body style="background: #00FF00">
+<div style="position:absolute;left:200px;top:200px">
+<a href="#">touch me</a>
 </div>
+<div id="naviBtnWarpper" class="naviBtnWarpper">
+	<div class=box style="display:none" data-status='close'>
+		<!-- The center cover layer -->
+		<div class="centercover"></div>
+		<!-- The center button -->
+	</div>
+	
+	<div class="centerbtn"><a href='javascript:void(0);'><span>Button</span></a></div>
+
+</div>
+
 </body>
 </html>
