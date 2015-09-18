@@ -10,7 +10,7 @@ function NavButtonJs(){
 	this.itemDeg = 30;
 	this.maxItems = 7;
 	this.lastPosX = 0;
-	this.lastPosY = 0;
+	this.lastPosY = 0; 
 	this.posX = 0;
 	this.posY = 0;
 	this.centerBtn=null;
