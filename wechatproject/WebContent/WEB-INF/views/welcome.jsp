@@ -10,7 +10,7 @@
 <script type="text/javascript" src="${ctx}/js/hammer.min.js"></script>
 <link rel="stylesheet" type="text/css" href="${ctx}/css/navbutton.css">
 </head>
-<body >
+<body style="width:400px;height:700px">
 <div style="position:absolute;left:200px;top:200px">
 <a href="#">touch me</a>
 </div>
