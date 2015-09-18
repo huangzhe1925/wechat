@@ -40,6 +40,8 @@ public class CommonUtil {
 	public static final String SCRIPT_DEPLOY_METHOD = "deploy";
 	public static final String SCRIPT_DEPLOY = "/root/atdeploy";
 //	public static final String SCRIPT_DEPLOY = "C:\\work\\test.bat";
+	public static final String SCRIPT_DEPLOY_CHK_METHOD = "deployQCheck";
+	public static final String SCRIPT_DEPLOY_CHK = "/root/deployQCheck";
 
 	public static boolean isEmptyString(String str) {
 		if (str == null || str.isEmpty()) {
@@ -137,6 +139,8 @@ public class CommonUtil {
 				strList.addAll(CommonUtil.execShell(SCRIPT_UPDATE, true));
 			} else if (SCRIPT_DEPLOY_METHOD.equals(method)) {
 //				unregisteJDBCDrivers();
+				strList.addAll(CommonUtil.execShell(SCRIPT_DEPLOY, true));
+			}else if(SCRIPT_DEPLOY_CHK_METHOD.equals(method)){
 				strList.addAll(CommonUtil.execShell(SCRIPT_DEPLOY, true));
 			}
 		} catch (Exception e) {

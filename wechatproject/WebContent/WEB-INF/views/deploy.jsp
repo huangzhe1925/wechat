@@ -14,6 +14,8 @@
 	<br>
 	<button id="deploy">Deploy</button>
 	<br>
+	<button id="deployQCheck">Deploy Queue Check</button>
+	<br>
 	<div id="content"></div>
 
 	<script>
@@ -30,7 +32,12 @@
 			changeBtnState(false);
 			exeDeploy("deploy");
 		});
-
+		
+		$('#deploy').click(function() {
+			changeBtnState(false);
+			exeDeploy("deployQCheck");
+		});
+		
 		function exeDeploy(method) {
 			var _data = {
 				method : method

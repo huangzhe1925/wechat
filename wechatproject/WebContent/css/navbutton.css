@@ -1,10 +1,10 @@
-.naviBtnWarpper .box .navItem{border:1px solid red;z-index:11;overflow:hidden;position:absolute;width:125px;height:125px;}
+.naviBtnWarpper .box .navItem{border:1px solid red;z-index:5;overflow:hidden;position:absolute;width:125px;height:125px;}
 
-.naviBtnWarpper .box .navItem a{z-index:12;position:absolute;text-decoration:none;background: -webkit-radial-gradient(transparent 35%, #429a67 35%);overflow:hidden;text-align:center;width:250px;height:250px;border-radius:50%;-webkit-border-radius:50%;}
+.naviBtnWarpper .box .navItem a{z-index:5;position:absolute;text-decoration:none;background: -webkit-radial-gradient(transparent 35%, #429a67 35%);overflow:hidden;text-align:center;width:250px;height:250px;border-radius:50%;-webkit-border-radius:50%;}
 
-.naviBtnWarpper .box .navItem a span{z-index:11;position:relative; top:5%; text-align:center;}
+.naviBtnWarpper .box .navItem a span{z-index:5;position:relative; top:5%; text-align:center;}
 
-.naviBtnWarpper .box .centercover{border:1px solid red;z-index:12;position:absolute;left:62.5px;top:62.5px;width:125px;height:125px;border-radius:50%;-webkit-border-radius:50%;}
-.naviBtnWarpper .centerbtn a{border:1px solid red;z-index:13;position:absolute;left:100px;top:100px;width:50px;height:50px;-webkit-border-radius:50%;border-radius:50%;text-align:center;background-color:green;}
-.naviBtnWarpper .centerbtn a span{z-index:11;position:relative; top:40%; text-align:center;}
-.naviBtnWarpper .box{border:1px solid red;z-index:10;overflow:hidden;position:absolute;left:0px;top:0px;height:250px;width:250px;}
+.naviBtnWarpper .box .centercover{border:1px solid red;z-index:6;position:absolute;left:62.5px;top:62.5px;width:125px;height:125px;border-radius:50%;-webkit-border-radius:50%;}
+.naviBtnWarpper .centerbtn a{border:1px solid red;z-index:7;position:absolute;left:100px;top:100px;width:50px;height:50px;-webkit-border-radius:50%;border-radius:50%;text-align:center;background-color:green;}
+.naviBtnWarpper .centerbtn a span{z-index:5;position:relative; top:40%; text-align:center;}
+.naviBtnWarpper .box{border:1px solid red;z-index:5;overflow:hidden;position:absolute;left:0px;top:0px;height:250px;width:250px;}
