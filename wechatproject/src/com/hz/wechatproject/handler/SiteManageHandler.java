@@ -60,6 +60,11 @@ public class SiteManageHandler {
 		return "deploy";
 	}
 	
+	@RequestMapping(value = "testScroll")
+	public String testScroll(){
+		return "scrollcontainer";
+	}
+	
 	@RequestMapping(value = "executeScript")
 	@ResponseBody  
 	public JSONPObject executeScript(@RequestParam String callbackparam,@ModelAttribute ModelExcuteScriptPOJO data){
