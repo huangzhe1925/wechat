@@ -4,7 +4,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.LineNumberReader;
-import java.io.PrintWriter;
 import java.sql.Driver;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -13,8 +12,6 @@ import java.util.Enumeration;
 import java.util.List;
 
 import org.apache.log4j.Logger;
-
-import com.fasterxml.jackson.databind.util.JSONPObject;
 
 public class CommonUtil {
 
