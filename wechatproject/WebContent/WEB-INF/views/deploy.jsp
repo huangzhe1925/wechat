@@ -9,18 +9,15 @@
 <title>Deploy</title>
 </head>
 <body>
-	<button id="gitupdate">Git Update</button>
-	<br>
-	<button id="deploy">Deploy</button>
-	<br>
-	<button id="deployQCheck">Deploy Queue Check</button>
-	<br>
-	<div id="content"></div>
+<span><button id="gitupdate">Git Update</button>&nbsp;&nbsp;<button id="deploy">Deploy</button>&nbsp;&nbsp;<button id="deployQCheck">Deploy Queue Check</button></span>
+<p>
+<div id="content"></div>
 
 	<script>
 		function changeBtnState(state) {
 			$('#gitupdate').attr('disabled', !state);
 			$('#deploy').attr('disabled', !state);
+			$('#deployQCheck').attr('disabled', !state);
 		}
 		$('#gitupdate').click(function() {
 			changeBtnState(false);
