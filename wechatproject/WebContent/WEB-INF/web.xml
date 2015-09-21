@@ -69,7 +69,16 @@
 	<listener>
 		<listener-class>org.springframework.web.util.Log4jConfigListener</listener-class>
 	</listener>
-
+	
+	<!-- tag lib -->
+	<jsp-config>
+        <taglib>
+            <taglib-uri>http://www.HZ.com/taglibs/wctags</taglib-uri>
+            <taglib-location>/META-INF/tags.tld</taglib-location>
+        </taglib>
+    </jsp-config>
+    
+    
 	<!-- Spring view分发器 -->
 	<servlet>
 		<servlet-name>dispatcher</servlet-name>

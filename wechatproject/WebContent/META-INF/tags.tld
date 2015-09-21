@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<taglib>
+	<tlib-version>1.0</tlib-version>
+	<jsp-version>1.2</jsp-version>
+	<short-name>wctags</short-name>
+	<uri>http://www.HZ.com/taglibs/wctags</uri>
+	<tag>
+		<name>navBtn</name>
+		<tag-class>com.hz.wechatproject.tags.NavButtonTag</tag-class>
+		<body-content>JSP</body-content>
+		<description>navi Button</description>
+		<attribute>
+			<name>comId</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+</taglib>
