@@ -154,7 +154,7 @@ public class CommonUtil {
 //				unregisteJDBCDrivers();
 				strList.addAll(CommonUtil.execShell(SCRIPT_DEPLOY, true));
 			}else if(SCRIPT_DEPLOY_CHK_METHOD.equals(method)){
-				strList.addAll(CommonUtil.execShell(SCRIPT_DEPLOY, true));
+				strList.addAll(CommonUtil.execShell(SCRIPT_DEPLOY_CHK, true));
 			}
 		} catch (Exception e) {
 			logger.error("Error when execute script, maybe did not find script");

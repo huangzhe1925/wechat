@@ -29,7 +29,7 @@
 			exeDeploy("deploy");
 		});
 		
-		$('#deploy').click(function() {
+		$('#deployQCheck').click(function() {
 			changeBtnState(false);
 			exeDeploy("deployQCheck");
 		});
