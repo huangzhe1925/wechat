@@ -17,6 +17,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.fasterxml.jackson.databind.util.JSONPObject;
 import com.hz.wechatproject.db.service.UserService;
 import com.hz.wechatproject.pojo.ModelExcuteScriptPOJO;
+import com.hz.wechatproject.pojo.ModelGettingUrlPOJO;
 import com.hz.wechatproject.pojo.User;
 import com.hz.wechatproject.utils.CommonUtil;
 
@@ -64,6 +65,20 @@ public class SiteManageHandler {
 	public String testScroll(){
 		return "scrollcontainer";
 	}
+	
+	@RequestMapping(value = "testHttpProxy")
+	public String testHttpProxy(){
+		return "httpproxy";
+	}
+	
+	@RequestMapping(value = "gettingUrl")
+	@ResponseBody  
+	public JSONPObject gettingUrl(@RequestParam String callbackparam,@ModelAttribute ModelGettingUrlPOJO data){
+		logger.debug("start to getting url "+data.getUrl());
+		String content=CommonUtil.HttpClientUtil.get(data.getUrl());
+		return new JSONPObject(callbackparam, content);
+	}
+	
 	
 	@RequestMapping(value = "executeScript")
 	@ResponseBody  

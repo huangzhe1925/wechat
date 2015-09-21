@@ -7,7 +7,7 @@
 	<tag>
 		<name>navBtn</name>
 		<tag-class>com.hz.wechatproject.tags.NavButtonTag</tag-class>
-		<body-content>JSP</body-content>
+		<body-content>empty</body-content>
 		<description>navi Button</description>
 		<attribute>
 			<name>comId</name>
@@ -15,4 +15,52 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 	</tag>
+	
+	<tag>
+		<name>scrollContainer</name>
+		<tag-class>com.hz.wechatproject.tags.ScrollContainerTag</tag-class>
+		<body-content>JSP</body-content>
+		<description>Scroll Container Tag</description>
+		<attribute>
+			<name>comId</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>mode</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>scrollDownAction</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>scrollUpAction</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>scrollerBottomHeight</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>scrollEndAction</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>pullDownLabel</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>pullUpLabel</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>	
+	
 </taglib>

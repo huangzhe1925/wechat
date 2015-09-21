@@ -1,47 +1,35 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/views/common.jsp"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-<title>Deploy</title>
+<title>Test Http Proxy</title>
 </head>
 <body>
-	<button id="gitupdate">Git Update</button>
-	<br>
-	<button id="deploy">Deploy</button>
-	<br>
-	<button id="deployQCheck">Deploy Queue Check</button>
-	<br>
+
+	<input id="wanttedurl" value="http://www.baidu.com/" type="text">
+	<button id="getUrl">get URL</button>
 	<div id="content"></div>
 
 	<script>
 		function changeBtnState(state) {
-			$('#gitupdate').attr('disabled', !state);
-			$('#deploy').attr('disabled', !state);
+			$('#getUrl').attr('disabled', !state);
 		}
-		$('#gitupdate').click(function() {
+		$('#getUrl').click(function() {
 			changeBtnState(false);
-			exeDeploy("gitupdate");
+			console.log($('#wanttedurl').val());
+			exeGetUrl($('#wanttedurl').val());
 		});
 
-		$('#deploy').click(function() {
-			changeBtnState(false);
-			exeDeploy("deploy");
-		});
 		
-		$('#deploy').click(function() {
-			changeBtnState(false);
-			exeDeploy("deployQCheck");
-		});
-		
-		function exeDeploy(method) {
+		function exeGetUrl(wanttedurl) {
 			var _data = {
-				method : method
+				url : wanttedurl
 			};
-			var _url = "${ctx}/siteManage/executeScript";
+			var _url = "${ctx}/siteManage/gettingUrl";
 			$.ajax({
 				url : _url,
 				type : 'get',
@@ -55,9 +43,9 @@
 				},
 				success : function(data) {
 					changeBtnState(true);
-					for (var index = 0; index < data.length; index++) {
-						$("#content").append(data[index] + "<br>");
-					}
+					console.log(data);
+					$("body").empty().html(data);
+					//$("#content").html(data);
 				}
 			});
 		};

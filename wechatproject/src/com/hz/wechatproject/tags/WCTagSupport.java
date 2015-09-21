@@ -10,8 +10,6 @@ public abstract class WCTagSupport extends BodyTagSupport {
 	
 	protected abstract void renderCSS() throws Exception;
 	
-	protected abstract void renderHTML() throws Exception;
-	
 	protected abstract void initTag();
 	
 }

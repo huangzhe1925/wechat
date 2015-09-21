@@ -3,7 +3,7 @@ package com.hz.wechatproject.pojo;
 public class ModelExcuteScriptPOJO {
 
 	
-	public String method;
+	private String method;
 
 	public String getMethod() {
 		return method;

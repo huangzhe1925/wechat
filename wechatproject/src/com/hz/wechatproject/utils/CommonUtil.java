@@ -11,6 +11,12 @@ import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
 
+import org.apache.http.HttpEntity;
+import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClients;
+import org.apache.http.util.EntityUtils;
 import org.apache.log4j.Logger;
 
 public class CommonUtil {
@@ -48,6 +54,13 @@ public class CommonUtil {
 			return true;
 		}
 		return false;
+	}
+	
+	public static String emptyString(String str){
+		if (str == null || str.isEmpty()) {
+			return "";
+		}
+		return str;
 	}
 
 	public static boolean isValidURI(String uri) {
@@ -189,5 +202,57 @@ public class CommonUtil {
 
 		return strList;
 	}
+	
+	
+	public static class HttpClientUtil{
+		/** 
+	     * 发送 get请求 
+	     */  
+	    public static String get(String url) {
+	        CloseableHttpClient httpclient = HttpClients.createDefault();
+	        StringBuilder sb=new StringBuilder();
+	        try {
+	            // 创建httpget. 
 
+	            HttpGet httpget = new HttpGet(url);
+	            
+	            //httpget.setHeader("User-Agent", "Mozilla/5.0 (Windows NT 5.1) AppleWebKit/537.1 (KHTML, like Gecko) Chrome/21.0.1180.77 Safari/537.1");
+	            httpget.setHeader("Accept-Language","zh-CN,zh;q=0.8");
+	    		httpget.setHeader("User-Agent","Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/35.0.1916.153 Safari/537.36");
+	            System.out.println("executing request " + httpget.getURI());  
+	            // 执行get请求.    
+	            CloseableHttpResponse response = httpclient.execute(httpget);  
+	            try {  
+	                // 获取响应实体    
+	                HttpEntity entity = response.getEntity();  
+	                System.out.println("--------------------------------------");  
+	                // 打印响应状态    
+	                System.out.println(response.getStatusLine());  
+	                if (entity != null) {  
+	                    // 打印响应内容长度    
+	                    System.out.println("Response content length: " + entity.getContentLength());  
+	                    // 打印响应内容    
+	                    //System.out.println("Response content: " + EntityUtils.toString(entity));
+	                    sb.append(EntityUtils.toString(entity));
+	                }  
+	                System.out.println("------------------------------------");  
+	            } finally {  
+	                response.close();  
+	            }  
+	        } catch (Exception e) {  
+	          e.printStackTrace();
+	        } finally {  
+	            // 关闭连接,释放资源    
+	            try {  
+	                httpclient.close();  
+	            } catch (IOException e) {
+	                e.printStackTrace();  
+	            }  
+	        }
+	        
+	        return sb.toString();
+	    }  
+		
+	}
+	
 }
