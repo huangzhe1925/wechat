@@ -26,7 +26,7 @@ function NavButtonJs(){
 		
 		//--------init component
 		this.transitionEvent = this.whichTransitionEvent();
-		var menuArr = this.getSubMenuArray('1', that.navItemJson);
+		var menuArr = this.getItemObjFromId('1', that.navItemJson).sub;
 		$.each(menuArr, function(ky, vl) {
 			//var index = ky + 1;
 			var realLink="javascript:void(0)";
@@ -246,34 +246,11 @@ function NavButtonJs(){
 				var tempretVal = that.getItemObjFromId(id, vl.sub);
 				if(tempretVal!=''){
 					retVal=tempretVal;
-				}
-			}
-
-		});
-		return retVal;
-	};
-	
-	this.getSubMenuArray=function(id, json) {
-		if (json == null) {
-			return;
-		}
-
-		var retVal = null;
-		$.each(json, function(ky, vl) {
-			if (id.startWith(vl.id)) {
-				if (id == vl.id) {
-					retVal = vl.sub;
 					return false;
-				} else {
-					var tempretVal = that.getSubMenuArray(id, vl.sub);
-					if(tempretVal!=''){
-						retVal=tempretVal;
-					}
 				}
 			}
 
 		});
-
 		return retVal;
 	};
 	
@@ -317,7 +294,7 @@ function NavButtonJs(){
 
 
 	this.createNewItems=function(id) {
-		var menuArr = that.getSubMenuArray(id, that.navItemJson);
+		var menuArr = that.getItemObjFromId(id, that.navItemJson).sub;
 		$(that.navItemsSel).remove();
 
 		$.each(menuArr,function(ky, vl) {
