@@ -158,6 +158,7 @@ public class CommonUtil {
 			}
 		} catch (Exception e) {
 			logger.error("Error when execute script, maybe did not find script");
+			strList.add("Error when execute script, maybe did not find script");
 		}
 		return strList;
 	}
