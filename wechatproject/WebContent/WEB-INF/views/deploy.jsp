@@ -9,6 +9,7 @@
 <title>Deploy</title>
 </head>
 <body>
+<wctags:navBtn comId="any" />
 <span><button id="gitupdate">Git Update</button>&nbsp;&nbsp;<button id="deploy">Deploy</button>&nbsp;&nbsp;<button id="deployQCheck">Deploy Queue Check</button></span>
 <p>
 <div id="content"></div>

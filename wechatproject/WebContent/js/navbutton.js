@@ -29,7 +29,8 @@ function NavButtonJs(){
 		var menuArr = this.getSubMenuArray('1', that.navItemJson);
 		$.each(menuArr, function(ky, vl) {
 			//var index = ky + 1;
-			$(that.boxSel).append('<div class="'+that.navItemClass+'"><a date-id="'+ vl.id + '" href="javascript:void(0);"><span>'+ vl.content + '</span></a></div>');
+			var realLink="javascript:void(0)";
+			$(that.boxSel).append('<div class="'+that.navItemClass+'"><a data-id="'+ vl.id + '" href="'+realLink+'"><span>'+ vl.content + '</span></a></div>');
 		});
 		
 		
@@ -65,7 +66,7 @@ function NavButtonJs(){
 				} else {
 					var parId = that.getParentId($(that.centerBtnASel).attr('data-id'));
 					that.createNewItems(parId);
-					that.changeCenterButton(parId, that.getContentFromId(parId, that.navItemJson));
+					that.changeCenterButton(parId, that.getItemObjFromId(parId, that.navItemJson).content);
 				}
 
 			}
@@ -89,28 +90,6 @@ function NavButtonJs(){
 	            return transitions[t];  
 	        }  
 	    }  
-	};
-	
-	this.getSubMenuArray=function(id, json) {
-		if (json == null) {
-			return;
-		}
-
-		var retVal = null;
-		$.each(json, function(ky, vl) {
-			if (id.startWith(vl.id)) {
-				if (id == vl.id) {
-					retVal = vl.sub;
-					return false;
-				} else {
-					retVal = that.getSubMenuArray(id, vl.sub);
-					return false;
-				}
-			}
-
-		});
-
-		return retVal;
 	};
 	
 	this.changeCenterButton=function(dataId, content) {
@@ -208,11 +187,11 @@ function NavButtonJs(){
 		$(that.navItemsSel).each(function(i) {
 			// animationend transitionend
 			$(this).bind(that.transitionEvent,function() {
-				if ($(this).children('a').attr('date-status') == 'clicked') {
-					$(this).children('a').attr('date-status', '');
-					var newDataId = $(this).children('a').attr('date-id');
+				if ($(this).children('a').attr('data-status') == 'clicked') {
+					$(this).children('a').attr('data-status', '');
+					var newDataId = $(this).children('a').attr('data-id');
 					that.createNewItems(newDataId);
-					that.changeCenterButton(newDataId,that.getContentFromId(newDataId,that.navItemJson));
+					that.changeCenterButton(newDataId,that.getItemObjFromId(newDataId,that.navItemJson).content);
 				}
 				if($(this).parent().attr('data-status')=='close'){
 					$(this).parent().hide();
@@ -228,9 +207,19 @@ function NavButtonJs(){
 			function(i) {
 				var thatNav=$(this);
 				new Hammer($(this)[0]).on("tap pressup", function(ev) {
-					thatNav.children('a').attr('date-status', 'clicked');
-					that.getTransStyle(thatNav,0.5, 100, 100,that.calculatedObj[i].rotate, that.calculatedObj[i].skew,0, 0);
-					thatNav.siblings('.'+that.navItemClass).css({'opacity' : '0'});
+					var dataId=thatNav.children('a').attr('data-id');
+					var itemObj=that.getItemObjFromId(dataId,that.navItemJson);
+					var link=itemObj.link;
+					if(link!='#'){
+						var realLink=getContextPath()+link;
+						window.location.href=realLink;
+					}else{
+						thatNav.children('a').attr('data-status', 'clicked');
+						that.getTransStyle(thatNav,0.5, 100, 100,that.calculatedObj[i].rotate, that.calculatedObj[i].skew,0, 0);
+						thatNav.siblings('.'+that.navItemClass).css({'opacity' : '0'});
+					}
+					
+					
 				});
 		});
 	};
@@ -243,7 +232,7 @@ function NavButtonJs(){
 		return id.substring(0, id.lastIndexOf('_'));
 	};
 
-	this.getContentFromId=function(id, json) {
+	this.getItemObjFromId=function(id, json) {
 		if (json == null) {
 			return '';
 		}
@@ -251,13 +240,40 @@ function NavButtonJs(){
 		var retVal = '';
 		$.each(json, function(ky, vl) {
 			if (id == vl.id) {
-				retVal = vl.content;
+				retVal = vl;
 				return false;
 			} else {
-				retVal = that.getContentFromId(id, vl.sub);
+				var tempretVal = that.getItemObjFromId(id, vl.sub);
+				if(tempretVal!=''){
+					retVal=tempretVal;
+				}
 			}
 
 		});
+		return retVal;
+	};
+	
+	this.getSubMenuArray=function(id, json) {
+		if (json == null) {
+			return;
+		}
+
+		var retVal = null;
+		$.each(json, function(ky, vl) {
+			if (id.startWith(vl.id)) {
+				if (id == vl.id) {
+					retVal = vl.sub;
+					return false;
+				} else {
+					var tempretVal = that.getSubMenuArray(id, vl.sub);
+					if(tempretVal!=''){
+						retVal=tempretVal;
+					}
+				}
+			}
+
+		});
+
 		return retVal;
 	};
 	
@@ -305,7 +321,8 @@ function NavButtonJs(){
 		$(that.navItemsSel).remove();
 
 		$.each(menuArr,function(ky, vl) {
-			$(that.boxSel).append('<div class="'+that.navItemClass+'" style="display:none;"><a date-id="'+ vl.id+ '" href="javascript:void(0);"><span>'+ vl.content+ '</span></a></div>');
+			var realLink='javascript:void(0);';
+			$(that.boxSel).append('<div class="'+that.navItemClass+'" style="display:none;"><a data-id="'+ vl.id+ '" href="'+realLink+'"><span>'+ vl.content+ '</span></a></div>');
 		});
 		var itemCnt = $(that.navItemsSel).length;
 		that.calculatedObj = that.calculateAngle(itemCnt, that.spaceDeg, that.itemDeg);
@@ -335,32 +352,40 @@ $(function() {
 	var navObj = Object.create([{
 		'id' : '1',
 		'content' : 'Menu',
+		'link':'#',
 		'sub' : [ {
 			'id' : '1_1',
 			'content' : 'List1',
+			'link':'#',
 			'sub' : [ {
 				'id' : '1_1_1',
-				'content' : 'List11',
+				'content' : 'Wel',
+				'link':'/siteManage/welcomepage',
 				'sub' : []
 			}, {
 				'id' : '1_1_2',
-				'content' : 'List12',
+				'content' : 'Scr',
+				'link':'/siteManage/testScroll',
 				'sub' : []
 			} ]
 		}, {
 			'id' : '1_2',
-			'content' : 'List2',
+			'content' : 'Dep',
+			'link':'/siteManage/deploypage',
 			'sub' : []
 		}, {
 			'id' : '1_3',
 			'content' : 'List3',
+			'link':'#',
 			'sub' : [ {
 				'id' : '1_3_1', 
 				'content' : 'List31',
+				'link':'#',
 				'sub' : []
 			}, {
 				'id' : '1_3_2',
 				'content' : 'List32',
+				'link':'#',
 				'sub' : []
 			} ]
 		} ]

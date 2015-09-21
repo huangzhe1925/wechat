@@ -8,8 +8,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
 <title>scrollcontainer</title>
 </head>
-
 <body>
+<wctags:navBtn comId="any" />
 <wctags:scrollContainer comId="testId" mode="3" scrollerBottomHeight="2" pullDownLabel="请下拉" pullUpLabel="请上拉" scrollDownAction="onScrollDown(options)" scrollUpAction="onScrollUp(options)">
 				<ul>
 				<li>1</li>
