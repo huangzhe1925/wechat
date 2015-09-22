@@ -943,6 +943,7 @@ IScroll.prototype = {
 			// Vertical scrollbar
 			if ( this.options.scrollY ) {
 				indicator = {
+					//custom hz 
 					el: createDefaultScrollbar('v', interactive, this.options.scrollbars,this.options.scrollBarTop, this.options.scrollBarBottom, this.options.scrollBarWidth),
 					interactive: interactive,
 					defaultScrollbars: true,

@@ -1,6 +1,7 @@
 package com.hz.wechatproject.utils;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.LineNumberReader;
@@ -18,6 +19,8 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
 import org.apache.log4j.Logger;
+
+import com.hz.wechatproject.pojo.ModelSystemFilesPOJO;
 
 public class CommonUtil {
 
@@ -42,10 +45,10 @@ public class CommonUtil {
 
 	public static final String SCRIPT_UPDATE_METHOD = "gitupdate";
 	public static final String SCRIPT_UPDATE = "/root/gitupdate";
-//	public static final String SCRIPT_UPDATE = "C:\\work\\test.bat";
+	// public static final String SCRIPT_UPDATE = "C:\\work\\test.bat";
 	public static final String SCRIPT_DEPLOY_METHOD = "deploy";
 	public static final String SCRIPT_DEPLOY = "/root/atdeploy";
-//	public static final String SCRIPT_DEPLOY = "C:\\work\\test.bat";
+	// public static final String SCRIPT_DEPLOY = "C:\\work\\test.bat";
 	public static final String SCRIPT_DEPLOY_CHK_METHOD = "deployQCheck";
 	public static final String SCRIPT_DEPLOY_CHK = "/root/deployQCheck";
 
@@ -55,8 +58,8 @@ public class CommonUtil {
 		}
 		return false;
 	}
-	
-	public static String emptyString(String str){
+
+	public static String emptyString(String str) {
 		if (str == null || str.isEmpty()) {
 			return "";
 		}
@@ -126,9 +129,9 @@ public class CommonUtil {
 				strList.add(line);
 				logger.debug(line);
 			}
-		}else{
-			new Thread(){
-				public void run(){
+		} else {
+			new Thread() {
+				public void run() {
 					try {
 						Thread.sleep(2000);
 						Runtime rt = Runtime.getRuntime();
@@ -151,9 +154,9 @@ public class CommonUtil {
 			if (SCRIPT_UPDATE_METHOD.equals(method)) {
 				strList.addAll(CommonUtil.execShell(SCRIPT_UPDATE, true));
 			} else if (SCRIPT_DEPLOY_METHOD.equals(method)) {
-//				unregisteJDBCDrivers();
+				// unregisteJDBCDrivers();
 				strList.addAll(CommonUtil.execShell(SCRIPT_DEPLOY, true));
-			}else if(SCRIPT_DEPLOY_CHK_METHOD.equals(method)){
+			} else if (SCRIPT_DEPLOY_CHK_METHOD.equals(method)) {
 				strList.addAll(CommonUtil.execShell(SCRIPT_DEPLOY_CHK, true));
 			}
 		} catch (Exception e) {
@@ -203,58 +206,90 @@ public class CommonUtil {
 
 		return strList;
 	}
-	
-	
-	public static class HttpClientUtil{
-		/** 
-	     * 发送 get请求 
-	     */  
-	    public static String get(String url) {
-	        CloseableHttpClient httpclient = HttpClients.createDefault();
-	        StringBuilder sb=new StringBuilder();
-	        try {
-	            // 创建httpget. 
 
-	            HttpGet httpget = new HttpGet(url);
-	            
-	            //httpget.setHeader("User-Agent", "Mozilla/5.0 (Windows NT 5.1) AppleWebKit/537.1 (KHTML, like Gecko) Chrome/21.0.1180.77 Safari/537.1");
-	            httpget.setHeader("Accept-Language","zh-CN,zh;q=0.8");
-	    		httpget.setHeader("User-Agent","Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/35.0.1916.153 Safari/537.36");
-	            System.out.println("executing request " + httpget.getURI());  
-	            // 执行get请求.    
-	            CloseableHttpResponse response = httpclient.execute(httpget);  
-	            try {  
-	                // 获取响应实体    
-	                HttpEntity entity = response.getEntity();  
-	                logger.debug("--------------------------------------");  
-	                // 打印响应状态    
-	                logger.debug(response.getStatusLine());  
-	                if (entity != null) {  
-	                    // 打印响应内容长度    
-	                	logger.debug("Response content length: " + entity.getContentLength());  
-	                    // 打印响应内容    
-	                    //System.out.println("Response content: " + EntityUtils.toString(entity));
-	                	String content=EntityUtils.toString(entity);
-	                    sb.append(content);
-	                }  
-	                logger.debug("------------------------------------");  
-	            } finally {  
-	                response.close();  
-	            }  
-	        } catch (Exception e) {  
-	          e.printStackTrace();
-	        } finally {  
-	            // 关闭连接,释放资源    
-	            try {  
-	                httpclient.close();  
-	            } catch (IOException e) {
-	                e.printStackTrace();  
-	            }  
-	        }
-	        
-	        return sb.toString();
-	    }  
-		
+	public static List<ModelSystemFilesPOJO> getSystemFiles(ModelSystemFilesPOJO data) {
+		List<ModelSystemFilesPOJO> result = new ArrayList<>();
+		if (data == null||isEmptyString(data.getFilePath())) {
+			File[] rootFiles = File.listRoots();
+			for (File file : rootFiles) {
+				Integer type = file.isDirectory() ? ModelSystemFilesPOJO.FILE_TYPE_DIR
+						: ModelSystemFilesPOJO.FILE_TYPE_FILE;
+				result.add(new ModelSystemFilesPOJO(file.getPath(), type, file
+						.getAbsolutePath()));
+			}
+		} else {
+			String path = data.getFilePath();
+			File rootfile = new File(path);
+			File[] tempList = rootfile.listFiles();
+			for (File file: tempList) {
+				Integer type = file.isDirectory() ? ModelSystemFilesPOJO.FILE_TYPE_DIR
+						: ModelSystemFilesPOJO.FILE_TYPE_FILE;
+				result.add(new ModelSystemFilesPOJO(file.getName(), type, file
+						.getAbsolutePath()));
+			}
+		}
+		return result;
 	}
-	
+
+	public static void main(String args[]){
+		System.out.println(getSystemFiles(null));
+		System.out.println(getSystemFiles(new ModelSystemFilesPOJO("C:\\",2,"C:\\")));
+	}
+
+	public static class HttpClientUtil {
+		/**
+		 * 发送 get请求
+		 */
+		public static String get(String url) {
+			CloseableHttpClient httpclient = HttpClients.createDefault();
+			StringBuilder sb = new StringBuilder();
+			try {
+				// 创建httpget.
+
+				HttpGet httpget = new HttpGet(url);
+
+				// httpget.setHeader("User-Agent",
+				// "Mozilla/5.0 (Windows NT 5.1) AppleWebKit/537.1 (KHTML, like Gecko) Chrome/21.0.1180.77 Safari/537.1");
+				httpget.setHeader("Accept-Language", "zh-CN,zh;q=0.8");
+				httpget.setHeader(
+						"User-Agent",
+						"Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/35.0.1916.153 Safari/537.36");
+				System.out.println("executing request " + httpget.getURI());
+				// 执行get请求.
+				CloseableHttpResponse response = httpclient.execute(httpget);
+				try {
+					// 获取响应实体
+					HttpEntity entity = response.getEntity();
+					logger.debug("--------------------------------------");
+					// 打印响应状态
+					logger.debug(response.getStatusLine());
+					if (entity != null) {
+						// 打印响应内容长度
+						logger.debug("Response content length: "
+								+ entity.getContentLength());
+						// 打印响应内容
+						// System.out.println("Response content: " +
+						// EntityUtils.toString(entity));
+						String content = EntityUtils.toString(entity);
+						sb.append(content);
+					}
+					logger.debug("------------------------------------");
+				} finally {
+					response.close();
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			} finally {
+				// 关闭连接,释放资源
+				try {
+					httpclient.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+
+			return sb.toString();
+		}
+	}
+
 }
