@@ -1,9 +1,12 @@
 package com.hz.wechatproject.handler;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
@@ -17,7 +20,6 @@ import org.springframework.web.servlet.ModelAndView;
 import com.fasterxml.jackson.databind.util.JSONPObject;
 import com.hz.wechatproject.db.service.UserService;
 import com.hz.wechatproject.pojo.ModelExcuteScriptPOJO;
-import com.hz.wechatproject.pojo.ModelGettingUrlPOJO;
 import com.hz.wechatproject.pojo.User;
 import com.hz.wechatproject.utils.CommonUtil;
 
@@ -72,16 +74,19 @@ public class SiteManageHandler {
 	}
 	
 	@RequestMapping(value = "gettingUrl")
-	@ResponseBody  
-	public JSONPObject gettingUrl(@RequestParam String callbackparam,@ModelAttribute ModelGettingUrlPOJO data){
-		logger.debug("start to getting url "+data.getUrl());
-		String content=CommonUtil.HttpClientUtil.get(data.getUrl());
-		return new JSONPObject(callbackparam, content);
+	public void gettingUrl(HttpServletRequest req,HttpServletResponse res){
+		logger.debug("start to getting url "+req.getParameter("url"));
+		String content=CommonUtil.HttpClientUtil.get(req.getParameter("url"));
+		try {
+			res.getWriter().append(content);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	
 	@RequestMapping(value = "executeScript")
-	@ResponseBody  
+	@ResponseBody
 	public JSONPObject executeScript(@RequestParam String callbackparam,@ModelAttribute ModelExcuteScriptPOJO data){
 		List<String> result=new ArrayList<String>();
 		logger.debug("start to execute script "+data.getMethod());

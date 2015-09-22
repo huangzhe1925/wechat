@@ -10,46 +10,10 @@
 </head>
 <body>
 
-	<input id="wanttedurl" value="http://www.baidu.com/" type="text">
-	<button id="getUrl">get URL</button>
-	<div id="content"></div>
-
-	<script>
-		function changeBtnState(state) {
-			$('#getUrl').attr('disabled', !state);
-		}
-		$('#getUrl').click(function() {
-			changeBtnState(false);
-			console.log($('#wanttedurl').val());
-			exeGetUrl($('#wanttedurl').val());
-		});
-
-		
-		function exeGetUrl(wanttedurl) {
-			var _data = {
-				url : wanttedurl
-			};
-			var _url = "${ctx}/siteManage/gettingUrl";
-			$.ajax({
-				url : _url,
-				type : 'get',
-				data : _data,
-				dataType : "jsonp",
-				async : true,
-				jsonp : "callbackparam",
-				error : function(XHR, textStatus, errorThrown) {
-					console.log('加载失败');
-					changeBtnState(true);
-				},
-				success : function(data) {
-					changeBtnState(true);
-					console.log(data);
-					$("body").empty().html(data);
-					//$("#content").html(data);
-				}
-			});
-		};
-	</script>
+	<form action="${ctx}/siteManage/gettingUrl">
+		<input id="url" name="url" value="http://www.baidu.com/" type="text">
+		<button type="submit">Submit</button>
+	</form>
 
 </body>
 </html>
