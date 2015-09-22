@@ -346,7 +346,7 @@ $(function() {
 				'sub' : []
 			},{
 				'id' : '1_1_3',
-				'content' : 'Scr',
+				'content' : 'Htt',
 				'link':'/siteManage/testHttpProxy',
 				'sub' : []
 			} ]
