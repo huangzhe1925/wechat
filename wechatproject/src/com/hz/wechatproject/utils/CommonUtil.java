@@ -226,17 +226,18 @@ public class CommonUtil {
 	            try {  
 	                // 获取响应实体    
 	                HttpEntity entity = response.getEntity();  
-	                System.out.println("--------------------------------------");  
+	                logger.debug("--------------------------------------");  
 	                // 打印响应状态    
-	                System.out.println(response.getStatusLine());  
+	                logger.debug(response.getStatusLine());  
 	                if (entity != null) {  
 	                    // 打印响应内容长度    
-	                    System.out.println("Response content length: " + entity.getContentLength());  
+	                	logger.debug("Response content length: " + entity.getContentLength());  
 	                    // 打印响应内容    
 	                    //System.out.println("Response content: " + EntityUtils.toString(entity));
-	                    sb.append(EntityUtils.toString(entity));
+	                	String content=EntityUtils.toString(entity);
+	                    sb.append(content);
 	                }  
-	                System.out.println("------------------------------------");  
+	                logger.debug("------------------------------------");  
 	            } finally {  
 	                response.close();  
 	            }  
