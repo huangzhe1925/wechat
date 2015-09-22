@@ -9,7 +9,7 @@
 <title>Test Http Proxy</title>
 </head>
 <body>
-
+<wctags:navBtn comId="any" />
 	<form action="${ctx}/siteManage/gettingUrl">
 		<input id="url" name="url" value="http://www.baidu.com/" type="text">
 		<button type="submit">Submit</button>
