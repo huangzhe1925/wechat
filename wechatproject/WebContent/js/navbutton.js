@@ -344,6 +344,11 @@ $(function() {
 				'content' : 'Scr',
 				'link':'/siteManage/testScroll',
 				'sub' : []
+			},{
+				'id' : '1_1_3',
+				'content' : 'Scr',
+				'link':'/siteManage/testHttpProxy',
+				'sub' : []
 			} ]
 		}, {
 			'id' : '1_2',
