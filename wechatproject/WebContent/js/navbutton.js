@@ -352,12 +352,22 @@ $(function() {
 			} ]
 		}, {
 			'id' : '1_2',
-			'content' : 'Dep',
-			'link':'/siteManage/deploypage',
-			'sub' : []
+			'content' : 'Sys',
+			'link':'#',
+			'sub' : [ {
+				'id' : '1_2_1',
+				'content' : 'Dep',
+				'link':'/siteManage/deploypage',
+				'sub' : []
+			}, {
+				'id' : '1_2_2',
+				'content' : 'Fil',
+				'link':'/siteManage/systemfiles',
+				'sub' : []
+			} ]
 		}, {
 			'id' : '1_3',
-			'content' : 'List3',
+			'content' : 'Tes',
 			'link':'#',
 			'sub' : [ {
 				'id' : '1_3_1', 

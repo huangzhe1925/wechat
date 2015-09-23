@@ -39,12 +39,6 @@ public class CommonUtil {
 	public static final String STATIC_RESOURCE_UTI_JS_PREFIX = "/wechatproject/js";
 	public static final String STATIC_RESOURCE_UTI_IMAGES_PREFIX = "/wechatproject/images";
 
-	public static final String ACCESS_STRING_SEPERATOR = ",";
-	public static final String ACCESS_ROLE_ROLE_USER = "ROLE_USER";
-	public static final String ACCESS_NUM_ROLE_USER = "1";
-	public static final String ACCESS_ROLE_ROLE_ADMIN = "ROLE_ADMIN";
-	public static final String ACCESS_NUM_ROLE_ADMIN = "999";
-
 	public static final String SCRIPT_UPDATE_METHOD = "gitupdate";
 	public static final String SCRIPT_UPDATE = "/root/gitupdate";
 	// public static final String SCRIPT_UPDATE = "C:\\work\\test.bat";
@@ -359,6 +353,15 @@ public class CommonUtil {
 
 			return sb.toString();
 		}
+	}
+	
+	
+	public static class SecurityUtil{
+		public static final String ACCESS_STRING_SEPERATOR = ",";
+		public static final String ACCESS_ROLE_ROLE_USER = "ROLE_USER";
+		public static final String ACCESS_NUM_ROLE_USER = "1";
+		public static final String ACCESS_ROLE_ROLE_ADMIN = "ROLE_ADMIN";
+		public static final String ACCESS_NUM_ROLE_ADMIN = "999";
 	}
 
 }
