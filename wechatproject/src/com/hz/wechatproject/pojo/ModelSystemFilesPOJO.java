@@ -8,6 +8,8 @@ public class ModelSystemFilesPOJO {
 	private Integer type;
 	private String filePath;
 	
+	private String content;
+	
 	public ModelSystemFilesPOJO(){
 		
 	}
@@ -48,6 +50,14 @@ public class ModelSystemFilesPOJO {
 		return "ModelSystemFilesPOJO [fileName=" + fileName + ", type=" + type
 				+ ", filePath=" + filePath + "]";
 	}
-	
+
+	public String getContent() {
+		return content;
+	}
+
+	public void setContent(String content) {
+		this.content = content;
+	}
+
 	
 }

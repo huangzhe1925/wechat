@@ -110,7 +110,7 @@ public class SiteManageHandler {
 		String data = "";
 		try {
 			data = mapper.writeValueAsString(result);
-			data=data.replace("\\", "\\\\");
+			//data=data.replace("\\", "\\\\");
 		} catch (JsonProcessingException e) {
 			e.printStackTrace();
 		}
@@ -122,18 +122,18 @@ public class SiteManageHandler {
 	@RequestMapping(value = "getsystemfiles")
 	@ResponseBody
 	public JSONPObject getsystemfiles(@RequestParam String callbackparam,
-			@ModelAttribute ModelSystemFilesPOJO data) {
+			@ModelAttribute ModelSystemFilesPOJO data , @RequestParam(required=false) Boolean isParent) {
 		Map<String, Object> result = new LinkedHashMap<String, Object>();
-		ObjectMapper mapper = new ObjectMapper();
-		String listItems = "";
-		try {
-			listItems = mapper.writeValueAsString(CommonUtil.getSystemFiles(data));
-			listItems=listItems.replace("\\", "\\\\");
-		} catch (JsonProcessingException e) {
-			e.printStackTrace();
+		if(isParent){
+			data=CommonUtil.getParentSysFilePath(data);
 		}
-		result.put("listItems",listItems );
-		result.put("currPath", data.getFilePath());
+		
+		List<ModelSystemFilesPOJO> listItems=CommonUtil.getSystemFiles(data);
+		if(CommonUtil.isSystemFileContentPOJO(listItems)){
+			result.put("isFileContent",true);
+		}
+		result.put("listItems",listItems);
+		result.put("currPath", data==null?"/":data.getFilePath());
 		return new JSONPObject(callbackparam, result);
 	}
 

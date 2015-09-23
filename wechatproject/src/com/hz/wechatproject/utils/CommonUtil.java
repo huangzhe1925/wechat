@@ -2,9 +2,11 @@ package com.hz.wechatproject.utils;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.LineNumberReader;
+import java.nio.charset.Charset;
 import java.sql.Driver;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -207,9 +209,11 @@ public class CommonUtil {
 		return strList;
 	}
 
-	public static List<ModelSystemFilesPOJO> getSystemFiles(ModelSystemFilesPOJO data) {
+	public static List<ModelSystemFilesPOJO> getSystemFiles(
+			ModelSystemFilesPOJO data) {
 		List<ModelSystemFilesPOJO> result = new ArrayList<>();
-		if (data == null||isEmptyString(data.getFilePath())) {
+		if (data == null || isEmptyString(data.getFilePath())
+				|| data.getFilePath().equals("/")) {
 			File[] rootFiles = File.listRoots();
 			for (File file : rootFiles) {
 				Integer type = file.isDirectory() ? ModelSystemFilesPOJO.FILE_TYPE_DIR
@@ -219,21 +223,88 @@ public class CommonUtil {
 			}
 		} else {
 			String path = data.getFilePath();
-			File rootfile = new File(path);
-			File[] tempList = rootfile.listFiles();
-			for (File file: tempList) {
-				Integer type = file.isDirectory() ? ModelSystemFilesPOJO.FILE_TYPE_DIR
-						: ModelSystemFilesPOJO.FILE_TYPE_FILE;
-				result.add(new ModelSystemFilesPOJO(file.getName(), type, file
-						.getAbsolutePath()));
+			logger.debug(path);
+			File file = new File(path);
+			if (file.isFile()) {
+				result.add(getSystemFileContent(file));
+			} else {
+				File[] tempList = null;
+				tempList = file.listFiles();
+				for (File tempFile : tempList) {
+					Integer type = tempFile.isDirectory() ? ModelSystemFilesPOJO.FILE_TYPE_DIR
+							: ModelSystemFilesPOJO.FILE_TYPE_FILE;
+					String name = tempFile.getName();
+					result.add(new ModelSystemFilesPOJO(name, type, tempFile
+							.getAbsolutePath()));
+				}
 			}
 		}
 		return result;
 	}
 
-	public static void main(String args[]){
+	
+	public static boolean isSystemFileContentPOJO(List<ModelSystemFilesPOJO> itemList){
+		if(itemList==null||itemList.size()>1){
+			return false;
+		}
+		if(itemList.size()==1&&ModelSystemFilesPOJO.FILE_TYPE_FILE.equals(itemList.get(0).getType())){
+			return true;
+		}
+		
+		return false;
+	}
+	
+	public static ModelSystemFilesPOJO getSystemFileContent(File file) {
+		Integer type = file.isDirectory() ? ModelSystemFilesPOJO.FILE_TYPE_DIR
+				: ModelSystemFilesPOJO.FILE_TYPE_FILE;
+		ModelSystemFilesPOJO ret = new ModelSystemFilesPOJO(file.getName(),
+				type, file.getAbsolutePath());
+		if (file.isFile() && file.exists()) {
+			try {
+				InputStreamReader read;
+				read = new InputStreamReader(new FileInputStream(file),Charset.forName("Utf8"));
+				// 考虑到编码格式
+				BufferedReader bufferedReader = new BufferedReader(read);
+				StringBuilder sb = new StringBuilder();
+				String line = null;
+				while ((line = bufferedReader.readLine()) != null) {
+					sb.append(line+"\n");
+				}
+				bufferedReader.close();
+				read.close();
+				ret.setContent(sb.toString());
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return ret;
+
+	}
+
+	public static ModelSystemFilesPOJO getParentSysFilePath(
+			ModelSystemFilesPOJO data) {
+		if (data == null || isEmptyString(data.getFilePath())
+				|| data.getFilePath().equals("/")) {
+			return data;
+		}
+
+		String path = data.getFilePath();
+		logger.debug("getParentSysFilePath " + path);
+		File file = new File(path).getParentFile();
+		if (file == null) {
+			return null;
+		}
+		Integer type = file.isDirectory() ? ModelSystemFilesPOJO.FILE_TYPE_DIR
+				: ModelSystemFilesPOJO.FILE_TYPE_FILE;
+		ModelSystemFilesPOJO ret = new ModelSystemFilesPOJO(file.getName(),
+				type, file.getAbsolutePath());
+		return ret;
+	}
+
+	public static void main(String args[]) {
 		System.out.println(getSystemFiles(null));
-		System.out.println(getSystemFiles(new ModelSystemFilesPOJO("C:\\",2,"C:\\")));
+		System.out.println(getSystemFiles(new ModelSystemFilesPOJO("C:\\work",
+				2, "C:\\work")));
 	}
 
 	public static class HttpClientUtil {
