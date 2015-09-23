@@ -209,11 +209,9 @@ public class CommonUtil {
 		return strList;
 	}
 
-	public static List<ModelSystemFilesPOJO> getSystemFiles(
-			ModelSystemFilesPOJO data) {
+	public static List<ModelSystemFilesPOJO> getSystemFiles(ModelSystemFilesPOJO data) {
 		List<ModelSystemFilesPOJO> result = new ArrayList<>();
-		if (data == null || isEmptyString(data.getFilePath())
-				|| data.getFilePath().equals("/")) {
+		if (data == null || isEmptyString(data.getFilePath())) {
 			File[] rootFiles = File.listRoots();
 			for (File file : rootFiles) {
 				Integer type = file.isDirectory() ? ModelSystemFilesPOJO.FILE_TYPE_DIR
