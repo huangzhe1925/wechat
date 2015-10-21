@@ -17,8 +17,8 @@
 	<context-param>  
         <param-name>contextConfigLocation</param-name>  
         <param-value>  
-        	/WEB-INF/conf/dispatcher-servlet.xml,
-        	/WEB-INF/conf/spring-security.xml
+        	classpath:dispatcher-servlet.xml,
+        	classpath:spring-security.xml
         </param-value>  
     </context-param>  
     
@@ -58,7 +58,7 @@
 	
 	<context-param>
 		<param-name>log4jConfigLocation</param-name>
-		<param-value>WEB-INF/conf/log4j.properties</param-value>
+		<param-value>classpath:log4j.properties</param-value>
 	</context-param>
 
 	<context-param>
@@ -85,7 +85,7 @@
 		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
 		<init-param>
 			<param-name>contextConfigLocation</param-name>
-			<param-value>/WEB-INF/conf/dispatcher-servlet.xml</param-value>
+			<param-value>classpath:dispatcher-servlet.xml</param-value>
 		</init-param>
 		<load-on-startup>1</load-on-startup>
 	</servlet>
