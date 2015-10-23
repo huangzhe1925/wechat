@@ -26,6 +26,7 @@ import com.hz.wechatproject.db.service.UserService;
 import com.hz.wechatproject.pojo.ModelExcuteScriptPOJO;
 import com.hz.wechatproject.pojo.ModelSystemFilesPOJO;
 import com.hz.wechatproject.utils.CommonUtil;
+import com.hz.wechatproject.utils.PropertiesUtil;
 
 @Controller
 @RequestMapping(value = "siteManage")
@@ -47,6 +48,8 @@ public class SiteManageHandler {
 	public ModelAndView siteMangeLogin(
 			@RequestParam(value = "error", required = false) String error,
 			ModelAndView model) {
+		
+		logger.debug(PropertiesUtil.getStringProperty(PropertiesUtil.DBSOURCE_SQLITE_URL));
 
 		if (!model.getModel().containsKey("user")) {
 			model.getModel().put("user", new User());

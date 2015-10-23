@@ -5,5 +5,6 @@
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/java"/>
         <property name="context-root" value="wechatproject"/>
         <property name="java-output-path" value="/wechatproject/build/classes"/>
+        <property name="component.inclusion.patterns"/>
     </wb-module>
 </project-modules>
