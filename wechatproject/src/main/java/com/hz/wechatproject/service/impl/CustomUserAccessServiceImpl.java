@@ -50,7 +50,7 @@ public class CustomUserAccessServiceImpl implements UserDetailsService {
             user = new org.springframework.security.core.userdetails.User(foundedUser.getUserName(), foundedUser.getUserPasswd(), true, true, true, true, getAuthorities(foundedUser.getUserAccess()));  
   
         } catch (Exception e) {  
-            logger.error("Error in retrieving user");  
+            logger.error("Error in retrieving user",e);  
             throw new UsernameNotFoundException("Error in retrieving user");  
         }  
   
