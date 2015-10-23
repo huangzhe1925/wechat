@@ -1,4 +1,4 @@
-package com.hz.wechatproject.pojo;
+package com.hz.wechatproject.db.pojo;
 
 public class User {
 	Integer userId;

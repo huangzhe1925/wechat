@@ -7,7 +7,7 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 
 import com.hz.wechatproject.dao.impl.UserDAOImpl;
-import com.hz.wechatproject.pojo.User;
+import com.hz.wechatproject.db.pojo.User;
 
 
 class UserDaoImpl {

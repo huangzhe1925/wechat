@@ -7,7 +7,7 @@ import org.mybatis.spring.support.SqlSessionDaoSupport;
 import org.springframework.stereotype.Service;
 
 import com.hz.wechatproject.dao.UserDAO;
-import com.hz.wechatproject.pojo.User;
+import com.hz.wechatproject.db.pojo.User;
 
 public class UserDAOImpl extends SqlSessionDaoSupport implements UserDAO{
 

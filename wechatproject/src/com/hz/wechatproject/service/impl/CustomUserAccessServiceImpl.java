@@ -15,8 +15,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import com.hz.wechatproject.db.pojo.User;
 import com.hz.wechatproject.db.service.UserService;
-import com.hz.wechatproject.pojo.User;
 import com.hz.wechatproject.utils.CommonUtil;
 
 
