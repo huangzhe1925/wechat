@@ -9,12 +9,14 @@
         http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd  
         http://www.springframework.org/schema/jms http://www.springframework.org/schema/jms/spring-jms-3.0.xsd">
 
-<!-- 
-	<context:component-scan base-package="com.hz.wechatproject.service.jms" />
-	 -->
+	<bean id="JMSProducer" class="com.hz.wechatproject.service.jms.impl.ProducerServiceImpl">
+		<property name="jmsTemplate" ref="jmsTemplate" />
+		<property name="destination" ref="queueDestination" />
+	</bean>
+
 	<!-- Spring提供的JMS工具类，它可以进行消息发送、接收等 -->
-	<!-- 这个connectionFactory对应的是我们定义的Spring提供的那个ConnectionFactory对象 -->
 	<bean id="jmsTemplate" class="org.springframework.jms.core.JmsTemplate">
+		<!-- 这个connectionFactory对应的是我们定义的Spring提供的那个ConnectionFactory对象 -->
 		<property name="connectionFactory" ref="connectionFactory" />
 	</bean>
 
@@ -33,6 +35,7 @@
 		class="org.springframework.jms.connection.SingleConnectionFactory">
 		<property name="targetConnectionFactory" ref="pooledConnectionFactory" />
 	</bean>
+
 
 
 

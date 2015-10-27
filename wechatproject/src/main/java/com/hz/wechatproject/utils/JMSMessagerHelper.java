@@ -17,7 +17,6 @@ public class JMSMessagerHelper {
 			synchronized (JMSMessagerHelper.class) {
 				if (instance == null) {
 					instance = new JMSMessagerHelper();
-					
 				}
 			}
 		}
