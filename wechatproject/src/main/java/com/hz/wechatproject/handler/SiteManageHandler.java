@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,6 +27,7 @@ import com.hz.wechatproject.db.service.UserService;
 import com.hz.wechatproject.pojo.JMSMessagePOJO;
 import com.hz.wechatproject.pojo.ModelExcuteScriptPOJO;
 import com.hz.wechatproject.pojo.ModelSystemFilesPOJO;
+import com.hz.wechatproject.service.jms.impl.ProducerServiceImpl;
 import com.hz.wechatproject.utils.CommonUtil;
 import com.hz.wechatproject.utils.JMSMessagerHelper;
 import com.hz.wechatproject.utils.PropertiesUtil;
@@ -147,11 +149,16 @@ public class SiteManageHandler {
 		return new JSONPObject(callbackparam, result);
 	}
 	
+	@Autowired
+	private ProducerServiceImpl producerService;
+	
 	@RequestMapping(value = "sendJMSMessage")
 	@ResponseBody
-	public JSONPObject sendJMSMessage(@RequestParam String callbackparam, @ModelAttribute JMSMessagePOJO data ) {
+	public JSONPObject sendJMSMessage(@RequestParam String callbackparam, @ModelAttribute JMSMessagePOJO data, HttpServletRequest req ) {
 		Map<String, Object> result = new LinkedHashMap<String, Object>();
-		JMSMessagerHelper.getInst().sendJMSMessage(data.getMessage());
+//		CommonUtil.getObjFromSpringContainer(req,"jmsTemplate");
+//		JMSMessagerHelper.getInst().sendJMSMessage(data.getMessage());
+		producerService.sendMessage(data.getMessage());
 		result.put("isSuccess","success");
 		return new JSONPObject(callbackparam, result);
 	}

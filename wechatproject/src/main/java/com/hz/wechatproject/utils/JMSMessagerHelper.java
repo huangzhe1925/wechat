@@ -7,7 +7,6 @@ import com.hz.wechatproject.service.jms.impl.ProducerServiceImpl;
 public class JMSMessagerHelper {
 
 	private JMSMessagerHelper() {
-		this.producerService=new ProducerServiceImpl();
 	}
 
 	private static JMSMessagerHelper instance;

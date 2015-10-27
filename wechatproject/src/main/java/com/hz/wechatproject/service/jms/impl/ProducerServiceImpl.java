@@ -6,17 +6,25 @@ import javax.jms.Message;
 import javax.jms.Session;
 
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.jms.core.JmsTemplate;
 import org.springframework.jms.core.MessageCreator;
+import org.springframework.stereotype.Component;
 
 import com.hz.wechatproject.service.jms.ProducerService;
 
+@Component("JMSProducer")
 public class ProducerServiceImpl implements ProducerService {
 
 	private static Logger logger = Logger.getLogger(ProducerServiceImpl.class);
 
+	@Autowired
+	@Qualifier("jmsTemplate")
 	private JmsTemplate jmsTemplate;
 
+	@Autowired
+	@Qualifier("queueDestination")
 	private Destination destination;
 
 	public void sendMessage(Destination destination, final String message) {

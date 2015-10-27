@@ -14,6 +14,8 @@ import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.http.HttpEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
@@ -21,10 +23,18 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
 import org.apache.log4j.Logger;
+import org.springframework.context.ApplicationContext;
+import org.springframework.web.context.support.WebApplicationContextUtils;
 
 import com.hz.wechatproject.pojo.ModelSystemFilesPOJO;
 
 public class CommonUtil {
+	
+	public static void main(String args[]) {
+		System.out.println(getSystemFiles(null));
+		System.out.println(getSystemFiles(new ModelSystemFilesPOJO("C:\\work",
+				2, "C:\\work")));
+	}
 
 	private static Logger logger = Logger.getLogger(CommonUtil.class);
 
@@ -47,6 +57,18 @@ public class CommonUtil {
 	// public static final String SCRIPT_DEPLOY = "C:\\work\\test.bat";
 	public static final String SCRIPT_DEPLOY_CHK_METHOD = "deployQCheck";
 	public static final String SCRIPT_DEPLOY_CHK = "/root/deployQCheck";
+	
+	public static Object getObjFromSpringContainer(HttpServletRequest req,String name){
+//		ApplicationContext ac1 = WebApplicationContextUtils.getRequiredWebApplicationContext(req.getServletContext());
+		ApplicationContext ac2 = WebApplicationContextUtils.getWebApplicationContext(req.getServletContext());
+		Object objBean=ac2.getBean(name); 
+		if(objBean==null){
+			logger.debug(name+" bean is null");
+		}else{
+			System.out.println(name+" bean is not null");
+		}
+		return objBean; 
+	}
 
 	public static boolean isEmptyString(String str) {
 		if (str == null || str.isEmpty()) {
@@ -291,12 +313,6 @@ public class CommonUtil {
 		ModelSystemFilesPOJO ret = new ModelSystemFilesPOJO(file.getName(),
 				type, file.getAbsolutePath());
 		return ret;
-	}
-
-	public static void main(String args[]) {
-		System.out.println(getSystemFiles(null));
-		System.out.println(getSystemFiles(new ModelSystemFilesPOJO("C:\\work",
-				2, "C:\\work")));
 	}
 
 	public static class HttpClientUtil {
