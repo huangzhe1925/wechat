@@ -7,18 +7,18 @@
 	<packaging>war</packaging>
 	<build>
 		<sourceDirectory>src/main/java</sourceDirectory>
-		
+
 		<resources>
-            <resource>
-                <directory>src/main/java</directory>
-                <includes>
-                    <include>**/*.properties</include>
-                    <include>**/*.xml</include>
-                </includes>
-                <filtering>false</filtering>
-            </resource>
-        </resources>
-		
+			<resource>
+				<directory>src/main/java</directory>
+				<includes>
+					<include>**/*.properties</include>
+					<include>**/*.xml</include>
+				</includes>
+				<filtering>false</filtering>
+			</resource>
+		</resources>
+
 		<plugins>
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
@@ -123,10 +123,16 @@
 			<artifactId>spring-jdbc</artifactId>
 			<version>3.0.5.RELEASE</version>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-context</artifactId>
+			<version>4.1.6.RELEASE</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-beans</artifactId>
 			<version>4.1.6.RELEASE</version>
 		</dependency>
 
@@ -187,14 +193,14 @@
 			<artifactId>httpclient</artifactId>
 			<version>4.5</version>
 		</dependency>
-		
+
 		<!-- JMS -->
 		<dependency>
 			<groupId>javax.jms</groupId>
 			<artifactId>javax.jms-api</artifactId>
 			<version>2.0</version>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>org.apache.activemq</groupId>
 			<artifactId>activemq-all</artifactId>
@@ -206,12 +212,13 @@
 			<artifactId>activemq-pool</artifactId>
 			<version>5.12.0</version>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-jms</artifactId>
 			<version>4.1.6.RELEASE</version>
 		</dependency>
+
 
 	</dependencies>
 </project>

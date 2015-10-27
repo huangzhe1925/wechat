@@ -9,14 +9,12 @@
         http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd  
         http://www.springframework.org/schema/jms http://www.springframework.org/schema/jms/spring-jms-3.0.xsd">
 
+<!-- 
 	<context:component-scan base-package="com.hz.wechatproject.service.jms" />
-	
-	 <bean class="org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor"/>   
-	
-
+	 -->
 	<!-- Spring提供的JMS工具类，它可以进行消息发送、接收等 -->
+	<!-- 这个connectionFactory对应的是我们定义的Spring提供的那个ConnectionFactory对象 -->
 	<bean id="jmsTemplate" class="org.springframework.jms.core.JmsTemplate">
-		<!-- 这个connectionFactory对应的是我们定义的Spring提供的那个ConnectionFactory对象 -->
 		<property name="connectionFactory" ref="connectionFactory" />
 	</bean>
 
@@ -45,10 +43,11 @@
 		</constructor-arg>
 	</bean>
 
-	<!--这个是主题目的地，一对多的 -->
+	<!--这个是主题目的地，一对多的
 	<bean id="topicDestination" class="org.apache.activemq.command.ActiveMQTopic">
 		<constructor-arg value="topic" />
 	</bean>
+	 -->
 	
 	<!--这个是sessionAwareQueue目的地-->  
     <bean id="sessionAwareQueueDest" class="org.apache.activemq.command.ActiveMQQueue">  
@@ -58,20 +57,20 @@
     </bean>  
 
 
-	<!-- 消息监听器 -->
+	<!-- 消息监听器
 	<bean id="consumerMessageListener" class="com.hz.javanote.jms.ConsumerMessageListener" />
-		
-	<!-- 消息监听容器-->
+		 -->
+	<!-- 消息监听容器
 	<bean id="jmsContainer"
 		class="org.springframework.jms.listener.DefaultMessageListenerContainer">
 		<property name="connectionFactory" ref="connectionFactory" />
 		<property name="destination" ref="sessionAwareQueueDest" />
 		<property name="messageListener" ref="consumerMessageListener" />
 	</bean>
-	
+	-->
 	
 	<!-- 可以获取session的MessageListener -->  
-    <bean id="consumerSessionAwareMessageListener" class="com.hz.javanote.jms.ConsumerSessionAwareMessageListener">  
+    <bean id="consumerSessionAwareMessageListener" class="com.hz.wechatproject.service.jms.impl.ConsumerSessionAwareMessageListener">  
         <property name="toDestination" ref="sessionAwareQueueDest"/>  
     </bean>  
 	 

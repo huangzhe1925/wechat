@@ -23,9 +23,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.util.JSONPObject;
 import com.hz.wechatproject.db.pojo.User;
 import com.hz.wechatproject.db.service.UserService;
+import com.hz.wechatproject.pojo.JMSMessagePOJO;
 import com.hz.wechatproject.pojo.ModelExcuteScriptPOJO;
 import com.hz.wechatproject.pojo.ModelSystemFilesPOJO;
 import com.hz.wechatproject.utils.CommonUtil;
+import com.hz.wechatproject.utils.JMSMessagerHelper;
 import com.hz.wechatproject.utils.PropertiesUtil;
 
 @Controller
@@ -139,5 +141,15 @@ public class SiteManageHandler {
 		result.put("currPath", data==null?"/":data.getFilePath());
 		return new JSONPObject(callbackparam, result);
 	}
+	
+	@RequestMapping(value = "sendJMSMessage")
+	@ResponseBody
+	public JSONPObject sendJMSMessage(@RequestParam String callbackparam, @ModelAttribute JMSMessagePOJO data ) {
+		Map<String, Object> result = new LinkedHashMap<String, Object>();
+		JMSMessagerHelper.sendJMSMessage(data.getMessage());
+		result.put("isSuccess","success");
+		return new JSONPObject(callbackparam, result);
+	}
+	
 
 }
