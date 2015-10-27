@@ -1,6 +1,5 @@
 package com.hz.wechatproject.service.jms.impl;
 
-import javax.annotation.Resource;
 import javax.jms.Destination;
 import javax.jms.JMSException;
 import javax.jms.Message;
@@ -15,7 +14,7 @@ import org.springframework.stereotype.Component;
 
 import com.hz.wechatproject.service.jms.ProducerService;
 
-@Component
+@Component("JMSProducer")
 public class ProducerServiceImpl implements ProducerService {
 
 	private static Logger logger = Logger.getLogger(ProducerServiceImpl.class);

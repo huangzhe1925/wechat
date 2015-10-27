@@ -8,9 +8,10 @@ import javax.jms.Session;
 import javax.jms.TextMessage;
 
 import org.apache.log4j.Logger;
+import org.springframework.jms.listener.SessionAwareMessageListener;
 
 
-public class ConsumerSessionAwareMessageListener {//implements SessionAwareMessageListener<TextMessage> {
+public class ConsumerSessionAwareMessageListener implements SessionAwareMessageListener<TextMessage> {
 
 	private static Logger logger = Logger.getLogger(ConsumerSessionAwareMessageListener.class);
 

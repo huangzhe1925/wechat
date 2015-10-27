@@ -84,6 +84,11 @@ public class SiteManageHandler {
 	public String testHttpProxy() {
 		return "httpproxy";
 	}
+	
+	@RequestMapping(value = "testJMSSender")
+	public String testJMSSender() {
+		return "testJMS";
+	}
 
 	@RequestMapping(value = "gettingUrl")
 	public void gettingUrl(HttpServletRequest req, HttpServletResponse res) {
@@ -146,7 +151,7 @@ public class SiteManageHandler {
 	@ResponseBody
 	public JSONPObject sendJMSMessage(@RequestParam String callbackparam, @ModelAttribute JMSMessagePOJO data ) {
 		Map<String, Object> result = new LinkedHashMap<String, Object>();
-		JMSMessagerHelper.sendJMSMessage(data.getMessage());
+		JMSMessagerHelper.getInst().sendJMSMessage(data.getMessage());
 		result.put("isSuccess","success");
 		return new JSONPObject(callbackparam, result);
 	}
