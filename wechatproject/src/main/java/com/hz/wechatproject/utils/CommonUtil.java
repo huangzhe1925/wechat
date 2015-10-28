@@ -77,7 +77,7 @@ public class CommonUtil {
 		return false;
 	}
 
-	public static String emptyString(String str) {
+	public static String getEmptyString(String str) {
 		if (str == null || str.isEmpty()) {
 			return "";
 		}

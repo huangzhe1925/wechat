@@ -39,18 +39,19 @@
 	</bean>
 
 
-	<!--这个是队列目的地 -->
+	<!--这个是队列目的地 
 	<bean id="queueDestination" class="org.apache.activemq.command.ActiveMQQueue">
 		<constructor-arg>
 			<value>testDest</value>
 		</constructor-arg>
 	</bean>
+-->
 
-	<!--这个是主题目的地，一对多的
+	<!--这个是主题目的地，一对多的-->
 	<bean id="topicDestination" class="org.apache.activemq.command.ActiveMQTopic">
 		<constructor-arg value="topic" />
 	</bean>
-	 -->
+	 
 	
 	<!--这个是sessionAwareQueue目的地-->  
     <bean id="sessionAwareQueueDest" class="org.apache.activemq.command.ActiveMQQueue">  
@@ -80,7 +81,7 @@
 	 <bean id="sessionAwareListenerContainer"  
         class="org.springframework.jms.listener.DefaultMessageListenerContainer">  
         <property name="connectionFactory" ref="connectionFactory" />  
-        <property name="destination" ref="queueDestination" />  
+        <property name="destination" ref="topicDestination" />  
         <property name="messageListener" ref="consumerSessionAwareMessageListener" />  
     </bean>  
 	 

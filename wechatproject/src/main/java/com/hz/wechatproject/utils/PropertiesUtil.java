@@ -16,7 +16,8 @@ public class PropertiesUtil {
 
 	public static final String PROPERTY_FILE_NAME = "wechat.properties";
 
-	public static final String DBSOURCE_SQLITE_URL = "dbsource.sqlite.url";
+	@Deprecated
+	public static final String DBSOURCE_SQLITE_URL = "jdbc_url";
 
 
 	static {

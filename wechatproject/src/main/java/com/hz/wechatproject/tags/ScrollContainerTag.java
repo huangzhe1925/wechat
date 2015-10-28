@@ -40,8 +40,8 @@ public class ScrollContainerTag  extends WCTagSupport{
 	private void renderBeforeHTML() throws Exception {
 		StringBuilder html=new StringBuilder();
 		html.append("<div id='"+comId+"_ScrollCompo_DIV'>");
-		html.append("<input type='hidden' name='scrollComInfo' value='"+comId+"|"+mode+"|"+CommonUtil.emptyString(scrollUpAction)+"|");
-		html.append(CommonUtil.emptyString(scrollDownAction)+"|"+scrollerBottomHeight+"|"+CommonUtil.emptyString(scrollEndAction)+"'>");
+		html.append("<input type='hidden' name='scrollComInfo' value='"+comId+"|"+mode+"|"+CommonUtil.getEmptyString(scrollUpAction)+"|");
+		html.append(CommonUtil.getEmptyString(scrollDownAction)+"|"+scrollerBottomHeight+"|"+CommonUtil.getEmptyString(scrollEndAction)+"'>");
 		html.append("<div id='warpper' class='scrollwarpper'>");
 		html.append("<div id='scroller' class='scrollscroller'>");
 		html.append("<div class='pullDown' data-state=''  style='display:none;'>");

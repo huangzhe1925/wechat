@@ -7,7 +7,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.hz.wechatproject.utils.WechatProcessUtil;
 import com.hz.wechatproject.utils.WechatUtil;
 
 @Controller
@@ -34,7 +33,7 @@ public class WechatProcessHandler {
 			String xml = WechatUtil.getXMLFromRequest(request);
 			System.out.println("comein MSG: "+xml);
 			System.out.println();
-			result=WechatProcessUtil.processWechatMag(xml);
+			result=WechatUtil.processWechatMag(xml);
 			System.out.println("outgoing MSG: "+result);
 			System.out.println();
 		}
