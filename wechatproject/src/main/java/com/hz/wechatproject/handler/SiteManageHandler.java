@@ -96,7 +96,7 @@ public class SiteManageHandler {
 	@RequestMapping(value = "gettingUrl")
 	public void gettingUrl(HttpServletRequest req, HttpServletResponse res) {
 		logger.debug("start to getting url " + req.getParameter("url"));
-		String content = CommonUtil.HttpClientUtil.get(req.getParameter("url"));
+		String content = CommonUtil.UtilHttpClient.get(req.getParameter("url"));
 		try {
 			res.getWriter().append(content);
 		} catch (IOException e) {

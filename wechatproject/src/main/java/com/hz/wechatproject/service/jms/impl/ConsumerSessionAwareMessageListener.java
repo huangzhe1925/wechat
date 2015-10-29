@@ -44,7 +44,7 @@ public class ConsumerSessionAwareMessageListener implements SessionAwareMessageL
 //		producer.send(textMessage);
 		
 		try {
-			CommonUtil.HTMLParseUtil.getContentOnClass(CommonUtil.HttpClientUtil.get("http://www.dytt8.net/"), "co_content8");
+			CommonUtil.UtilHTMLParse.getContentOnClass(CommonUtil.UtilHttpClient.get("http://www.dytt8.net/"), "co_content8");
 		} catch (ParserException e) {
 			logger.error("error when parser",e);
 		}

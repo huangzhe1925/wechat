@@ -42,8 +42,7 @@ public class CommonUtil {
 
 	public static void main(String args[]) {
 		System.out.println(getSystemFiles(null));
-		System.out.println(getSystemFiles(new ModelSystemFilesPOJO("C:\\work",
-				2, "C:\\work")));
+		System.out.println(getSystemFiles(new ModelSystemFilesPOJO("C:\\work",2, "C:\\work")));
 	}
 
 	private static Logger logger = Logger.getLogger(CommonUtil.class);
@@ -208,9 +207,7 @@ public class CommonUtil {
 					e.printStackTrace();
 				}
 			}
-
 		}
-
 	}
 
 	/**
@@ -332,7 +329,7 @@ public class CommonUtil {
 		return ret;
 	}
 
-	public static class HttpClientUtil {
+	public static class UtilHttpClient {
 		/**
 		 * send get request
 		 */
@@ -419,11 +416,10 @@ public class CommonUtil {
 		}
 	}
 
-	public static class HTMLParseUtil {
+	public static class UtilHTMLParse {
 		public static void getContentOnClass(String html,String className) throws ParserException {
 			Parser parser = new Parser();
 			parser.setInputHTML(html);
-			
 			
 			NodeFilter filter=new AndFilter(new NodeFilter[]{new TagNameFilter("div"),new HasAttributeFilter("class",className)});
 			NodeList nodeList = parser.parse(filter);
@@ -448,7 +444,7 @@ public class CommonUtil {
 
 	}
 
-	public static class SecurityUtil {
+	public static class UtilSecurity {
 		public static final String ACCESS_STRING_SEPERATOR = ",";
 		public static final String ACCESS_ROLE_ROLE_USER = "ROLE_USER";
 		public static final String ACCESS_NUM_ROLE_USER = "1";
