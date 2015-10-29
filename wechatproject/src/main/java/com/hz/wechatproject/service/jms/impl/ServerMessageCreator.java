@@ -7,24 +7,26 @@ import javax.jms.Session;
 import org.springframework.jms.core.MessageCreator;
 import org.springframework.stereotype.Component;
 
-import com.hz.wechatproject.utils.CommonUtil;
+import com.hz.wechatproject.service.jms.pojo.JMSMessageObject;
 
 
 @Component("serverMessageCreator")
 public class ServerMessageCreator implements MessageCreator {
 	
-	private String message;
+	private JMSMessageObject message;
 	
 	public Message createMessage(Session session) throws JMSException {
-		return session.createTextMessage(this.getMessage());
+		Message result=session.createObjectMessage(message);
+		return result;
 	}
 
-	public String getMessage() {
-		return CommonUtil.getEmptyString(message);
+	public JMSMessageObject getMessage() {
+		return message;
 	}
 
-	public void setMessage(String message) {
+	public void setMessage(JMSMessageObject message) {
 		this.message = message;
 	}
+
 
 }

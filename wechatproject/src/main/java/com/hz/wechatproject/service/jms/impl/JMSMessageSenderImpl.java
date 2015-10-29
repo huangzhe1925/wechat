@@ -9,6 +9,7 @@ import org.springframework.jms.core.JmsTemplate;
 import org.springframework.stereotype.Component;
 
 import com.hz.wechatproject.service.jms.JMSMessageSender;
+import com.hz.wechatproject.service.jms.pojo.JMSMessageObject;
 
 @Component("JMSProducer")
 public class JMSMessageSenderImpl implements JMSMessageSender {
@@ -30,7 +31,7 @@ public class JMSMessageSenderImpl implements JMSMessageSender {
 	public void sendMessage(Destination destination, final String message) {
 		logger.debug("---------------Server发送消息-----------------");
 		logger.debug("---------------Server发了一个消息：" + message);
-		serverMessageCreator.setMessage(message);
+		serverMessageCreator.setMessage(new JMSMessageObject(message));
 		try{
 			jmsTemplate.send(destination,serverMessageCreator );
 		}catch(Exception ex){

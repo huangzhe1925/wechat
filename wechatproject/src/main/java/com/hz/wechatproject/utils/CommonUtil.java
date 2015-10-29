@@ -16,20 +16,30 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.http.HeaderElement;
 import org.apache.http.HttpEntity;
+import org.apache.http.NameValuePair;
+import org.apache.http.ParseException;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
 import org.apache.log4j.Logger;
+import org.htmlparser.NodeFilter;
+import org.htmlparser.Parser;
+import org.htmlparser.filters.AndFilter;
+import org.htmlparser.filters.HasAttributeFilter;
+import org.htmlparser.filters.TagNameFilter;
+import org.htmlparser.util.NodeList;
+import org.htmlparser.util.ParserException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
 import com.hz.wechatproject.pojo.ModelSystemFilesPOJO;
 
 public class CommonUtil {
-	
+
 	public static void main(String args[]) {
 		System.out.println(getSystemFiles(null));
 		System.out.println(getSystemFiles(new ModelSystemFilesPOJO("C:\\work",
@@ -57,17 +67,20 @@ public class CommonUtil {
 	// public static final String SCRIPT_DEPLOY = "C:\\work\\test.bat";
 	public static final String SCRIPT_DEPLOY_CHK_METHOD = "deployQCheck";
 	public static final String SCRIPT_DEPLOY_CHK = "/root/deployQCheck";
-	
-	public static Object getObjFromSpringContainer(HttpServletRequest req,String name){
-//		ApplicationContext ac1 = WebApplicationContextUtils.getRequiredWebApplicationContext(req.getServletContext());
-		ApplicationContext ac2 = WebApplicationContextUtils.getWebApplicationContext(req.getServletContext());
-		Object objBean=ac2.getBean(name); 
-		if(objBean==null){
-			logger.debug(name+" bean is null");
-		}else{
-			System.out.println(name+" bean is not null");
+
+	public static Object getObjFromSpringContainer(HttpServletRequest req,
+			String name) {
+		// ApplicationContext ac1 =
+		// WebApplicationContextUtils.getRequiredWebApplicationContext(req.getServletContext());
+		ApplicationContext ac2 = WebApplicationContextUtils
+				.getWebApplicationContext(req.getServletContext());
+		Object objBean = ac2.getBean(name);
+		if (objBean == null) {
+			logger.debug(name + " bean is null");
+		} else {
+			System.out.println(name + " bean is not null");
 		}
-		return objBean; 
+		return objBean;
 	}
 
 	public static boolean isEmptyString(String str) {
@@ -225,7 +238,8 @@ public class CommonUtil {
 		return strList;
 	}
 
-	public static List<ModelSystemFilesPOJO> getSystemFiles(ModelSystemFilesPOJO data) {
+	public static List<ModelSystemFilesPOJO> getSystemFiles(
+			ModelSystemFilesPOJO data) {
 		List<ModelSystemFilesPOJO> result = new ArrayList<>();
 		if (data == null || isEmptyString(data.getFilePath())) {
 			File[] rootFiles = File.listRoots();
@@ -256,18 +270,20 @@ public class CommonUtil {
 		return result;
 	}
 
-	
-	public static boolean isSystemFileContentPOJO(List<ModelSystemFilesPOJO> itemList){
-		if(itemList==null||itemList.size()>1){
+	public static boolean isSystemFileContentPOJO(
+			List<ModelSystemFilesPOJO> itemList) {
+		if (itemList == null || itemList.size() > 1) {
 			return false;
 		}
-		if(itemList.size()==1&&ModelSystemFilesPOJO.FILE_TYPE_FILE.equals(itemList.get(0).getType())){
+		if (itemList.size() == 1
+				&& ModelSystemFilesPOJO.FILE_TYPE_FILE.equals(itemList.get(0)
+						.getType())) {
 			return true;
 		}
-		
+
 		return false;
 	}
-	
+
 	public static ModelSystemFilesPOJO getSystemFileContent(File file) {
 		Integer type = file.isDirectory() ? ModelSystemFilesPOJO.FILE_TYPE_DIR
 				: ModelSystemFilesPOJO.FILE_TYPE_FILE;
@@ -276,13 +292,14 @@ public class CommonUtil {
 		if (file.isFile() && file.exists()) {
 			try {
 				InputStreamReader read;
-				read = new InputStreamReader(new FileInputStream(file),Charset.forName("Utf8"));
+				read = new InputStreamReader(new FileInputStream(file),
+						Charset.forName("Utf8"));
 				// 考虑到编码格式
 				BufferedReader bufferedReader = new BufferedReader(read);
 				StringBuilder sb = new StringBuilder();
 				String line = null;
 				while ((line = bufferedReader.readLine()) != null) {
-					sb.append(line+"\n");
+					sb.append(line + "\n");
 				}
 				bufferedReader.close();
 				read.close();
@@ -317,7 +334,7 @@ public class CommonUtil {
 
 	public static class HttpClientUtil {
 		/**
-		 * 发送 get请求
+		 * send get request
 		 */
 		public static String get(String url) {
 			CloseableHttpClient httpclient = HttpClients.createDefault();
@@ -326,14 +343,11 @@ public class CommonUtil {
 				// 创建httpget.
 
 				HttpGet httpget = new HttpGet(url);
-
-				// httpget.setHeader("User-Agent",
-				// "Mozilla/5.0 (Windows NT 5.1) AppleWebKit/537.1 (KHTML, like Gecko) Chrome/21.0.1180.77 Safari/537.1");
 				httpget.setHeader("Accept-Language", "zh-CN,zh;q=0.8");
 				httpget.setHeader(
 						"User-Agent",
 						"Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/35.0.1916.153 Safari/537.36");
-				System.out.println("executing request " + httpget.getURI());
+				logger.debug("executing request " + httpget.getURI());
 				// 执行get请求.
 				CloseableHttpResponse response = httpclient.execute(httpget);
 				try {
@@ -343,21 +357,22 @@ public class CommonUtil {
 					// 打印响应状态
 					logger.debug(response.getStatusLine());
 					if (entity != null) {
-						// 打印响应内容长度
 						logger.debug("Response content length: "
 								+ entity.getContentLength());
-						// 打印响应内容
-						// System.out.println("Response content: " +
-						// EntityUtils.toString(entity));
-						String content = EntityUtils.toString(entity);
-						sb.append(content);
+						if (entity != null) {
+							String charset = getContentCharSet(entity);
+							if (isEmptyString(charset)) {
+								charset = "GB2312";
+							}
+							sb.append(EntityUtils.toString(entity, charset));
+						}
 					}
 					logger.debug("------------------------------------");
 				} finally {
 					response.close();
 				}
 			} catch (Exception e) {
-				e.printStackTrace();
+				logger.error("error when excute httpget", e);
 			} finally {
 				// 关闭连接,释放资源
 				try {
@@ -369,10 +384,71 @@ public class CommonUtil {
 
 			return sb.toString();
 		}
+
+		/**
+		 * 默认编码utf -8 Obtains character set of the entity, if known.
+		 * 
+		 * @param entity
+		 *            must not be null
+		 * @return the character set, or null if not found
+		 * @throws ParseException
+		 *             if header elements cannot be parsed
+		 * @throws IllegalArgumentException
+		 *             if entity is null
+		 */
+		public static String getContentCharSet(final HttpEntity entity)
+				throws ParseException {
+
+			if (entity == null) {
+				throw new IllegalArgumentException(
+						"HTTP entity may not be null");
+			}
+			String charset = null;
+			if (entity.getContentType() != null) {
+				HeaderElement values[] = entity.getContentType().getElements();
+				if (values.length > 0) {
+					NameValuePair param = values[0]
+							.getParameterByName("charset");
+					if (param != null) {
+						charset = param.getValue();
+					}
+				}
+			}
+
+			return charset;
+		}
 	}
-	
-	
-	public static class SecurityUtil{
+
+	public static class HTMLParseUtil {
+		public static void getContentOnClass(String html,String className) throws ParserException {
+			Parser parser = new Parser();
+			parser.setInputHTML(html);
+			
+			
+			NodeFilter filter=new AndFilter(new NodeFilter[]{new TagNameFilter("div"),new HasAttributeFilter("class",className)});
+			NodeList nodeList = parser.parse(filter);
+			logger.debug(nodeList.asString());
+			
+//			PrototypicalNodeFactory pnfPrototypicalNodeFactory = new PrototypicalNodeFactory();
+//			pnfPrototypicalNodeFactory.registerTag(new Div());
+//			parser.setNodeFactory(pnfPrototypicalNodeFactory);
+//
+//			NodeFilter filter1 = new NodeClassFilter(LinkTag.class);
+//			NodeList nodelist = parser.extractAllNodesThatMatch(filter1);
+//			for (Node node : nodelist.toNodeArray()) {
+//				if (node instanceof LinkTag) {
+//					LinkTag link = (LinkTag) node;
+//					if (link != null) {
+//						System.out.println("地址:" + link.getLink() + "\t标题:"
+//								+ link.getLinkText());
+//					}
+//				}
+//			}
+		}
+
+	}
+
+	public static class SecurityUtil {
 		public static final String ACCESS_STRING_SEPERATOR = ",";
 		public static final String ACCESS_ROLE_ROLE_USER = "ROLE_USER";
 		public static final String ACCESS_NUM_ROLE_USER = "1";
