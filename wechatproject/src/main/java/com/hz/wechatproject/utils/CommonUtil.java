@@ -46,17 +46,18 @@ public class CommonUtil {
 	}
 
 	private static Logger logger = Logger.getLogger(CommonUtil.class);
-
-	public static final String WECHAT_URL = "/wechatproject/wechat/wechatProcess";
+	
 	public static final String WECHAT_CONTEXT_PATH = "/wechatproject";
-	public static final String SITE_MANAGE_LOGIN_URL = "/wechatproject/siteManage";
-	public static final String SITE_MANAGE_URL = "/wechatproject/siteManage";
-	public static final String ERRPR_PAGES_URI_PREFIX = "/wechatproject/errorpages";
-	public static final String SECURITY_CHECK_URI = "/wechatproject/j_spring_security_check";
 
-	public static final String STATIC_RESOURCE_UTI_CSS_PREFIX = "/wechatproject/css";
-	public static final String STATIC_RESOURCE_UTI_JS_PREFIX = "/wechatproject/js";
-	public static final String STATIC_RESOURCE_UTI_IMAGES_PREFIX = "/wechatproject/images";
+	public static final String WECHAT_URL = WECHAT_CONTEXT_PATH+"/wechat/wechatProcess";
+	public static final String SITE_MANAGE_LOGIN_URL = WECHAT_CONTEXT_PATH+"/siteManage";
+	public static final String SITE_MANAGE_URL = WECHAT_CONTEXT_PATH+"/siteManage";
+	public static final String ERRPR_PAGES_URI_PREFIX = WECHAT_CONTEXT_PATH+"/errorpages";
+	public static final String SECURITY_CHECK_URI = WECHAT_CONTEXT_PATH+"/j_spring_security_check";
+
+	public static final String STATIC_RESOURCE_UTI_CSS_PREFIX = WECHAT_CONTEXT_PATH+"/css";
+	public static final String STATIC_RESOURCE_UTI_JS_PREFIX = WECHAT_CONTEXT_PATH+"/js";
+	public static final String STATIC_RESOURCE_UTI_IMAGES_PREFIX = WECHAT_CONTEXT_PATH+"/images";
 
 	public static final String SCRIPT_UPDATE_METHOD = "gitupdate";
 	public static final String SCRIPT_UPDATE = "/root/gitupdate";
@@ -66,6 +67,8 @@ public class CommonUtil {
 	// public static final String SCRIPT_DEPLOY = "C:\\work\\test.bat";
 	public static final String SCRIPT_DEPLOY_CHK_METHOD = "deployQCheck";
 	public static final String SCRIPT_DEPLOY_CHK = "/root/deployQCheck";
+	
+	public static final String WEBSERVICE_URI = WECHAT_CONTEXT_PATH+"/webservice";
 
 	public static Object getObjFromSpringContainer(HttpServletRequest req,
 			String name) {
@@ -107,6 +110,8 @@ public class CommonUtil {
 		} else if (uri.startsWith(CommonUtil.ERRPR_PAGES_URI_PREFIX)) {
 			retVal = true;
 		} else if (uri.startsWith(CommonUtil.SECURITY_CHECK_URI)) {
+			retVal = true;
+		}else if(uri.startsWith(CommonUtil.WEBSERVICE_URI)){
 			retVal = true;
 		}
 

@@ -232,5 +232,18 @@
 			<version>1.6</version>
 		</dependency>
 
+		<!-- CXF WEBSERVICE -->
+		<dependency>
+			<groupId>org.apache.cxf</groupId>
+			<artifactId>cxf-rt-frontend-jaxws</artifactId>
+			<version>2.2.3</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.apache.cxf</groupId>
+			<artifactId>cxf-rt-transports-http</artifactId>
+			<version>2.2.3</version>
+		</dependency>
+		
 	</dependencies>
 </project>
