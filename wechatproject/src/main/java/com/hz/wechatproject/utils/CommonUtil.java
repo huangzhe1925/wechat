@@ -68,7 +68,7 @@ public class CommonUtil {
 	public static final String SCRIPT_DEPLOY_CHK_METHOD = "deployQCheck";
 	public static final String SCRIPT_DEPLOY_CHK = "/root/deployQCheck";
 	
-	public static final String WEBSERVICE_URI = WECHAT_CONTEXT_PATH+"/webservice";
+	public static final String WEBSERVICE_URI = WECHAT_CONTEXT_PATH+"/ws";
 
 	public static Object getObjFromSpringContainer(HttpServletRequest req,
 			String name) {

@@ -103,7 +103,7 @@
   
     <servlet-mapping>
          <servlet-name>CXFServlet</servlet-name>  
-         <url-pattern>/webservice/*</url-pattern>  
+         <url-pattern>/ws/*</url-pattern>  
     </servlet-mapping>
     
      <session-config>
