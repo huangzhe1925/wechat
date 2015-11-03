@@ -422,14 +422,13 @@ public class CommonUtil {
 	}
 
 	public static class UtilHTMLParse {
-		public static void getContentOnClass(String html,String className) throws ParserException {
+		public static String getContentOnClass(String html,String tagName,String className) throws ParserException {
 			Parser parser = new Parser();
 			parser.setInputHTML(html);
 			
-			NodeFilter filter=new AndFilter(new NodeFilter[]{new TagNameFilter("div"),new HasAttributeFilter("class",className)});
+			NodeFilter filter=new AndFilter(new NodeFilter[]{new TagNameFilter(tagName),new HasAttributeFilter("class",className)});
 			NodeList nodeList = parser.parse(filter);
-			logger.debug(nodeList.asString());
-			
+			return nodeList.asString();			
 //			PrototypicalNodeFactory pnfPrototypicalNodeFactory = new PrototypicalNodeFactory();
 //			pnfPrototypicalNodeFactory.registerTag(new Div());
 //			parser.setNodeFactory(pnfPrototypicalNodeFactory);
