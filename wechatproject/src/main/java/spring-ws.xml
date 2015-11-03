@@ -12,12 +12,12 @@
 	<import resource="classpath:META-INF/cxf/cxf-servlet.xml" />
 
     <jaxws:endpoint id="testWS" implementor="com.hz.wechatproject.service.ws.impl.TestWSImpl" address="/TestWS" />
-
+	<jaxws:endpoint id="wechatWS" implementor="com.hz.wechatproject.service.ws.impl.WechatWSImpl" address="/WechatWS" />
 	<!-- for client
 	<bean id="client" class="com.hz.wechatproject.service.ws.TestWS" factory-bean="clientFactory" factory-method="create" />
 	<bean id="clientFactory" class="org.apache.cxf.jaxws.JaxWsProxyFactoryBean">
 		<property name="serviceClass" value="com.hz.wechatproject.service.ws.TestWS" />
-		<property name="address" value="http://localhost:8080/wechatproject/webservice/TestWS" />
+		<property name="address" value="http://localhost:8080/ws/webservice/TestWS" />
 	</bean>
 	 -->
 </beans>  
