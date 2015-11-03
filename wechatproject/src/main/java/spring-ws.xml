@@ -17,7 +17,7 @@
 	<bean id="client" class="com.hz.wechatproject.service.ws.TestWS" factory-bean="clientFactory" factory-method="create" />
 	<bean id="clientFactory" class="org.apache.cxf.jaxws.JaxWsProxyFactoryBean">
 		<property name="serviceClass" value="com.hz.wechatproject.service.ws.TestWS" />
-		<property name="address" value="http://localhost:8080/wechatproject/webservice/TestWS" />
+		<property name="address" value="http://localhost:8080/ws/webservice/TestWS" />
 	</bean>
 	 -->
 </beans>  
