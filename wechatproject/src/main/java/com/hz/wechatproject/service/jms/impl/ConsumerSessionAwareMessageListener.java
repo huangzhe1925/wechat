@@ -43,11 +43,11 @@ public class ConsumerSessionAwareMessageListener implements SessionAwareMessageL
 //		Message textMessage = session.createTextMessage("ConsumerSessionAwareMessageListener收到消息..."+ );
 //		producer.send(textMessage);
 		
-		try {
-			CommonUtil.UtilHTMLParse.getContentOnClass(CommonUtil.UtilHttpClient.get("http://www.dytt8.net/"), "co_content8");
-		} catch (ParserException e) {
-			logger.error("error when parser",e);
-		}
+//		try {
+//			CommonUtil.UtilHTMLParse.getContentOnClass(CommonUtil.UtilHttpClient.get("http://www.dytt8.net/"), "co_content8");
+//		} catch (ParserException e) {
+//			logger.error("error when parser",e);
+//		}
 		
 	}
 }

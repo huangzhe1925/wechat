@@ -26,9 +26,10 @@
 		});
 
 		function sendMessageToJMS() {
-			var _url = "${ctx}/siteManage/sendJMSMessage";
+			var _url = "${ctx}/siteManage/sendMessages";
 			var _data = {
-				message : $('#sender').val()
+				message : $('#sender').val(),
+				method:"1"
 			};
 			$.ajax({
 				url : _url,
@@ -42,7 +43,7 @@
 				},
 				success : function(data) {
 					console.log('加载成功');
-					$("#receiver").append(data.isSuccess);
+					$("#receiver").append(data.resultStr);
 				}
 			});
 		}

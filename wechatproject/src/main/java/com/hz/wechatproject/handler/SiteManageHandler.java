@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
+import org.htmlparser.util.ParserException;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,9 +24,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.util.JSONPObject;
 import com.hz.wechatproject.db.pojo.User;
 import com.hz.wechatproject.db.service.UserService;
-import com.hz.wechatproject.pojo.JMSMessagePOJO;
 import com.hz.wechatproject.pojo.ModelExcuteScriptPOJO;
 import com.hz.wechatproject.pojo.ModelSystemFilesPOJO;
+import com.hz.wechatproject.pojo.SendAndReceiveMessagePOJO;
 import com.hz.wechatproject.service.jms.impl.JMSMessageSenderImpl;
 import com.hz.wechatproject.utils.CommonUtil;
 import com.hz.wechatproject.utils.PropertiesUtil;
@@ -88,9 +89,9 @@ public class SiteManageHandler {
 		return "httpproxy";
 	}
 	
-	@RequestMapping(value = "testJMSSender")
-	public String testJMSSender() {
-		return "testJMS";
+	@RequestMapping(value = "testSendAndReceive")
+	public String testSendAndReceive() {
+		return "sendAndReceive";
 	}
 
 	@RequestMapping(value = "gettingUrl")
@@ -150,13 +151,17 @@ public class SiteManageHandler {
 		return new JSONPObject(callbackparam, result);
 	}
 	
-	@RequestMapping(value = "sendJMSMessage")
+	@RequestMapping(value = "sendMessages")
 	@ResponseBody
-	public JSONPObject sendJMSMessage(@RequestParam String callbackparam, @ModelAttribute JMSMessagePOJO data, HttpServletRequest req ) {
+	public JSONPObject sendJMSMessage(@RequestParam String callbackparam, @ModelAttribute SendAndReceiveMessagePOJO data, HttpServletRequest req ) throws ParserException {
 		Map<String, Object> result = new LinkedHashMap<String, Object>();
-//		ProducerServiceImpl ps=(ProducerServiceImpl)CommonUtil.getObjFromSpringContainer(req,"JMSProducer");
-		JMSMessageSender.sendMessage(data.getMessage());
-		result.put("isSuccess","success");
+		if("jms".equals(data.getMethod())){
+			JMSMessageSender.sendMessage(data.getMessage());
+			result.put("isSuccess","success");
+		}else{
+			String resultStr=CommonUtil.UtilHTMLParse.getContentOnClass(CommonUtil.UtilHttpClient.get("http://www.dytt8.net/"),"div", "co_content8");
+			result.put("resultStr",resultStr);
+		}
 		return new JSONPObject(callbackparam, result);
 	}
 	
