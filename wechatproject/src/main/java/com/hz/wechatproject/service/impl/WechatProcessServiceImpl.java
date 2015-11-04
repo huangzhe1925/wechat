@@ -49,7 +49,7 @@ public class WechatProcessServiceImpl implements WechatProcessService {
 	private String processWechatMsg(String xml) throws Exception {
 		ReceiveXmlEntity xmlEntity = ReceiveXmlProcessUtil.getMsgEntity(xml);
 		String response="";
-		if(xmlEntity.getContent().equalsIgnoreCase("mov")){
+		if("mov".equalsIgnoreCase(xmlEntity.getContent())){
 			String html=CommonUtil.UtilHttpClient.get("http://www.dytt8.net/");
 			response=CommonUtil.UtilHTMLParse.getNodeAsString(CommonUtil.UtilHTMLParse.getNodeListOnClass(html,"div", "co_content8"), 0);
 			response=response.replaceAll(" ", "");
