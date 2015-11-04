@@ -9,15 +9,21 @@ import java.util.Arrays;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.log4j.Logger;
+
 import com.hz.wechatproject.pojo.ReceiveXmlEntity;
 
 public class WechatUtil {
+	
+	private static Logger logger = Logger.getLogger(WechatUtil.class);
 
 	public static final String TOKEN="19890402";
 	
 	 public static String processWechatMag(String xml){  
 	        ReceiveXmlEntity xmlEntity = new ReceiveXmlProcessUtil().getMsgEntity(xml);  
 	          
+	        logger.debug(xmlEntity.toString());
+	        
 	        String result = "repeat";  
 	        if("text".endsWith(xmlEntity.getMsgType())){  
 	            result = xmlEntity.getContent();  
