@@ -26,6 +26,7 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
 import org.apache.log4j.Logger;
+import org.htmlparser.Node;
 import org.htmlparser.NodeFilter;
 import org.htmlparser.Parser;
 import org.htmlparser.filters.AndFilter;
@@ -422,30 +423,29 @@ public class CommonUtil {
 	}
 
 	public static class UtilHTMLParse {
-		public static String getContentOnClass(String html,String tagName,String className) throws ParserException {
+		public static NodeList getNodeListOnClass(String html,String tagName,String className) throws ParserException {
 			Parser parser = new Parser();
 			parser.setInputHTML(html);
 			
 			NodeFilter filter=new AndFilter(new NodeFilter[]{new TagNameFilter(tagName),new HasAttributeFilter("class",className)});
 			NodeList nodeList = parser.parse(filter);
-			return nodeList.asString();			
-//			PrototypicalNodeFactory pnfPrototypicalNodeFactory = new PrototypicalNodeFactory();
-//			pnfPrototypicalNodeFactory.registerTag(new Div());
-//			parser.setNodeFactory(pnfPrototypicalNodeFactory);
-//
-//			NodeFilter filter1 = new NodeClassFilter(LinkTag.class);
-//			NodeList nodelist = parser.extractAllNodesThatMatch(filter1);
-//			for (Node node : nodelist.toNodeArray()) {
-//				if (node instanceof LinkTag) {
-//					LinkTag link = (LinkTag) node;
-//					if (link != null) {
-//						System.out.println("地址:" + link.getLink() + "\t标题:"
-//								+ link.getLinkText());
-//					}
-//				}
-//			}
+			return nodeList;			
 		}
-
+		
+		public static String getNodeAsString(Node node){
+			if(null==node){
+				return "";
+			}
+			return node.toString();
+		}
+		
+		public static String getNodeAsString(NodeList nodeList,int index){
+			if(null==nodeList||null==nodeList.elementAt(index)){
+				return "";
+			}
+			Node node=nodeList.elementAt(index);
+			return getNodeAsString(node);
+		}
 	}
 
 	public static class UtilSecurity {

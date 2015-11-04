@@ -16,7 +16,8 @@ public class WechatWSImpl implements WechatWS{
 		String result="";
 		result=CommonUtil.UtilHttpClient.get("http://www.dytt8.net/");
 		try {
-			result=CommonUtil.UtilHTMLParse.getContentOnClass(result, "div", "co_content8");
+			String html=CommonUtil.UtilHttpClient.get("http://www.dytt8.net/");
+			result=CommonUtil.UtilHTMLParse.getNodeAsString(CommonUtil.UtilHTMLParse.getNodeListOnClass(html,"div", "co_content8"), 0);
 		} catch (ParserException e) {
 			e.printStackTrace();
 		}

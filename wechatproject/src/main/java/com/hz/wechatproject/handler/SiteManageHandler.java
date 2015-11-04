@@ -27,10 +27,9 @@ import com.hz.wechatproject.db.service.UserService;
 import com.hz.wechatproject.pojo.ModelExcuteScriptPOJO;
 import com.hz.wechatproject.pojo.ModelSystemFilesPOJO;
 import com.hz.wechatproject.pojo.SendAndReceiveMessagePOJO;
-import com.hz.wechatproject.service.jms.impl.JMSMessageSenderImpl;
+import com.hz.wechatproject.service.jms.JMSMessageSender;
 import com.hz.wechatproject.utils.CommonUtil;
 import com.hz.wechatproject.utils.PropertiesUtil;
-
 @Controller
 @RequestMapping(value = "siteManage")
 public class SiteManageHandler {
@@ -41,7 +40,7 @@ public class SiteManageHandler {
 	UserService userService;
 
 	@Resource(name = "JMSProducer")
-	private JMSMessageSenderImpl JMSMessageSender;
+	private JMSMessageSender JMSMessageSender;
 	
 	// @ModelAttribute("user")
 	// public void initAccount(Model model) {
@@ -159,7 +158,8 @@ public class SiteManageHandler {
 			JMSMessageSender.sendMessage(data.getMessage());
 			result.put("isSuccess","success");
 		}else if("httpClient".equalsIgnoreCase(data.getMethod())){}{
-			String resultStr=CommonUtil.UtilHTMLParse.getContentOnClass(CommonUtil.UtilHttpClient.get("http://www.dytt8.net/"),"div", "co_content8");
+			String html=CommonUtil.UtilHttpClient.get("http://www.dytt8.net/");
+			String resultStr=CommonUtil.UtilHTMLParse.getNodeAsString(CommonUtil.UtilHTMLParse.getNodeListOnClass(html,"div", "co_content8"), 0);
 			result.put("resultStr",resultStr);
 		}
 		return new JSONPObject(callbackparam, result);
