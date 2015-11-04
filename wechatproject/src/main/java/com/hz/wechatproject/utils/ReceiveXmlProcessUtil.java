@@ -11,7 +11,7 @@ import org.dom4j.Element;
 import com.hz.wechatproject.pojo.ReceiveXmlEntity;
 
 public class ReceiveXmlProcessUtil {  
-    public ReceiveXmlEntity getMsgEntity(String strXml){  
+    public static ReceiveXmlEntity getMsgEntity(String strXml){  
         ReceiveXmlEntity msg = null;  
         try {  
             if (strXml.length() <= 0 || strXml == null)  

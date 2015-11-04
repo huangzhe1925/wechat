@@ -20,7 +20,7 @@ public class WechatUtil {
 	public static final String TOKEN="19890402";
 	
 	 public static String processWechatMag(String xml){  
-	        ReceiveXmlEntity xmlEntity = new ReceiveXmlProcessUtil().getMsgEntity(xml);  
+	        ReceiveXmlEntity xmlEntity = ReceiveXmlProcessUtil.getMsgEntity(xml);  
 	          
 	        logger.debug(xmlEntity.toString());
 	        
@@ -31,7 +31,7 @@ public class WechatUtil {
 	          
 	        result =FormatXmlProcessUtil.formatXmlAnswer(xmlEntity.getFromUserName(), xmlEntity.getToUserName(), result);  
 	          
-	        return result;  
+	        return xml;  
 	    }  
 	
 	public static String getXMLFromRequest(HttpServletRequest request)
