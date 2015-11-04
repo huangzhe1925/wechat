@@ -3,7 +3,7 @@ package com.hz.wechatproject.utils;
 import java.util.Date;
 
 public class FormatXmlProcessUtil {  
-    public String formatXmlAnswer(String to, String from, String content) {  
+    public static String formatXmlAnswer(String to, String from, String content) {  
         StringBuffer sb = new StringBuffer();  
         Date date = new Date();  
         sb.append("<xml><ToUserName><![CDATA[");  

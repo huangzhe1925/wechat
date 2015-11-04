@@ -18,12 +18,12 @@ public class WechatUtil {
 	 public static String processWechatMag(String xml){  
 	        ReceiveXmlEntity xmlEntity = new ReceiveXmlProcessUtil().getMsgEntity(xml);  
 	          
-	        String result = "";  
+	        String result = "repeat";  
 	        if("text".endsWith(xmlEntity.getMsgType())){  
-	            result = xmlEntity.getContent()+"    "+xml;  
+	            result = xmlEntity.getContent();  
 	        }  
 	          
-	        result = new FormatXmlProcessUtil().formatXmlAnswer(xmlEntity.getFromUserName(), xmlEntity.getToUserName(), result);  
+	        result =FormatXmlProcessUtil.formatXmlAnswer(xmlEntity.getFromUserName(), xmlEntity.getToUserName(), result);  
 	          
 	        return result;  
 	    }  
