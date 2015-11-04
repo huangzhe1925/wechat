@@ -65,13 +65,10 @@ public class WechatProcessServiceImpl implements WechatProcessService {
 		}
 		logger.debug(xmlEntity.toString());
 
-		String result = "repeat";
-		if ("text".endsWith(xmlEntity.getMsgType())) {
-			result = xmlEntity.getContent();
-		}
+		String result = "";
 
 		result = FormatXmlProcessUtil.formatXmlAnswer(
-				xmlEntity.getFromUserName(), xmlEntity.getToUserName(), result);
+				xmlEntity.getFromUserName(), xmlEntity.getToUserName(), response);
 
 		return result;
 	}
