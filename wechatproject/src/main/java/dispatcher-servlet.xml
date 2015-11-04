@@ -14,8 +14,6 @@
             http://www.springframework.org/schema/tx   
             http://www.springframework.org/schema/tx/spring-tx-4.0.xsd">
 
-	
-	
 	<import resource="spring-mybatis.xml"/>
 	<import resource="spring-jms.xml"/>  
 	<import resource="spring-ws.xml"/>  
