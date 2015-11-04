@@ -14,7 +14,7 @@
 <body>
 	<wctags:navBtn comId="any" />
 	<p id="msgContent" class="lead">
-		<input type="button" id="bt" value="Send" /> <br />
+		<span><input type="button" id="bt" value="Send" /> &nbsp;&nbsp;<input type="input" id="method" value="httpClient" /></span><br />
 		<textarea class="form-control" style="width: 100%; height: 40%;" id="sender"></textarea>
 		<br />
 		<textarea class="form-control" style="width: 100%; height: 40%;" id="receiver"></textarea>
@@ -30,7 +30,7 @@
 			var _url = "${ctx}/siteManage/sendMessages";
 			var _data = {
 				message : $('#sender').val(),
-				method:"1"
+				method: $('#method').val()
 			};
 			$.ajax({
 				url : _url,

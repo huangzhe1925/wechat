@@ -158,7 +158,7 @@ public class SiteManageHandler {
 		if("jms".equals(data.getMethod())){
 			JMSMessageSender.sendMessage(data.getMessage());
 			result.put("isSuccess","success");
-		}else{
+		}else if("httpClient".equalsIgnoreCase(data.getMethod())){}{
 			String resultStr=CommonUtil.UtilHTMLParse.getContentOnClass(CommonUtil.UtilHttpClient.get("http://www.dytt8.net/"),"div", "co_content8");
 			result.put("resultStr",resultStr);
 		}
