@@ -3,6 +3,7 @@ package com.hz.wechatproject.handler;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -13,6 +14,8 @@ import com.hz.wechatproject.utils.WechatUtil;
 @RequestMapping(value = "wechat")
 public class WechatProcessHandler {
 
+	private static Logger logger = Logger.getLogger(WechatProcessHandler.class);
+	
 	@RequestMapping(value = "wechatProcess")
 	@ResponseBody
 	public String wechatAuth(HttpServletRequest request,
@@ -26,16 +29,14 @@ public class WechatProcessHandler {
 			if (WechatUtil.checkSignature(request)) {
 				return echostr;
 			} else {
-				System.out.println("Error checkSignature");
+				logger.error("Error checkSignature",new Exception("Error checkSignature"));
 				return "Error";
 			}
 		} else {
 			String xml = WechatUtil.getXMLFromRequest(request);
-			System.out.println("comein MSG: "+xml);
-			System.out.println();
+			logger.debug("comein MSG: "+xml);
 			result=WechatUtil.processWechatMag(xml);
-			System.out.println("outgoing MSG: "+result);
-			System.out.println();
+			logger.debug("outgoing MSG: "+result);
 		}
 		return result;
 	}
