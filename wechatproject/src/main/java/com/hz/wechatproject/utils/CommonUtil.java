@@ -41,9 +41,14 @@ import com.hz.wechatproject.pojo.ModelSystemFilesPOJO;
 
 public class CommonUtil {
 
-	public static void main(String args[]) {
-		System.out.println(getSystemFiles(null));
-		System.out.println(getSystemFiles(new ModelSystemFilesPOJO("C:\\work",2, "C:\\work")));
+	public static void main(String args[]) throws ParserException {
+//		System.out.println(getSystemFiles(null));
+//		System.out.println(getSystemFiles(new ModelSystemFilesPOJO("C:\\work",2, "C:\\work")));
+		
+		String html=UtilHttpClient.get("http://www.dytt8.net/");
+		String resultStr=UtilHTMLParse.getNodeAsString(UtilHTMLParse.getNodeListOnClass(html,"div", "co_content8"), 0);
+		resultStr=resultStr.replaceAll(" ", "");
+		System.out.println(resultStr);
 	}
 
 	private static Logger logger = Logger.getLogger(CommonUtil.class);
@@ -436,7 +441,7 @@ public class CommonUtil {
 			if(null==node){
 				return "";
 			}
-			return node.toString();
+			return node.toPlainTextString();
 		}
 		
 		public static String getNodeAsString(NodeList nodeList,int index){
