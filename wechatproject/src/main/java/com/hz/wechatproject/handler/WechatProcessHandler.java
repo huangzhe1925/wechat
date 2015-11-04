@@ -26,6 +26,7 @@ public class WechatProcessHandler {
 		String result = "";
 		String echostr = request.getParameter("echostr");
 		if (echostr != null && echostr.length() > 1) {
+			logger.debug("checking Signature");
 			if (WechatUtil.checkSignature(request)) {
 				return echostr;
 			} else {
