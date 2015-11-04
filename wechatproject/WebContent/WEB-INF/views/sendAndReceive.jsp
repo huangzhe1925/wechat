@@ -12,6 +12,7 @@
 <script src="${ctx}/js/bootstrap.min.js"></script>
 </head>
 <body>
+	<wctags:navBtn comId="any" />
 	<p id="msgContent" class="lead">
 		<input type="button" id="bt" value="Send" /> <br />
 		<textarea class="form-control" style="width: 100%; height: 40%;" id="sender"></textarea>
