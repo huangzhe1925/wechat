@@ -6,7 +6,7 @@
 	<uri>http://www.HZ.com/taglibs/wctags</uri>
 	<tag>
 		<name>navBtn</name>
-		<tag-class>com.hz.wechatproject.tags.NavButtonTag</tag-class>
+		<tag-class>com.hz.wechatproject.tags.impl.NavButtonTag</tag-class>
 		<body-content>empty</body-content>
 		<description>navi Button</description>
 		<attribute>
@@ -18,7 +18,7 @@
 	
 	<tag>
 		<name>scrollContainer</name>
-		<tag-class>com.hz.wechatproject.tags.ScrollContainerTag</tag-class>
+		<tag-class>com.hz.wechatproject.tags.impl.ScrollContainerTag</tag-class>
 		<body-content>JSP</body-content>
 		<description>Scroll Container Tag</description>
 		<attribute>

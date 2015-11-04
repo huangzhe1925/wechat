@@ -1,7 +1,9 @@
-package com.hz.wechatproject.tags;
+package com.hz.wechatproject.tags.impl;
 
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.JspWriter;
+
+import com.hz.wechatproject.tags.WCTagSupport;
 
 public class NavButtonTag extends WCTagSupport {
 	private static final long serialVersionUID = 1212862803772561211L;

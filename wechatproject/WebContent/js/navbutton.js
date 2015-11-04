@@ -349,6 +349,11 @@ $(function() {
 				'content' : 'Htt',
 				'link':'/siteManage/testHttpProxy',
 				'sub' : []
+			},{
+				'id' : '1_1_4',
+				'content' : 'Send',
+				'link':'/siteManage/testSendAndReceive',
+				'sub' : []
 			} ]
 		}, {
 			'id' : '1_2',
