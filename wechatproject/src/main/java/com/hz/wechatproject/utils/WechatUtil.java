@@ -31,7 +31,7 @@ public class WechatUtil {
 	          
 	        result =FormatXmlProcessUtil.formatXmlAnswer(xmlEntity.getFromUserName(), xmlEntity.getToUserName(), result);  
 	          
-	        return xml;  
+	        return result;  
 	    }  
 	
 	public static String getXMLFromRequest(HttpServletRequest request)
