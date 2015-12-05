@@ -56,43 +56,28 @@ public class WechatProcessServiceImpl implements WechatProcessService {
 
 	private String processWechatMsg(String xml) throws Exception {
 		ReceiveXmlEntity xmlEntity = ReceiveXmlProcessUtil.getMsgEntity(xml);
-		String response="";
 		String requestCMD=xmlEntity.getContent();
 		if(REQ_CMD_MOV.equalsIgnoreCase(requestCMD)){
 			String html=CommonUtil.UtilHttpClient.get("http://www.dytt8.net/");
-			response=CommonUtil.UtilHTMLParse.getNodeAsString(CommonUtil.UtilHTMLParse.getNodeListOnClass(html,"div", "co_content8"), 0);
+			String response=CommonUtil.UtilHTMLParse.getNodeAsString(CommonUtil.UtilHTMLParse.getNodeListOnClass(html,"div", "co_content8"), 0);
 			response=response.replaceAll(" ", "");
+			return FormatXmlProcessUtil.formatTextAnswer(xmlEntity, response);
 		}else if(REQ_CMD_HOTEL_BOOKING.equalsIgnoreCase(requestCMD)){
 			String linkUrl=PropertiesUtil.getStringProperty(PropertiesUtil.PROP_HOTEL_BOOKING_SITE_URL);
-			String linkLabel=PropertiesUtil.getStringProperty(PropertiesUtil.PROP_HOTEL_BOOKING_SITE_LABEL);
+			String linkTitle=PropertiesUtil.getStringProperty(PropertiesUtil.PROP_HOTEL_BOOKING_SITE_LABEL);
 			if(!CommonUtil.isEmptyString(linkUrl)){
-				response="<a href='"+linkUrl+"'>"+linkLabel+"</a>";
+				return FormatXmlProcessUtil.formatLinkAnswer(xmlEntity, linkTitle, linkUrl, "");
 			}
 		}//default request process
 		else{
 			String linkUrl=PropertiesUtil.getStringProperty(PropertiesUtil.PROP_HOTEL_BOOKING_SITE_URL);
-			String linkLabel=PropertiesUtil.getStringProperty(PropertiesUtil.PROP_HOTEL_BOOKING_SITE_LABEL);
+			String linkTitle=PropertiesUtil.getStringProperty(PropertiesUtil.PROP_HOTEL_BOOKING_SITE_LABEL);
 			if(!CommonUtil.isEmptyString(linkUrl)){
-				response="<a href='"+linkUrl+"'>"+linkLabel+"</a>";
+				return FormatXmlProcessUtil.formatLinkAnswer(xmlEntity, linkTitle, linkUrl, "");
 			}
 		}
 		
-		return processWechatMsg(xmlEntity, response);
-	}
-
-	private String processWechatMsg(ReceiveXmlEntity xmlEntity, String response) {
-
-		if (null == xmlEntity) {
-			return "";
-		}
-		logger.debug(xmlEntity.toString());
-
-		String result = "";
-
-		result = FormatXmlProcessUtil.formatXmlAnswer(
-				xmlEntity.getFromUserName(), xmlEntity.getToUserName(), response);
-
-		return result;
+		return FormatXmlProcessUtil.formatTextAnswer(xmlEntity, "");
 	}
 
 }
