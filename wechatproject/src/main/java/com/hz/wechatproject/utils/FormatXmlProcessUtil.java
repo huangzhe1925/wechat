@@ -28,7 +28,7 @@ public class FormatXmlProcessUtil {
         sb.append(date.getTime());  
         sb.append("</CreateTime><MsgType><![CDATA[text]]></MsgType><Content><![CDATA[");  
         sb.append(content);  
-        sb.append("]]></Content><MsgId>"+date.getTime()+"</MsgId></xml>");  
+        sb.append("]]></Content></xml>");  
         return sb.toString();  
     }
     
@@ -55,7 +55,7 @@ public class FormatXmlProcessUtil {
     	sb.append(desc);
     	sb.append("]]></Description><Url><![CDATA[");
     	sb.append(link);
-    	sb.append("]]></Url><MsgId>"+date.getTime()+"</MsgId></xml>");  
+    	sb.append("]]></Url></xml>");  
     	return sb.toString();  
     }  
 
