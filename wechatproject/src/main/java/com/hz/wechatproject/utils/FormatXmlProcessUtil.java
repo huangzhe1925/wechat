@@ -21,9 +21,9 @@ public class FormatXmlProcessUtil {
         StringBuffer sb = new StringBuffer();  
         Date date = new Date();  
         sb.append("<xml><ToUserName><![CDATA[");  
-        sb.append(fromUser);  
-        sb.append("]]></ToUserName><FromUserName><![CDATA[");  
         sb.append(toUser);  
+        sb.append("]]></ToUserName><FromUserName><![CDATA[");  
+        sb.append(fromUser);  
         sb.append("]]></FromUserName><CreateTime>");  
         sb.append(date.getTime());  
         sb.append("</CreateTime><MsgType><![CDATA[text]]></MsgType><Content><![CDATA[");  
