@@ -18,6 +18,10 @@ public class PropertiesUtil {
 
 	@Deprecated
 	public static final String DBSOURCE_SQLITE_URL = "jdbc_url";
+	
+	public static final String PROP_HOTEL_BOOKING_SITE_URL="hotel_booking_site_url";
+	
+	public static final String PROP_HOTEL_BOOKING_SITE_LABEL="hotel_booking_site_label";
 
 
 	static {
